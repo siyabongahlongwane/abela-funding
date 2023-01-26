@@ -1,0 +1,207 @@
+@mixin flex($direction, $justifyContent, $alignItems, $height: auto) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justifyContent;
+    align-items: $alignItems;
+    height: $height;
+    box-sizing: border-box;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+.nowrap {
+    flex-wrap: nowrap;
+}
+
+// ================================================================================================================================================
+// Space-between
+// ================================================================================================================================================
+// Space-between Start
+.horizontal-space-between {
+    @include flex(row, space-between, flex-start);
+}
+.vertical-space-between {
+    @include flex(column, space-between, flex-start, auto);
+}
+// Space-between Center
+.horizontal-space-between-center {
+    @include flex(row, space-between, center);
+}
+.vertical-space-between-center {
+    @include flex(column, space-between, center, auto);
+}
+// Space-between End
+.horizontal-space-between-end {
+    @include flex(row, space-between, flex-end);
+}
+.vertical-space-between-end {
+    @include flex(column, space-between, flex-end, auto);
+}
+// Space-between Strech
+.horizontal-space-between-stretch {
+    @include flex(row, space-between, stretch);
+}
+.vertical-space-between-stretch {
+    @include flex(column, space-between, stretch, auto);
+}
+
+// ================================================================================================================================================
+// Space-around
+// ================================================================================================================================================
+// Space-around Start
+.horizontal-space-around {
+    @include flex(row, space-around, flex-start);
+}
+.vertical-space-around {
+    @include flex(column, space-around, flex-start, auto);
+}
+// Space-around Center
+.horizontal-space-around-center {
+    @include flex(row, space-around, center);
+}
+.vertical-space-around-center {
+    @include flex(column, space-around, center, auto);
+}
+// Space-around End
+.horizontal-space-around-end {
+    @include flex(row, space-around, flex-end);
+}
+.vertical-space-around-end {
+    @include flex(column, space-around, flex-end, auto);
+}
+// Space-around Strech
+.horizontal-space-around-stretch {
+    @include flex(row, space-around, stretch);
+}
+.vertical-space-around-stretch {
+    @include flex(column, space-around, stretch, auto);
+}
+
+// ================================================================================================================================================
+// Space-evenly
+// ================================================================================================================================================
+// Space-evenly Start
+.horizontal-space-evenly {
+    @include flex(row, space-evenly, flex-start);
+}
+.vertical-space-evenly {
+    @include flex(column, space-evenly, flex-start, auto);
+}
+// Space-evenly Center
+.horizontal-space-evenly-center {
+    @include flex(row, space-evenly, center);
+}
+.vertical-space-evenly-center {
+    @include flex(column, space-evenly, center, auto);
+}
+// Space-evenly End
+.horizontal-space-evenly-end {
+    @include flex(row, space-evenly, flex-end);
+}
+.vertical-space-evenly-end {
+    @include flex(column, space-evenly, flex-end, auto);
+}
+// Space-evenly Stretch
+.horizontal-space-evenly-stretch {
+    @include flex(row, space-evenly, stretch);
+}
+.vertical-space-evenly-stretch {
+    @include flex(column, space-evenly, stretch, auto);
+}
+
+// ================================================================================================================================================
+// Start
+// ================================================================================================================================================
+// start Start
+.horizontal-start {
+    @include flex(row, flex-start, flex-start);
+}
+.vertical-start {
+    @include flex(column, flex-start, flex-start, auto);
+}
+// start Center
+.horizontal-start-center {
+    @include flex(row, flex-start, center);
+}
+.vertical-start-center {
+    @include flex(column, flex-start, center, auto);
+}
+// start End
+.horizontal-start-end {
+    @include flex(row, flex-start, flex-end);
+}
+.vertical-start-end {
+    @include flex(column, flex-start, flex-end, auto);
+}
+// start Stretch
+.horizontal-start-stretch {
+    @include flex(row, flex-start, stretch);
+}
+.vertical-start-stretch {
+    @include flex(column, flex-start, stretch, auto);
+}
+
+// ================================================================================================================================================
+// Center
+// ================================================================================================================================================
+// center Start
+.horizontal-center {
+    @include flex(row, center, flex-start);
+}
+.vertical-center {
+    @include flex(column, center, flex-start, auto);
+}
+// center Center
+.horizontal-center-center {
+    @include flex(row, center, center);
+}
+.vertical-center-center {
+    @include flex(column, center, center, auto);
+}
+// center End
+.horizontal-center-end {
+    @include flex(row, center, flex-end);
+}
+.vertical-center-end {
+    @include flex(column, center, flex-end, auto);
+}
+// center stretch
+.horizontal-center-stretch {
+    @include flex(row, center, stretch);
+}
+.vertical-center-stretch {
+    @include flex(column, center, stretch, auto);
+}
+
+// ================================================================================================================================================
+// End
+// ================================================================================================================================================
+// end Start
+.horizontal-end {
+    @include flex(row, flex-end, flex-start);
+}
+.vertical-end {
+    @include flex(column, flex-end, flex-start, auto);
+}
+// end flex-end
+.horizontal-end-center {
+    @include flex(row, flex-end, center);
+}
+.vertical-end-center {
+    @include flex(column, flex-end, center, auto);
+}
+// end End
+.horizontal-end-end {
+    @include flex(row, flex-end, flex-end);
+}
+.vertical-end-end {
+    @include flex(column, flex-end, flex-end, auto);
+}
+// end Stretch
+.horizontal-end-stretch {
+    @include flex(row, flex-end, stretch);
+}
+.vertical-end-stretch {
+    @include flex(column, flex-end, stretch, auto);
+}
