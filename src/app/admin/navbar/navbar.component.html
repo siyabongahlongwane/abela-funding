@@ -1,0 +1,32 @@
+<div class="horizontal-space-between-center">
+    <div class="vertical-start-stretch width-25">
+        <div class="horizontal-start-center gap-1em">
+            <mat-icon class="bold pointer" *ngIf="!this.drawer?.opened" (click)="drawer?.toggle()">east</mat-icon>
+            <mat-icon class="bold pointer" *ngIf="this.drawer?.opened" (click)="drawer?.toggle()">west</mat-icon>
+            <h1 class="bold">Applications</h1>
+        </div>
+    </div>
+    <div class="vertical-start-stretch grey-input-container width-25">
+        <mat-form-field appearance="outline">
+            <input matInput name="search" placeholder="Search Applications Here">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
+    <div class="vertical-start-end width-25">
+        <div class="horizontal-start-center gap-1em">
+            <div class="white-bg dark-grey-color rounded icons vertical-center-center pointer">
+                <mat-icon class="bold" matBadge="15" matBadgeColor="accent">notifications</mat-icon>
+            </div>
+            <div class="white-bg dark-grey-color rounded icons vertical-center-center pointer">
+                <h2 class="bold">N</h2>
+            </div>
+            <div class="white-bg dark-grey-color bold rounded icons horizontal-center-center pointer">
+                <mat-icon class="bold">power_settings_new</mat-icon>
+            </div>
+            <div class="vertical-start-stretch">
+                <label class="bold">Nthabiseng</label>
+                <label class="dark-grey-color">Super Admin</label>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,221 @@
 /* You can add global styles to this file, and also import other style files */
+@import './flex.scss';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+app-container,
+app-dashboard {
+    width: 100%;
+    height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin-block-end: 0 !important;
+    margin-block-start: 0 !important;
+}
+
+//=============================================================================================================================================
+// Colors
+// ============================================================================================================================================
+$primary: #e01a72;
+$secondary: #212158;
+$black: #000000;
+$white: #ffffff;
+$lightBlue: #48a9f8;
+$lightGreen: #1cd086;
+$grassGreen: #8bc743;
+$grey: #e3e3e3;
+$darkGrey: #495057;
+$lightGrey: #f2f2f2;
+
+.primary-color {
+    color: $primary;
+}
+
+.secondary-color {
+    color: $secondary;
+}
+
+.black-color {
+    color: $black;
+}
+
+.white-color {
+    color: $white;
+}
+
+.light-grey-color {
+    color: $lightGrey;
+}
+
+.grey-color {
+    color: $grey;
+}
+
+.dark-grey-color {
+    color: lighten($black, 20%);
+}
+
+.bold {
+    font-weight: bold !important;
+}
+
+//=============================================================================================================================================
+// Background Color
+// ============================================================================================================================================
+.primary-bg,
+body {
+    background-color: $primary;
+}
+
+.secondary-bg {
+    background-color: $secondary;
+}
+
+.black-bg {
+    background-color: $black;
+}
+
+.white-bg {
+    background-color: $white;
+}
+
+.light-grey-bg {
+    background-color: $lightGrey;
+}
+
+.grey-bg {
+    background-color: $grey;
+}
+
+.mat-drawer {
+    width: 250px;
+    height: 100%;
+    background-color: transparent !important;
+}
+
+.mat-drawer-side {
+    border-right: none !important;
+}
+
+.mat-drawer-container {
+    background: transparent !important;
+}
+
+.container {
+    height: 100vh;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.border-radius-70px {
+    border-top-left-radius: 70px;
+}
+
+.padding-3em {
+    padding: 3em;
+}
+
+.gap-1em {
+    gap: 1em;
+}
+
+@mixin inputReset {
+    mat-form-field {
+        width: 100%;
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+
+    .mat-form-field-infix {
+        border-top: 0 solid transparent;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        color: transparent;
+        border-radius: 4px;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 0.8em 0 0.5em 0;
+    }
+}
+
+@mixin greyBackground {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        background: rgba(33, 33, 33, 0.08);
+    }
+}
+
+@mixin greyBorder {
+    border: 1px solid $grey;
+    border-radius: 4px;
+}
+
+.grey-input-container,
+.grey-select-Container {
+    @include inputReset;
+    @include greyBackground;
+
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 1.3em 0 0.8em 0;
+    }
+}
+
+.grey-border-input-container {
+    @include inputReset;
+    @include greyBorder;
+
+    .mat-form-field-prefix .mat-icon,
+    .mat-form-field-suffix .mat-icon {
+        font-size: 124%;
+        color: $grey;
+        cursor: pointer;
+    }
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.content-width {
+    width: calc(100% - 250px - 6em);
+}
+
+.width-25 {
+    width: 25%;
+}
+
+.width-20 {
+    width: 20%;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.rounded {
+    border-radius: 50%;
+}
+
+.pointer {
+    cursor: pointer;
+}
