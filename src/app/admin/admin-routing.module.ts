@@ -18,20 +18,7 @@ const routes: Routes = [
         path: 'dashboard', component: DashboardComponent
       },
       {
-        path: 'applications', component: ApplicationsComponent, children: [
-          {
-            path: 'all', component: ApplicationsComponent
-          },
-          {
-            path: 'pending', component: ApplicationsComponent
-          },
-          {
-            path: 'approved', component: ApplicationsComponent
-          },
-          {
-            path: 'rejected', component: ApplicationsComponent
-          },
-        ]
+        path: 'applications/:applicationType', component: ApplicationsComponent
       }
     ]
   },

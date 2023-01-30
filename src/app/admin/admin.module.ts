@@ -7,6 +7,7 @@ import { ContainerComponent } from './container/container.component';
 import { MaterialModule } from '../modules/material/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ApplicationsComponent } from './applications/applications.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ApplicationsComponent } from './applications/applications.component';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ChartsModule
   ]
 })
 export class AdminModule { }

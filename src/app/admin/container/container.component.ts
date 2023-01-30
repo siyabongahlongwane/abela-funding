@@ -47,7 +47,6 @@ export class ContainerComponent implements OnInit {
   checkActiveRoute() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        console.log(event.url.split('/')[4])
         if (this.router.url.includes('applications')) {
           this.selectedItem = 1;
         }

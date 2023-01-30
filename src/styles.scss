@@ -42,7 +42,7 @@ $grassGreen: #149a00;
 $grey: #e3e3e3;
 $darkGrey: #495057;
 $lightGrey: #f2f2f2;
-$orange: orange;
+$orange: #ffa500;
 $red: #c20000;
 
 .primary-color, .side-nav-items {
@@ -102,7 +102,7 @@ $red: #c20000;
 // ============================================================================================================================================
 .primary-bg,
 body {
-    background-color: $primary;
+    background-color: $primary !important;
 }
 
 .secondary-bg, .active {
@@ -187,6 +187,13 @@ body {
     gap: 5px;
 }
 
+.margin-bottom-1em {
+    margin-bottom: 1em !important;
+}
+
+.margin-bottom-05em {
+    margin-bottom: 0.5em !important;
+}
 @mixin inputReset {
     mat-form-field {
         width: 100%;
@@ -264,6 +271,10 @@ body {
 
 .width-30 {
     width: 30%;
+}
+
+.width-46  {
+    width: 46%;
 }
 
 .half-width {
@@ -372,4 +383,8 @@ body {
 .side-nav-items {
     padding: 0.7em;
     border-radius: 2em;
+}
+
+.center-text {
+    text-align: center;
 }

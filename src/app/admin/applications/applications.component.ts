@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-applications',
@@ -20,11 +21,48 @@ export class ApplicationsComponent implements OnInit {
   ];
 
   displayedColumns: string[] = ['ref', 'name', 'surname', 'id', 'email', 'phone', 'status', 'action'];
-  dataSource = this.ELEMENT_DATA;
+  dataSource: any[] = this.ELEMENT_DATA;
 
-  constructor() { }
+  filterButtons: any[] = [
+    {
+      text: 'All',
+      filter: 'all'
+    },
+    {
+      text: 'Pending',
+      filter: 'pending'
+    },
+    {
+      text: 'In Review',
+      filter: 'in review'
+    },
+    {
+      text: 'Approved',
+      filter: 'approved'
+    },
+    {
+      text: 'Rejected',
+      filter: 'rejected'
+    }
+  ]
+
+  selectedFilter: string = '';
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.filterTableData(params['applicationType']);
+    })
+  }
+
+  filterTableData(filter: string) {
+    this.selectedFilter = filter;
+    this.dataSource = this.ELEMENT_DATA;
+    if (filter !== 'all') {
+      this.dataSource = this.ELEMENT_DATA.filter(application => {
+        return application.status.toLowerCase() == filter;
+      });
+    }
   }
 
 }

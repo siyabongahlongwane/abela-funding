@@ -1,10 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { ChartType } from 'chart.js';
+import { Label, MultiDataSet } from 'ng2-charts';
+
+interface Chart {
+  title: string;
+  labels: Label[];
+  data?: any;
+  datasets?: any
+  type: ChartType,
+  colors: any
+}
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
 export class DashboardComponent implements OnInit {
   cards: any = [
     {
@@ -16,24 +28,51 @@ export class DashboardComponent implements OnInit {
     },
     {
       icon: 'hourglass_bottom',
-      title: 'Pending Applications',
+      title: 'Pending',
       count: 100,
       route: '/abela/admin/applications/pending',
       bg: 'orange-bg'
     },
     {
       icon: 'thumb_up',
-      title: 'Approved Applications',
+      title: 'Approved',
       count: 900,
       route: '/abela/admin/applications/approved',
       bg: 'green-bg'
     },
     {
       icon: 'thumb_down',
-      title: 'Rejected Applications',
-      count: 290,
+      title: 'Rejected',
+      count: 50,
       route: '/abela/admin/applications/rejected',
       bg: 'red-bg'
+    }
+  ]
+
+  charts: Chart[] = [
+    {
+      title: 'Data - Pie Chart',
+      labels: ['Pending', 'In Review', 'Approved', 'Rejected'],
+      datasets: [
+        { data: [100, 150, 900, 50], label: 'Series A', backgroundColor: ['#000'] },
+      ],
+      type: 'pie',
+      colors: [
+        {
+          backgroundColor: ["#ffa500", "#212158", "#149a00", "#c20000"]
+        }]
+    },
+    {
+      title: 'Data - Bar Chart',
+      labels: ['Pending', 'In Review', 'Approved', 'Rejected'],
+      datasets: [
+        { data: [100, 150, 900, 50], label: '' },
+      ],
+      type: 'bar',
+      colors: [
+        {
+          backgroundColor: ["#ffa500", "#212158", "#149a00", "#c20000"]
+        }]
     }
   ]
   constructor() { }
