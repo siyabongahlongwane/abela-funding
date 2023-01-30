@@ -12,7 +12,8 @@ body {
 }
 
 app-container,
-app-dashboard {
+app-dashboard,
+app-applications {
     width: 100%;
     height: 100%;
 }
@@ -37,12 +38,14 @@ $black: #000000;
 $white: #ffffff;
 $lightBlue: #48a9f8;
 $lightGreen: #1cd086;
-$grassGreen: #8bc743;
+$grassGreen: #149a00;
 $grey: #e3e3e3;
 $darkGrey: #495057;
 $lightGrey: #f2f2f2;
+$orange: orange;
+$red: #c20000;
 
-.primary-color {
+.primary-color, .side-nav-items {
     color: $primary;
 }
 
@@ -54,7 +57,7 @@ $lightGrey: #f2f2f2;
     color: $black;
 }
 
-.white-color {
+.white-color, .active {
     color: $white;
 }
 
@@ -70,8 +73,28 @@ $lightGrey: #f2f2f2;
     color: lighten($black, 20%);
 }
 
-.bold {
+.light-blue-color {
+    color: $lightBlue;
+}
+
+.red-color {
+    color: $red;
+}
+
+.orange-color {
+    color: $orange;
+}
+
+.green-color {
+    color: $grassGreen;
+}
+
+.bold, .active {
     font-weight: bold !important;
+}
+
+.fw-500 {
+    font-weight: 500 !important;
 }
 
 //=============================================================================================================================================
@@ -82,8 +105,8 @@ body {
     background-color: $primary;
 }
 
-.secondary-bg {
-    background-color: $secondary;
+.secondary-bg, .active {
+    background-color: $secondary !important;
 }
 
 .black-bg {
@@ -102,6 +125,19 @@ body {
     background-color: $grey;
 }
 
+.orange-bg {
+    background-color: $orange;
+}
+
+.green-bg {
+    background-color: $grassGreen;
+}
+
+.red-bg {
+    background-color: $red;
+    
+}
+
 .mat-drawer {
     width: 250px;
     height: 100%;
@@ -116,6 +152,11 @@ body {
     background: transparent !important;
 }
 
+.content-height {
+    height: calc(100vh - 80px) !important;
+    overflow: auto;
+}
+
 .container {
     height: 100vh;
 }
@@ -126,14 +167,24 @@ body {
 
 .border-radius-70px {
     border-top-left-radius: 70px;
+    border-bottom-left-radius: 70px;
 }
 
 .padding-3em {
     padding: 3em;
 }
 
+.padding-1em {
+    padding: 1em;
+}
+
+
 .gap-1em {
     gap: 1em;
+}
+
+.gap-5px {
+    gap: 5px;
 }
 
 @mixin inputReset {
@@ -207,6 +258,13 @@ body {
 .width-20 {
     width: 20%;
 }
+.width-24 {
+    width: 24%;
+}
+
+.width-30 {
+    width: 30%;
+}
 
 .half-width {
     width: 50%;
@@ -218,4 +276,100 @@ body {
 
 .pointer {
     cursor: pointer;
+}
+
+.border-radius-2em {
+    border-radius: 2em !important;
+}
+
+.margin-top-3em {
+    margin-top: 3em;
+}
+
+.gap-3em {
+    gap: 3em;
+}
+
+.mSCOATableContainer,
+.treeStructureContainer {
+    overflow-x: auto;
+    width: calc(100vw - 285px);
+    min-width: 100%;
+    margin-bottom: 1em;
+
+    .mSCOATable {
+        tr.mat-header-row {
+            height: 50px;
+            background-color: $white;
+        }
+
+        tr.mat-row {
+            height: 55px;
+        }
+
+        th.mat-header-cell:last-of-type,
+        td.mat-cell:last-of-type,
+        td.mat-footer-cell:last-of-type {
+            text-align: left;
+        }
+
+        th.mat-header-cell,
+        td.mat-cell,
+        td.mat-footer-cell {
+            font-size: 12px;
+            text-align: left;
+            padding-left: 24px;
+            max-width: 350px;
+            white-space: break-spaces;
+        }
+
+        .rejectBtn {
+            padding-right: 15px;
+        }
+    }
+}
+
+.margin24pxLess {
+    margin-bottom: -24px !important;
+}
+
+.tableCellsTruncate {
+    max-width: 100px;
+}
+
+.truncate,
+.tableCellsTruncate {
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.filterInputContainer {
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 0.6em 0 0.5em 0 !important;
+    }
+}
+
+.appliedFiltersContainer {
+    border: 1px solid $darkGrey;
+    border-radius: 6px;
+    height: 25%;
+    padding: 10px;
+}
+
+.router-height {
+    height: calc(100vh - 60px - 112px) !important;
+    overflow-y: auto;
+}
+
+.status-btn {
+    width: fit-content;
+    padding: 0.7em;
+    border-radius: 2em;
+    font-weight: 500;
+}
+
+.side-nav-items {
+    padding: 0.7em;
+    border-radius: 2em;
 }

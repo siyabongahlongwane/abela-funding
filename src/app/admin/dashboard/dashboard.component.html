@@ -1,1 +1,13 @@
-<p>dashboard works!</p>
+<div class="horizontal-space-between-stretch">
+    <div [routerLink]="card.route" class="vertical-start-stretch width-24 dash-card white-color pointer" *ngFor="let card of cards;">
+        <div class="horizontal-space-between-stretch padding-1em" class="{{ card.bg }}">
+            <div class="vertical-center-stretch">
+                <mat-icon class="bold">{{ card.icon }}</mat-icon>
+            </div>
+            <div class="vertical-start-end">
+                <h3 class="fw-500">{{ card.title }}</h3>
+                <h1 class="large-font">{{ card.count }}</h1>
+            </div>
+        </div>
+    </div>
+</div>

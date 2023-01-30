@@ -6,13 +6,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContainerComponent } from './container/container.component';
 import { MaterialModule } from '../modules/material/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ApplicationsComponent } from './applications/applications.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     ContainerComponent,
-    NavbarComponent
+    NavbarComponent,
+    ApplicationsComponent
   ],
   imports: [
     CommonModule,

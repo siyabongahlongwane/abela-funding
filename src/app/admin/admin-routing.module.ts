@@ -1,20 +1,37 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ApplicationsComponent } from './applications/applications.component';
 import { ContainerComponent } from './container/container.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: '/abela/admin', pathMatch: 'full'
+    path: '', redirectTo: 'abela/admin/dashboard', pathMatch: 'full'
   }
   ,
   {
-    path: 'abela', component: ContainerComponent, children: [
+    path: 'abela/admin', component: ContainerComponent, children: [
       {
-        path: 'admin', component: ContainerComponent
+        path: '', redirectTo: 'dashboard', pathMatch: 'full'
       },
       {
         path: 'dashboard', component: DashboardComponent
+      },
+      {
+        path: 'applications', component: ApplicationsComponent, children: [
+          {
+            path: 'all', component: ApplicationsComponent
+          },
+          {
+            path: 'pending', component: ApplicationsComponent
+          },
+          {
+            path: 'approved', component: ApplicationsComponent
+          },
+          {
+            path: 'rejected', component: ApplicationsComponent
+          },
+        ]
       }
     ]
   },
