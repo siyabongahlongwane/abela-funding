@@ -1,0 +1,48 @@
+<div class="horizontal-center-center full-height">
+    <div class="vertical-start-stretch width-25">
+        <mat-card>
+            <div class="vertical-start-stretch gap-1em">
+                <div class="horizontal-center-center full-width">
+                    <img src="../../../assets/abela-logo.png" alt="Abela Logo" width="80px">
+                </div>
+                <h1 class="primary-color center-text bold">Login</h1>
+                <form [formGroup]="loginForm">
+                    <div class="vertical-start-stretch grey-input-container">
+                        <mat-form-field appearance="outline">
+                            <input matInput name="search" formControlName="email" placeholder="Enter Email"
+                                type="email">
+                            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                                Email is <b>required!</b>
+                            </mat-error>
+                            <mat-error *ngIf="loginForm.get('email')?.hasError('pattern')">
+                                Email is <b>invalid!</b>
+                        </mat-error>
+                            <mat-icon matPrefix>email</mat-icon>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="vertical-start-stretch grey-input-container">
+                        <mat-form-field appearance="outline">
+                            <input matInput name="search" formControlName="password" placeholder="Enter Password"
+                                [type]="showPass ? 'text' : 'password'">
+                                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                                    Password is <b>required!</b>
+                                </mat-error>
+                            <mat-icon matPrefix>lock</mat-icon>
+                            <mat-icon (click)="showPass = !showPass" matSuffix>{{ showPass ? 'visibility_off' :
+                                'visibility_on' }}</mat-icon>
+                        </mat-form-field>
+                        <div class="horizontal-end-stretch">
+                            <span class="secondary-color pointer bold underline">Forgot password?</span>
+                        </div>
+                    </div>
+                </form>
+                <div class="vertical-center-center">
+                    <button (click)="login(loginForm)" class="primary-bg white-color border-radius-2em width-30"
+                        mat-raised-button>Login</button>
+                </div>
+            </div>
+
+        </mat-card>
+    </div>
+</div>
