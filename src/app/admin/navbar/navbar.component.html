@@ -3,7 +3,7 @@
         <div class="horizontal-start-center gap-1em">
             <!-- <mat-icon class="bold pointer" *ngIf="!this.drawer?.opened" (click)="drawer?.toggle()">east</mat-icon>
             <mat-icon class="bold pointer" *ngIf="this.drawer?.opened" (click)="drawer?.toggle()">west</mat-icon> -->
-            <h1 class="bold">Applications</h1>
+            <h1 class="bold">{{ currentPage }}</h1>
         </div>
     </div>
     <div class="vertical-start-stretch grey-input-container width-25">
@@ -18,14 +18,14 @@
                 <mat-icon class="bold" matBadge="15" matBadgeColor="accent">notifications</mat-icon>
             </div>
             <div class="white-bg dark-grey-color rounded icons vertical-center-center pointer">
-                <h2 class="bold">N</h2>
+                <h2 class="bold">{{ admin?.firstName.charAt(0) }}</h2>
             </div>
             <div class="white-bg dark-grey-color bold rounded icons horizontal-center-center pointer">
                 <mat-icon class="bold">power_settings_new</mat-icon>
             </div>
             <div class="vertical-start-stretch">
-                <label class="bold">Nthabiseng</label>
-                <label class="dark-grey-color">Super Admin</label>
+                <label class="bold">{{ admin?.firstName }}</label>
+                <label class="dark-grey-color">{{ admin?.role?.id }}</label>
             </div>
         </div>
     </div>

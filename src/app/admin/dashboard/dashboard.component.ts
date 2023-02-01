@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartType } from 'chart.js';
 import { Label, MultiDataSet } from 'ng2-charts';
+import { SharedService } from 'src/app/services/shared.service';
 
 interface Chart {
   title: string;
@@ -75,9 +76,17 @@ export class DashboardComponent implements OnInit {
         }]
     }
   ]
-  constructor() { }
+
+  admin: any = {};
+
+  constructor(private sharedService: SharedService) { }
 
   ngOnInit(): void {
   }
+
+  getUser() {
+    this.admin = this.sharedService.get('user');
+  }
+
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-container',
@@ -36,12 +37,14 @@ export class ContainerComponent implements OnInit {
   ];
 
   selectedItem: number = 0;
-
-  constructor(private router: Router) {
+  admin: any = {};
+  currentPage: string = '';
+  constructor(private router: Router, private sharedService: SharedService) {
     this.checkActiveRoute();
   }
 
   ngOnInit(): void {
+    this.getUser();
   }
 
   checkActiveRoute() {
@@ -54,11 +57,22 @@ export class ContainerComponent implements OnInit {
           this.selectedItem = this.sideNavItems.findIndex((item: any) => event.url.includes(item.url));
         }
       }
+      let urlFragments = this.router.url.split('/');
+      this.setPageName(urlFragments);
     })
   }
 
   goTo(url: string, i: number) {
     this.selectedItem = i;
     this.router.navigate([url])
+  }
+
+  getUser() {
+    this.admin = this.sharedService.get('user');
+  }
+
+  setPageName(urlFragments: string[]) {
+    this.currentPage = urlFragments[3][0].toUpperCase() + urlFragments[3].slice(1);
+    if (urlFragments[4]) this.currentPage += ` - ${urlFragments[4]}`
   }
 }

@@ -46,7 +46,8 @@ $lightGrey: #f2f2f2;
 $orange: #ffa500;
 $red: #c20000;
 
-.primary-color, .side-nav-items {
+.primary-color,
+.side-nav-items {
     color: $primary;
 }
 
@@ -58,7 +59,8 @@ $red: #c20000;
     color: $black;
 }
 
-.white-color, .active {
+.white-color,
+.active {
     color: $white;
 }
 
@@ -90,7 +92,8 @@ $red: #c20000;
     color: $grassGreen;
 }
 
-.bold, .active {
+.bold,
+.active {
     font-weight: bold !important;
 }
 
@@ -106,7 +109,8 @@ body {
     background-color: $primary !important;
 }
 
-.secondary-bg, .active {
+.secondary-bg,
+.active {
     background-color: $secondary !important;
 }
 
@@ -136,7 +140,7 @@ body {
 
 .red-bg {
     background-color: $red;
-    
+
 }
 
 .mat-drawer {
@@ -199,7 +203,13 @@ body {
 .margin-bottom-05em {
     margin-bottom: 0.5em !important;
 }
+
 @mixin inputReset {
+    .mat-error {
+        margin-top: 1.5em !important;
+        margin-left: -10px;
+    }
+
     mat-form-field {
         width: 100%;
     }
@@ -270,6 +280,7 @@ body {
 .width-20 {
     width: 20%;
 }
+
 .width-24 {
     width: 24%;
 }
@@ -278,7 +289,7 @@ body {
     width: 30%;
 }
 
-.width-46  {
+.width-46 {
     width: 46%;
 }
 
