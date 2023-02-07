@@ -7,10 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './admin/admin.module';
 import { ChartsModule} from 'ng2-charts';
 import { AuthModule } from './auth/auth.module';
+import { ConfirmPopupComponent } from './components/confirm-popup/confirm-popup.component';
+import { MaterialModule } from './modules/material/material.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConfirmPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -18,7 +21,8 @@ import { AuthModule } from './auth/auth.module';
     BrowserAnimationsModule,
     AdminModule,
     AuthModule,
-    ChartsModule
+    ChartsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-popup.component';
 
 @Component({
   selector: 'app-applications',
@@ -7,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./applications.component.scss']
 })
 export class ApplicationsComponent implements OnInit {
-  ELEMENT_DATA: any[] = [
+  tableData: any[] = [
     { ref: 1, name: 'Siyabonga', surname: "Testing", id: '1234567', status: 'Pending', email: 'test@gmail.com', phone: '0670146942' },
     { ref: 2, name: 'Sne', surname: "Testing", id: '1234567', status: 'Pending', email: 'test@gmail.com', phone: '0670146942' },
     { ref: 3, name: 'Nonhlanhla', surname: "Testing", id: '1234567', status: 'Approved', email: 'test@gmail.com', phone: '0670146942' },
@@ -21,7 +23,7 @@ export class ApplicationsComponent implements OnInit {
   ];
 
   displayedColumns: string[] = ['ref', 'name', 'surname', 'id', 'email', 'phone', 'status', 'action'];
-  dataSource: any[] = this.ELEMENT_DATA;
+  dataSource: any[] = this.tableData;
 
   filterButtons: any[] = [
     {
@@ -47,22 +49,40 @@ export class ApplicationsComponent implements OnInit {
   ]
 
   selectedFilter: string = '';
-  constructor(private activatedRoute: ActivatedRoute) { }
+  selectedRow: any = {};
+  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.filterTableData(params['applicationType']);
-    })
+    });
   }
 
   filterTableData(filter: string) {
     this.selectedFilter = filter;
-    this.dataSource = this.ELEMENT_DATA;
+    this.dataSource = this.tableData;
     if (filter !== 'all') {
-      this.dataSource = this.ELEMENT_DATA.filter(application => {
+      this.dataSource = this.tableData.filter(application => {
         return application.status.toLowerCase() == filter;
       });
     }
   }
 
+  openConfirmDialog(application: any) {
+    const dialogRef = this.dialog.open(ConfirmPopupComponent, {
+      disableClose: true,
+      hasBackdrop: true,
+      data: {
+        heading: 'Confirmation',
+        text: 'Delete this application?',
+      }
+    })
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) this.deleteApplication(res);
+    });
+  }
+
+  deleteApplication(applicationId: string) {
+    console.log(`Application with ID: ${applicationId} has been Deleted`);
+  };
 }

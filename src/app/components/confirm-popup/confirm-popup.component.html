@@ -1,0 +1,14 @@
+<div class="vertical-start-stretch gap-1em width-300">
+    <div class="vertical-start-center">
+        <h1 class="bold">{{ data.heading }}</h1>
+        <h3>{{ data.text }}</h3>
+    </div>
+    <div class="horizontal-space-between-stretch">
+        <div class="vertical-start-stretch width-46"><button (click)="close(true)" mat-raised-button
+                class="primary-bg white-color border-radius-2em">Yes</button>
+        </div>
+        <div class="vertical-start-stretch width-46"><button (click)="close(false)" mat-raised-button color="warn" class=" border-radius-2em"
+                color="warn">No</button>
+        </div>
+    </div>
+</div>
