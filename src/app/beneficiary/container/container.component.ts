@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-container',
@@ -6,10 +8,71 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./container.component.scss']
 })
 export class ContainerComponent implements OnInit {
+  active: boolean = false;
+  sideNavItems: any[] = [
+    {
+      url: 'abela/beneficiary/dashboard',
+      title: 'Dashboard',
+      icon: 'dashboard',
+      isActive: false
+    },
+    {
+      url: 'abela/beneficiary/applications/all',
+      title: 'Applications',
+      icon: 'assignment_add',
+      isActive: false
+    },
+    {
+      url: 'beneficiaries',
+      title: 'Beneficiaries',
+      icon: 'diversity_3',
+      isActive: false
+    },
+    {
+      url: 'teammates',
+      title: 'Teammates',
+      icon: 'groups',
+      isActive: false
+    },
+  ];
 
-  constructor() { }
-
-  ngOnInit(): void {
+  selectedItem: number = 0;
+  beneficiary: any = {};
+  currentPage: string = '';
+  constructor(private router: Router, private sharedService: SharedService) {
+    this.checkActiveRoute();
   }
 
+  ngOnInit(): void {
+    this.getUser();
+  }
+
+  checkActiveRoute() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (this.router.url.includes('applications')) {
+          this.selectedItem = 1;
+        }
+        else {
+          this.selectedItem = this.sideNavItems.findIndex((item: any) => event.url.includes(item.url));
+        }
+      }
+      let urlFragments = this.router.url.split('/');
+      this.setPageName(urlFragments);
+    })
+  }
+
+  goTo(url: string, i: number) {
+    this.selectedItem = i;
+    this.router.navigate([url])
+  }
+
+  getUser() {
+    this.beneficiary = this.sharedService.get('user');
+  }
+
+  setPageName(urlFragments: string[]) {
+    this.currentPage = urlFragments[3][0].toUpperCase() + urlFragments[3].slice(1);
+    if (urlFragments[4]) this.currentPage += ` - ${urlFragments[4]}`
+  }
 }

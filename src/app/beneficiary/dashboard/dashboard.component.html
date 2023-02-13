@@ -1,0 +1,24 @@
+<div class="vertical-start-stretch">
+    <div class="horizontal-space-between-stretch">
+        <div [routerLink]="card.route" class="vertical-start-stretch width-24 dash-card white-color pointer"
+            *ngFor="let card of cards;">
+            <div class="horizontal-space-between-stretch padding-1em" class="{{ card.bg }}">
+                <div class="vertical-center-stretch">
+                    <mat-icon class="bold">{{ card.icon }}</mat-icon>
+                </div>
+                <div class="vertical-start-end">
+                    <h3 class="fw-500">{{ card.title }}</h3>
+                    <h1 class="large-font">{{ card.count }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="horizontal-space-between-center margin-top-3em">
+        <mat-card class="width-46 dashboard-card" *ngFor="let chart of charts">
+            <h1 class="bold primary-color margin-bottom-05em center-text">{{ chart.title }}</h1>
+            <canvas baseChart [data]="chart.data" [labels]="chart.labels" [chartType]="chart.type" [colors]="chart.colors" [legend]="chart.type != 'bar' ? true : false" [datasets]="chart.datasets">
+            </canvas>
+        </mat-card>
+    </div>
+</div>

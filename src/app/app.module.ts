@@ -9,6 +9,7 @@ import { ChartsModule} from 'ng2-charts';
 import { AuthModule } from './auth/auth.module';
 import { ConfirmPopupComponent } from './components/confirm-popup/confirm-popup.component';
 import { MaterialModule } from './modules/material/material.module';
+import { BeneficiaryModule } from './beneficiary/beneficiary.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MaterialModule } from './modules/material/material.module';
     BrowserAnimationsModule,
     AdminModule,
     AuthModule,
+    BeneficiaryModule,
     ChartsModule,
     MaterialModule
   ],
