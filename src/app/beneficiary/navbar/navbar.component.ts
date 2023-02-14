@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
   @Input() drawer: any;
-  @Input() admin: any;
+  @Input() user: any;
   @Input() currentPage: any;
   constructor() { }
 

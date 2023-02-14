@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,22 +13,8 @@ import { SharedService } from 'src/app/services/shared.service';
 export class LoginComponent implements OnInit {
   loginForm: any = {};
   showPass: boolean = false;
-  admin: any = {
-    firstName: 'Nthabiseng',
-    lastName: 'Lempe',
-    email: 'nthabiseng@abelatrust.co.za',
-    role: {
-      id: 'SA',
-      description: 'Super Admin',
-    },
-    privileges: {
-      canAdd: true,
-      canView: true,
-      canDelete: true,
-      canEdit: true,
-    }
-  }
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private router: Router) {
+  user: any = {};
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
       password: [null, [Validators.required]],
@@ -45,13 +32,18 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       // Process the form
-      if (true) {
-        this.sharedService.set('user', this.admin);
-        this.router.navigate(['abela/admin/dashboard']);
-        this.snackbar.open('Logged in', 'Close', {
-          duration: 3000
-        });
-      }
+      this.authService.login(`auth/login?email=${form.value.email}&password=${form.value.password}`).subscribe(resp => {
+        if (resp.user) {
+          this.user = resp.user;
+          this.sharedService.set('user', this.user);
+          this.router.navigate(['abela/admin/dashboard']);
+          this.snackbar.open('Logged in', 'Close', {
+            duration: 3000
+          });
+          if (resp.user.role.description.includes('Admin')) this.router.navigate(['abela/admin/dashboard']);
+          else this.router.navigate(['/beneficiary/dashboard']);
+        }
+      })
     }
   }
 

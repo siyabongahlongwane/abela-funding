@@ -14,7 +14,7 @@ export class NewApplicationComponent implements OnInit {
   isLinear = false;
   isUpload: any;
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
-  standards: string[] = ['SG - Standard Grade', 'HG - Higher Grade', 'NSC'];
+  standards: string[] = ['SG - Standard Grade', 'HG - Higher Grade', 'AP - Advance Programme'];
 
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar) {
     this.personalDetails = this.personalDetailsForm();

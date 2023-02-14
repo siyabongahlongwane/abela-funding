@@ -37,7 +37,7 @@ export class ContainerComponent implements OnInit {
   ];
 
   selectedItem: number = 0;
-  beneficiary: any = {};
+  user: any = {};
   currentPage: string = '';
   constructor(private router: Router, private sharedService: SharedService) {
     this.checkActiveRoute();
@@ -68,7 +68,7 @@ export class ContainerComponent implements OnInit {
   }
 
   getUser() {
-    this.beneficiary = this.sharedService.get('user');
+    this.user = this.sharedService.get('user');
   }
 
   setPageName(urlFragments: string[]) {

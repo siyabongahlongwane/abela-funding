@@ -1,7 +1,7 @@
 <div class="horizontal-center-stretch full-width full-height">
     <mat-card class="full-width full-height">
         <div class="vertical-start-stretch stepper-container">
-            <mat-stepper [linear]="isLinear" #stepper>
+            <mat-stepper [linear]="" #stepper>
                 <mat-step [stepControl]="personalDetails">
                     <form [formGroup]="personalDetails">
                         <ng-template matStepLabel>Personal Details</ng-template>
@@ -24,7 +24,7 @@
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Surname</label>
                                     <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
                                             matInput formControlName="surname" placeholder="Surname">
                                         <mat-error *ngIf="personalDetails.get('surname')?.hasError('required')">
                                             Surname is <b>required!</b>
@@ -50,7 +50,7 @@
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">School Currently Attending</label>
                                     <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
                                             matInput formControlName="schoolCurrentlyAttending"
                                             placeholder="School Currently Attending">
                                         <mat-error
@@ -63,7 +63,7 @@
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">School You Wish To Attend</label>
                                     <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
                                             matInput formControlName="schoolWishToAttend"
                                             placeholder="School You Wish To Attend">
                                         <mat-error
@@ -85,8 +85,8 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="oprizontal-start-end">
-                                <button class="secondary-bg white-color round" mat-raised-button
+                            <div class="horizontal-start-end margin-top-1em">
+                                <button [disabled]="personalDetails.invalid" class="primary-bg white-color round" mat-raised-button
                                     matStepperNext>Next</button>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Town</label>
                                     <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
                                             matInput formControlName="town" placeholder="Town">
                                         <mat-error *ngIf="addressDetails.get('town')?.hasError('required')">
                                             Town is <b>required!</b>
@@ -114,7 +114,7 @@
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">City</label>
                                     <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
                                             matInput formControlName="city" placeholder="City">
                                         <mat-error *ngIf="addressDetails.get('city')?.hasError('required')">
                                             City is <b>required!</b>
@@ -177,8 +177,8 @@
                                 </div>
                             </div>
 
-                            <div class="oprizontal-start-end">
-                                <button class="secondary-bg white-color round" mat-raised-button
+                            <div class="oprizontal-start-end margin-top-1em">
+                                <button [disabled]="addressDetails.invalid" class="primary-bg white-color round" mat-raised-button
                                     matStepperNext>Next</button>
                             </div>
                         </div>
@@ -204,9 +204,11 @@
                                         [formGroupName]="i">
                                         <label class="bold">Subject {{ i + 1}}</label>
                                         <mat-form-field appearance="outline">
-                                            <input type="text"
-                                                oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')" matInput
+                                            <input type="text" matInput
                                                 formControlName="subject" placeholder="Subject {{ i + 1}}">
+                                                <mat-error *ngIf="applicationForm.get('subject')?.hasError('required')">
+                                                    Subject {{i}} is <b>required!</b>
+                                                </mat-error>
                                         </mat-form-field>
                                     </div>
 
@@ -218,6 +220,9 @@
                                                 <mat-option *ngFor="let standard of standards" [value]="standard">{{
                                                     standard }}</mat-option>
                                             </mat-select>
+                                            <mat-error *ngIf="applicationForm.get('standard')?.hasError('required')">
+                                                Standard {{i}} is <b>required!</b>
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
 
@@ -228,9 +233,15 @@
                                             <input type="text"
                                                 oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')" matInput
                                                 formControlName="mark" placeholder="Mark {{i + 1}}">
+                                                <mat-error *ngIf="applicationForm.get('mark')?.hasError('required')">
+                                                    Mark {{i}} is <b>required!</b>
+                                                </mat-error>
+                                                <mat-error *ngIf="applicationForm.get('mark')?.hasError('max')">
+                                                    Mark cannot be more than <b>100%</b>
+                                                </mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="horizontal-start-center gap-1em margin-top-1-5em">
+                                    <div class="horizontal-start-stretch gap-1em margin-top-1-5em">
                                         <button (click)="addSubject()" class="primary-bg white-color round height-3em"
                                             mat-raised-button><mat-icon>add</mat-icon></button>
                                         <button *ngIf="subjects.length > 1" color="warn" (click)="removeSubject(i)"
@@ -238,14 +249,14 @@
                                             mat-raised-button><mat-icon>remove</mat-icon></button>
                                     </div>
                                 </div>
-                                <div class="horizontal-start-end">
-                                    <button (click)="onSubmit()" class="secondary-bg white-color round"
-                                        mat-raised-button matStepperNext>Submit</button>
+                                <div class="vertical-start-center">
+                                    <button (click)="onSubmit()" class="primary-bg white-color round"
+                                        mat-raised-button >Submit</button>
                                 </div>
                             </div>
                             <div *ngIf="isUpload" class="vertical-start-stretch gap-1em">
                                 <button (click)="onSubmit()" class="primary-bg white-color round" mat-raised-button
-                                    matStepperNext>
+                                    >
                                     <div class="horizontal-start-center gap-1em">
                                         Upload Marks<mat-icon>cloud</mat-icon>
                                     </div>
