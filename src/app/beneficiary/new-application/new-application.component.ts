@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-new-application',
@@ -15,8 +16,8 @@ export class NewApplicationComponent implements OnInit {
   isUpload: any;
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
   standards: string[] = ['SG - Standard Grade', 'HG - Higher Grade', 'AP - Advance Programme'];
-
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar) {
+  user: any = {};
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService) {
     this.personalDetails = this.personalDetailsForm();
     this.addressDetails = this.addressDetailsForm();
     this.applicationForm = this.fb.group({
@@ -28,6 +29,8 @@ export class NewApplicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.addSubject();
+    this.sharedService.get('user');
+    this.prepopulateForm();
   }
 
   toggleState(state: boolean) {
@@ -83,5 +86,10 @@ export class NewApplicationComponent implements OnInit {
 
   onSubmit() {
     console.log(this.applicationForm.value)
+  }
+
+  prepopulateForm() {
+    console.log(this.user);
+    this.personalDetailsForm().patchValue(this.user);
   }
 }

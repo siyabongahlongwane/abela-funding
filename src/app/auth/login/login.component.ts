@@ -13,7 +13,6 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
   loginForm: any = {};
   showPass: boolean = false;
-  user: any = {};
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
@@ -34,14 +33,13 @@ export class LoginComponent implements OnInit {
       // Process the form
       this.authService.login(`auth/login?email=${form.value.email}&password=${form.value.password}`).subscribe(resp => {
         if (resp.user) {
-          this.user = resp.user;
-          this.sharedService.set('user', this.user);
+          this.sharedService.set('user', resp.user);
           this.router.navigate(['abela/admin/dashboard']);
           this.snackbar.open('Logged in', 'Close', {
             duration: 3000
           });
           if (resp.user.role.description.includes('Admin')) this.router.navigate(['abela/admin/dashboard']);
-          else this.router.navigate(['/beneficiary/dashboard']);
+          else this.router.navigate(['abela/beneficiary/dashboard']);
         }
       })
     }

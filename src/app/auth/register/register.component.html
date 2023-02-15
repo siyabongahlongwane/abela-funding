@@ -1,1 +1,99 @@
-<p>register works!</p>
+<div class="horizontal-center-center full-height full-width">
+    <div class="vertical-start-stretch ">
+        <mat-card class="border-radius-2em">
+            <div class="vertical-start-stretch gap-1em">
+                <div class="horizontal-center-center full-width">
+                    <img src="../../../assets/abela-logo.png" alt="Abela Logo" width="80px">
+                </div>
+                <h1 class="primary-color center-text bold">Register</h1>
+                <form [formGroup]="registerForm">
+                    <div class="vertical-start-stretch gap-1em">
+                        <div class="horizontal-space-between-stretch">
+                            <div class="vertical-start-stretch grey-input-container width-48">
+                                <label class="bold">Name</label>
+                                <mat-form-field appearance="outline">
+                                    <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')" matInput
+                                        formControlName="name" placeholder="Name">
+                                    <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
+                                        Name is <b>required!</b>
+                                    </mat-error>
+                                    <mat-icon matPrefix>person</mat-icon>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="vertical-start-stretch grey-input-container width-48">
+                                <label class="bold">Surname</label>
+                                <mat-form-field appearance="outline">
+                                    <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')" matInput
+                                        formControlName="surname" placeholder="Surname">
+                                    <mat-error *ngIf="registerForm.get('surname')?.hasError('required')">
+                                        Surname is <b>required!</b>
+                                    </mat-error>
+                                    <mat-icon matPrefix>person</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="horizontal-space-between-stretch">
+                            <div class="vertical-start-stretch grey-input-container width-48">
+                                <label class="bold">Phone</label>
+                                <mat-form-field appearance="outline">
+                                    <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                                        matInput formControlName="cellOne" placeholder="Phone">
+                                    <mat-error *ngIf="registerForm.get('cellOne')?.hasError('required')">
+                                        Phone is <b>required!</b>
+                                    </mat-error>
+                                    <mat-icon matPrefix>phone</mat-icon>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="vertical-start-stretch grey-input-container width-48">
+                                <label class="bold">Email</label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="email" placeholder="Enter Email" type="email">
+                                    <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+                                        Email is <b>required!</b>
+                                    </mat-error>
+                                    <mat-error *ngIf="registerForm.get('email')?.hasError('pattern')">
+                                        Email is <b>invalid!</b>
+                                    </mat-error>
+                                    <mat-icon matPrefix>email</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="horizontal-space-between-stretch">
+                            <div class="vertical-start-stretch grey-input-container full-width">
+                                <mat-form-field appearance="outline">
+                                    <input matInput name="search" formControlName="password"
+                                        placeholder="Enter Password" [type]="showPass ? 'text' : 'password'">
+                                    <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+                                        Password is <b>required!</b>
+                                    </mat-error>
+                                    <mat-icon matPrefix>lock</mat-icon>
+                                    <mat-icon (click)="showPass = !showPass" matSuffix>{{ showPass ? 'visibility_off' :
+                                        'visibility_on' }}</mat-icon>
+                                </mat-form-field>
+                                <div class="horizontal-end-stretch">
+                                    <span class="secondary-color pointer bold underline">Forgot password?</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="vertical-center-center">
+                            <button (click)="register(registerForm)"
+                                class="primary-bg white-color border-radius-2em width-30"
+                                mat-raised-button>Register</button>
+                        </div>
+                        <div class="horizontal-center-center">
+                            <p>Already a user? Login <span routerLink="../login"
+                                    class="bold primary-color pointer underline">here.</span></p>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </mat-card>
+    </div>
+</div>
