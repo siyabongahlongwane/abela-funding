@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
@@ -11,29 +11,60 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  registerForm: any = {};
+  registerForm!: FormGroup;
+  personalDetails!: FormGroup;
+  addressDetails!: FormGroup;
+  contactDetails!: FormGroup;
   showPass: boolean = false;
   privileges: any = {};
   role: any = {};
   refId: string = '';
+  provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
+
   constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private authService: AuthService) {
     this.registerForm = this.fb.group({
-      name: [null, Validators.required],
-      surname: [null, Validators.required],
-      cellOne: [null],
-      email: [null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
-      password: [null, [Validators.required]],
-      role: this.fb.group({
-        id: [null, Validators.required],
-        description: [null, Validators.required]
+      personalDetails: this.personalDetails,
+      contactDetails: this.contactDetails,
+      addressDetails: this.addressDetails,
+      role: new FormGroup({
+        id: new FormControl(null, Validators.required),
+        description: new FormControl(null, Validators.required)
       }),
       privileges: this.privileges,
-      refId: null
+      refId: null,
+      password: [null, [Validators.required]],
     })
   }
 
   ngOnInit(): void {
     this.setFormData();
+    this.personalDetails = this.personalDetailsForm();
+    this.contactDetails = this.contactDetailsForm();
+    this.addressDetails = this.addressDetailsForm();
+  }
+
+  personalDetailsForm(): FormGroup {
+    return new FormGroup({
+      name: new FormControl(null, Validators.required),
+      surname: new FormControl(null, Validators.required),
+      dateOfBirth: new FormControl(null, Validators.required),
+    })
+  }
+
+  contactDetailsForm(): FormGroup {
+    return new FormGroup({
+      cellOne: new FormControl(null, [Validators.required, Validators.maxLength(13)]),
+      cellTwo: new FormControl(null),
+      email: new FormControl(null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]),
+    })
+  }
+
+  addressDetailsForm(): FormGroup {
+    return new FormGroup({
+      town: new FormControl(null, Validators.required),
+      city: new FormControl(null, Validators.required),
+      province: new FormControl(null, Validators.required)
+    })
   }
 
   register(form: FormGroup) {

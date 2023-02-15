@@ -10,7 +10,7 @@ export class SharedService {
 
   get(key: string): any {
     const data = localStorage.getItem(key);
-    return data && JSON.parse(data);
+    return JSON.parse(data!);
   }
 
   set(key: string, body: any): any {

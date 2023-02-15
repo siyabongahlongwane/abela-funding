@@ -156,9 +156,6 @@
                                     <mat-form-field appearance="outline">
                                         <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
                                             matInput formControlName="cellTwo" placeholder="Cell Number 2">
-                                        <mat-error *ngIf="addressDetails.get('cellTwo')?.hasError('required')">
-                                            Cell Number 2 is <b>required!</b>
-                                        </mat-error>
                                     </mat-form-field>
                                 </div>
 

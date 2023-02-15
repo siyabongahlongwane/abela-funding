@@ -29,7 +29,6 @@ export class NewApplicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.addSubject();
-    this.sharedService.get('user');
     this.prepopulateForm();
   }
 
@@ -67,8 +66,8 @@ export class NewApplicationComponent implements OnInit {
       town: [null, [Validators.required]],
       city: [null, [Validators.required]],
       province: [null, [Validators.required]],
-      cellOne: [null, [Validators.required, Validators.maxLength(10)]],
-      cellTwo: [null, [Validators.required, Validators.maxLength(10)]],
+      cellOne: [null, [Validators.required, Validators.maxLength(13)]],
+      cellTwo: [null],
       email: [null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
     })
   }
@@ -89,7 +88,7 @@ export class NewApplicationComponent implements OnInit {
   }
 
   prepopulateForm() {
-    console.log(this.user);
-    this.personalDetailsForm().patchValue(this.user);
+    this.user = this.sharedService.get('user');
+    this.personalDetails.patchValue(this.user);
   }
 }
