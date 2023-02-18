@@ -60,6 +60,10 @@
                                     </mat-form-field>
                                 </div>
 
+                                <input formControlName="marksDoc" type="file" #upload [required]="this.isUpload"
+                                    (change)="uploadDoc($event)" hidden />
+
+
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">School You Wish To Attend</label>
                                     <mat-form-field appearance="outline">
@@ -85,9 +89,89 @@
                                     </mat-form-field>
                                 </div>
                             </div>
+
+                            <div class="horizontal-space-between-end width-90">
+                                <div class="vertical-start-stretch grey-input-container width-30">
+                                    <label class="bold">Course You'd Like To Study after matric</label>
+                                    <mat-form-field appearance="outline">
+                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
+                                            matInput formControlName="course"
+                                            placeholder="Course You'd Like To Study after matric">
+                                        <mat-error *ngIf="personalDetails.get('course')?.hasError('required')">
+                                            Course You'd Like To Study after matric is
+                                            <b>required!</b>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="vertical-start-stretch grey-input-container width-30">
+                                    <label class="bold">Which College/University</label>
+                                    <mat-form-field appearance="outline">
+                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
+                                            matInput formControlName="fetWishToAttend"
+                                            placeholder="Which College/University">
+                                        <mat-error *ngIf="personalDetails.get('fetWishToAttend')?.hasError('required')">
+                                            Which College/University is <b>required!</b>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="vertical-start-stretch grey-input-container width-30">
+                                    <label class="bold">Currently have any educational grant</label>
+                                    <mat-form-field appearance="outline">
+                                        <mat-select formControlName="hasGrant"
+                                            placeholder="Currently have any educational grant">
+                                            <mat-option (click)="toggleDetailsInput(option)"
+                                                *ngFor="let option of options" [value]="option">{{
+                                                option }}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="personalDetails.get('hasGrant')?.hasError('required')">
+                                            Currently have any educational grant <b>required!</b>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="horizontal-space-between-end width-90">
+                                <div class="vertical-start-stretch grey-input-container width-30">
+                                    <label class="bold">Details About The Grant</label>
+                                    <mat-form-field appearance="outline">
+                                        <textarea formControlName="grantDetails" [disabled]="!hasGrant"
+                                            value="{{!hasGrant== false ? '' : personalDetails.get('grantDetails')?.value}}"
+                                            placeholder="Grant Details" matInput></textarea>
+                                        <mat-error *ngIf="personalDetails.get('grantDetails')?.hasError('required')">
+                                            Grant Details is
+                                            <b>required!</b>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="vertical-start-stretch grey-input-container width-30">
+                                    <label class="bold">What Are You Requesting For</label>
+                                    <mat-form-field appearance="outline">
+                                        <textarea formControlName="requestingFor"
+                                            placeholder="e.g Bursary, Laptop, Uniform" matInput></textarea>
+                                        <mat-error *ngIf="personalDetails.get('requestingFor')?.hasError('required')">
+                                            What Are You Requesting For is
+                                            <b>required!</b>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="vertical-start-stretch grey-input-container width-30">
+                                    <label class="bold">Motivation</label>
+                                    <mat-form-field appearance="outline">
+                                        <textarea formControlName="motivation" placeholder="Motivation"
+                                            matInput></textarea>
+                                        <mat-error *ngIf="personalDetails.get('motivation')?.hasError('required')">
+                                            Motivation is
+                                            <b>required!</b>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
                             <div class="horizontal-start-end margin-top-1em">
-                                <button [disabled]="personalDetails.invalid" class="primary-bg white-color round" mat-raised-button
-                                    matStepperNext>Next</button>
+                                <button [disabled]="personalDetails.invalid" class="primary-bg white-color round"
+                                    mat-raised-button matStepperNext>Next</button>
                             </div>
                         </div>
                     </form>
@@ -175,8 +259,8 @@
                             </div>
 
                             <div class="oprizontal-start-end margin-top-1em">
-                                <button [disabled]="addressDetails.invalid" class="primary-bg white-color round" mat-raised-button
-                                    matStepperNext>Next</button>
+                                <button [disabled]="addressDetails.invalid" class="primary-bg white-color round"
+                                    mat-raised-button matStepperNext>Next</button>
                             </div>
                         </div>
                     </form>
@@ -184,7 +268,7 @@
                 <mat-step [stepControl]="applicationForm">
                     <form [formGroup]="applicationForm">
                         <ng-template matStepLabel>Subjects</ng-template>
-                        <div class="vertical-center-center gap-2em width-90">
+                        <div class="vertical-center-center gap-1em" [ngClass]="{'full-width': subjects.length === 0, ' width-90' : subjects.length > 0}">
                             <div class="horizontal-start-stretch width-90">
                                 <h1 class="bold">Subjects & Marks</h1>
                             </div>
@@ -194,6 +278,21 @@
                                 <mat-radio-button value="insert" (click)="toggleState(false)">Insert Marks
                                     Manually</mat-radio-button>
                             </div>
+                            <div [ngClass]="{'vertical-start-center': subjects.length === 0, 'vertical-start-stretch' : subjects.length > 0}"
+                                class=" width-90">
+                                <div *ngIf="isUpload || isUpload == false"
+                                    class="vertical-start-stretch grey-input-container width-25">
+                                    <label class="bold">Favourite Subject</label>
+                                    <mat-form-field appearance="outline">
+                                        <input type="text" matInput formControlName="favouriteSubject"
+                                            placeholder="Favourite Subject">
+                                        <mat-error
+                                            *ngIf="applicationForm.get('favouriteSubject')?.hasError('required')">
+                                            Favourite Subject is <b>required!</b>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
                             <div *ngIf="isUpload == false" class="vertical-center-stretch width-90 gap-1em">
                                 <div *ngFor="let subject of subjects.controls; let i = index" formArrayName="subjects"
                                     class="horizontal-space-between-center">
@@ -201,11 +300,11 @@
                                         [formGroupName]="i">
                                         <label class="bold">Subject {{ i + 1}}</label>
                                         <mat-form-field appearance="outline">
-                                            <input type="text" matInput
-                                                formControlName="subject" placeholder="Subject {{ i + 1}}">
-                                                <mat-error *ngIf="applicationForm.get('subject')?.hasError('required')">
-                                                    Subject {{i}} is <b>required!</b>
-                                                </mat-error>
+                                            <input type="text" matInput formControlName="subject"
+                                                placeholder="Subject {{ i + 1}}">
+                                            <mat-error *ngIf="applicationForm.get('subject')?.hasError('required')">
+                                                Subject {{i}} is <b>required!</b>
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
 
@@ -230,12 +329,12 @@
                                             <input type="text"
                                                 oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')" matInput
                                                 formControlName="mark" placeholder="Mark {{i + 1}}">
-                                                <mat-error *ngIf="applicationForm.get('mark')?.hasError('required')">
-                                                    Mark {{i}} is <b>required!</b>
-                                                </mat-error>
-                                                <mat-error *ngIf="applicationForm.get('mark')?.hasError('max')">
-                                                    Mark cannot be more than <b>100%</b>
-                                                </mat-error>
+                                            <mat-error *ngIf="applicationForm.get('mark')?.hasError('required')">
+                                                Mark {{i}} is <b>required!</b>
+                                            </mat-error>
+                                            <mat-error *ngIf="applicationForm.get('mark')?.hasError('max')">
+                                                Mark cannot be more than <b>100%</b>
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="horizontal-start-stretch gap-1em margin-top-1-5em">
@@ -246,20 +345,25 @@
                                             mat-raised-button><mat-icon>remove</mat-icon></button>
                                     </div>
                                 </div>
-                                <div class="vertical-start-center">
-                                    <button (click)="onSubmit()" class="primary-bg white-color round"
-                                        mat-raised-button >Submit</button>
-                                </div>
+
                             </div>
-                            <div *ngIf="isUpload" class="vertical-start-stretch gap-1em">
-                                <button (click)="onSubmit()" class="primary-bg white-color round" mat-raised-button
-                                    >
+                            <div *ngIf="isUpload" class="vertical-start-center gap-1em">
+                                <span *ngIf="this.document">You are uploading: <span
+                                        class="bold">{{this.document?.name}}</span></span>
+                                <button (click)="upload.click()" class="secondary-bg white-color round"
+                                    mat-raised-button>
                                     <div class="horizontal-start-center gap-1em">
-                                        Upload Marks<mat-icon>cloud</mat-icon>
+                                        Choose File<mat-icon>cloud</mat-icon>
                                     </div>
                                 </button>
-                                <button (click)="onSubmit()" class="secondary-bg white-color round" mat-raised-button
-                                    matStepperNext>Submit</button>
+                                <mat-error
+                                    *ngIf="submitted && personalDetails.get('marksDoc')?.hasError('required')">Please
+                                    upload
+                                    your marks!</mat-error>
+                            </div>
+                            <div *ngIf="isUpload || isUpload == false" class="vertical-start-center">
+                                <button (click)="onSubmit()" class="primary-bg white-color round"
+                                    mat-raised-button>Submit</button>
                             </div>
                         </div>
                     </form>

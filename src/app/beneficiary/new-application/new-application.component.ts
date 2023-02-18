@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { ApplicationsService } from 'src/app/services/applications.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -16,25 +18,67 @@ export class NewApplicationComponent implements OnInit {
   isUpload: any;
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
   standards: string[] = ['SG - Standard Grade', 'HG - Higher Grade', 'AP - Advance Programme'];
+  options: string[] = ['Yes', 'No'];
   user: any = {};
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService) {
+  hasGrant: boolean = false;
+  submitted: boolean = false;
+  document: any = null;
+
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router
+) {
     this.personalDetails = this.personalDetailsForm();
     this.addressDetails = this.addressDetailsForm();
     this.applicationForm = this.fb.group({
       personalDetails: this.personalDetails,
       addressDetails: this.addressDetails,
       subjects: this.fb.array([]),
+      favouriteSubject: [null, [Validators.required]]
     });
   }
 
   ngOnInit(): void {
-    this.addSubject();
     this.prepopulateForm();
+    this.applicationForm.patchValue({
+      "personalDetails": {
+        "name": "Siyabonga",
+        "surname": "Hlongwane",
+        "dateOfBirth": "2023-02-22T22:00:00.000Z",
+        "schoolCurrentlyAttending": "jhj",
+        "schoolWishToAttend": "hjhjh",
+        "gradeAndYearDoing": "jhjhj",
+        "hasGrant": "Yes",
+        "grantDetails": "uhghg",
+        "course": "hjhj",
+        "motivation": "sdsd",
+        "fetWishToAttend": "hjhjh",
+        "requestingFor": "hghghhgh",
+        "marksDoc": ""
+      },
+      "addressDetails": {
+        "town": "jhjHJHJ",
+        "city": "hjhj",
+        "province": "Mpumalanga",
+        "cellOne": "67676",
+        "cellTwo": "76767",
+        "email": "siyabonga@webgooru.co.za"
+      },
+      "subjects": [],
+      "favouriteSubject": "sdsd"
+    })
   }
 
   toggleState(state: boolean) {
+    console.log(state);
     this.isUpload = state;
-    console.log(this.isUpload);
+    let length = this.subjects.length;
+    if (!this.isUpload) {
+      this.applicationForm.value.personalDetails.marksDoc = null;
+      if (length === 0) {
+        this.addSubject();
+      }
+    } else {
+      this.subjects.clear();
+    }
   }
 
   // Getter method to return the subjects formArray from the applicationsForm
@@ -44,9 +88,9 @@ export class NewApplicationComponent implements OnInit {
 
   newSubject(): FormGroup {
     return this.fb.group({
-      subject: [null, [Validators.required]],
-      standard: [null, [Validators.required]],
-      mark: [null, [Validators.required, Validators.max(100)]]
+      subject: [null, !this.isUpload ? [Validators.required] : []],
+      standard: [null, !this.isUpload ? [Validators.required] : []],
+      mark: [null, !this.isUpload ? [Validators.required, Validators.max(100)] : []],
     })
   }
 
@@ -58,6 +102,13 @@ export class NewApplicationComponent implements OnInit {
       schoolCurrentlyAttending: [null, [Validators.required]],
       schoolWishToAttend: [null, [Validators.required]],
       gradeAndYearDoing: [null, [Validators.required]],
+      hasGrant: [null, Validators.required],
+      grantDetails: [null, [Validators.required]],
+      course: [null, Validators.required],
+      motivation: [null, [Validators.required]],
+      fetWishToAttend: [null, [Validators.required]],
+      requestingFor: [null, [Validators.required]],
+      marksDoc: [this.isUpload ? this.document : null, this.isUpload ? Validators.required : []]
     })
   }
 
@@ -84,11 +135,63 @@ export class NewApplicationComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.applicationForm.value)
+    this.submitted = true;
+    if (this.applicationForm.invalid) {
+      this.sharedService.openSnackbar('Please enter all required details!');
+      return;
+    } else {
+      this.saveApplication(this.applicationForm.value)
+    }
+  }
+
+  uploadDoc($event: any): void {
+    console.log('events')
+    if ($event) {
+      this.readThis($event.target);
+    }
+  }
+
+  readThis(inputValue: any): void {
+    if (inputValue) {
+      let file: File = inputValue.files[0];
+      console.log(file.type);
+
+      if (['jpeg', 'jpg', 'pdf', 'png'].includes(file.type.split('/')[1])) {
+        let myReader: FileReader = new FileReader();
+
+        myReader.onloadend = (e) => {
+          this.applicationForm.value.personalDetails.marksDoc = this.document = {
+            base64: myReader.result,
+            name: file.name
+          };
+        }
+        myReader.readAsDataURL(file);
+      }
+      else {
+        return this.sharedService.openSnackbar('Please upload either an image or a pdf');
+      }
+    }
   }
 
   prepopulateForm() {
     this.user = this.sharedService.get('user');
     this.personalDetails.patchValue(this.user);
+  }
+
+  toggleDetailsInput(answer: string) {
+    this.hasGrant = answer == 'Yes' ? true : false;
+  }
+
+  saveApplication(form: any) {
+    form['owner'] = 'siyabonga@webgooru.co.za';
+    this.applicationService.apply(`applications/new`, form).subscribe(resp => {
+      if (resp.msg) {
+        this.sharedService.openSnackbar(resp.msg);
+        this.router.navigate(['abela/beneficiary/applications/all']);
+        this.router.navigate(['abela/beneficiary/dashboard']);
+      }
+    }, err => {
+      this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
+    })
   }
 }
