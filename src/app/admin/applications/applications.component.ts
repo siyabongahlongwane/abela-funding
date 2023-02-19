@@ -11,12 +11,8 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./applications.component.scss']
 })
 export class ApplicationsComponent implements OnInit {
-  tableData: any[] = [
-    { dateCreated: 1, name: 'Siyabonga', surname: "Testing", email: 'test@gmail.com', phone: '0670146942', requestingFor: '1234567', status: 'Pending' },
-  ];
-
   displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'phone', 'requestingFor', 'status', 'action'];
-  dataSource: any[] = this.tableData;
+  dataSource: any[] = []
 
   filterButtons: any[] = [
     {
