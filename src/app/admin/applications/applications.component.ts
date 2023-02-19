@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-popup.component';
+import { ApplicationsService } from 'src/app/services/applications.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-applications',
@@ -10,62 +12,60 @@ import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-
 })
 export class ApplicationsComponent implements OnInit {
   tableData: any[] = [
-    { ref: 1, name: 'Siyabonga', surname: "Testing", id: '1234567', status: 'Pending', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 2, name: 'Sne', surname: "Testing", id: '1234567', status: 'Pending', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 3, name: 'Nonhlanhla', surname: "Testing", id: '1234567', status: 'Approved', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 4, name: 'Samke', surname: "Testing", id: '1234567', status: 'Rejected', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 5, name: 'Gordon', surname: "Testing", id: '1234567', status: 'In Review', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 6, name: 'Brian', surname: "Testing", id: '1234567', status: 'Approved', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 7, name: 'Steve', surname: "Testing", id: '1234567', status: 'In Review', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 8, name: 'Beauty', surname: "Testing", id: '1234567', status: 'Approved', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 9, name: 'Florence', surname: "Testing", id: '1234567', status: 'Pending', email: 'test@gmail.com', phone: '0670146942' },
-    { ref: 10, name: 'Sphe', surname: "Testing", id: '1234567', status: 'Rejected', email: 'test@gmail.com', phone: '0670146942' },
+    { dateCreated: 1, name: 'Siyabonga', surname: "Testing", email: 'test@gmail.com', phone: '0670146942', requestingFor: '1234567', status: 'Pending' },
   ];
 
-  displayedColumns: string[] = ['ref', 'name', 'surname', 'id', 'email', 'phone', 'status', 'action'];
+  displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'phone', 'requestingFor', 'status', 'action'];
   dataSource: any[] = this.tableData;
 
   filterButtons: any[] = [
     {
       text: 'All',
-      filter: 'all'
+      filter: 'All',
+      slelected: false
     },
     {
       text: 'Pending',
-      filter: 'pending'
+      filter: 'Pending',
+      slelected: false
     },
     {
       text: 'In Review',
-      filter: 'in review'
+      filter: 'In Review',
+      slelected: false
     },
     {
       text: 'Approved',
-      filter: 'approved'
+      filter: 'Approved',
+      slelected: false
     },
     {
       text: 'Rejected',
-      filter: 'rejected'
+      filter: 'Rejected',
+      slelected: false
     }
   ]
 
-  selectedFilter: string = '';
   selectedRow: any = {};
-  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog) { }
+  counts: number[] = [0, 0, 0, 0, 0];
+  selectedButton: number = 0;
+  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.filterTableData(params['applicationType']);
+      let filterParam = params['applicationType'];
+      this.filterTableData(filterParam);
+      this.fetchApplicationsCount('?type=dashboard');
     });
   }
 
   filterTableData(filter: string) {
-    this.selectedFilter = filter;
-    this.dataSource = this.tableData;
-    if (filter !== 'all') {
-      this.dataSource = this.tableData.filter(application => {
-        return application.status.toLowerCase() == filter;
-      });
-    }
+    let selectedBtn = filter;
+    filter == 'All' ? filter = '' : filter = `?status.current=${filter}`;
+    this.filterButtons.forEach((button, i) => {
+      this.filterButtons[i]['selected'] = button.filter == selectedBtn ? true : false;
+    })
+    this.fetchApplicationsData(filter);
   }
 
   openConfirmDialog(application: any) {
@@ -85,4 +85,20 @@ export class ApplicationsComponent implements OnInit {
   deleteApplication(applicationId: string) {
     console.log(`Application with ID: ${applicationId} has been Deleted`);
   };
+
+  fetchApplicationsCount(filter: any) {
+    this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: number[]) => {
+      this.counts = data;
+    }, err => {
+      this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application Counts, Try Again Later.');
+    })
+  }
+
+  fetchApplicationsData(filter: any) {
+    this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
+      this.dataSource = data;
+    }, err => {
+      this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
+    })
+  }
 }

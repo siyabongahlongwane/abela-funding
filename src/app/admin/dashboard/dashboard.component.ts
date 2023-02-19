@@ -26,28 +26,28 @@ export class DashboardComponent implements OnInit {
       icon: 'event_note',
       title: 'All Applications',
       count: 0,
-      route: '/abela/admin/applications/all',
+      route: '/abela/admin/applications/All',
       bg: 'primary-bg'
     },
     {
       icon: 'hourglass_bottom',
       title: 'Pending',
       count: 0,
-      route: '/abela/admin/applications/pending',
+      route: '/abela/admin/applications/Pending',
       bg: 'orange-bg'
     },
     {
       icon: 'thumb_up',
       title: 'Approved',
       count: 0,
-      route: '/abela/admin/applications/approved',
+      route: '/abela/admin/applications/Approved',
       bg: 'green-bg'
     },
     {
       icon: 'thumb_down',
       title: 'Rejected',
       count: 0,
-      route: '/abela/admin/applications/rejected',
+      route: '/abela/admin/applications/Rejected',
       bg: 'red-bg'
     }
   ]

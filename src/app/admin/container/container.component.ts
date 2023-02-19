@@ -17,7 +17,7 @@ export class ContainerComponent implements OnInit {
       isActive: false
     },
     {
-      url: 'abela/admin/applications/all',
+      url: 'abela/admin/applications/All',
       title: 'Applications',
       icon: 'assignment_add',
       isActive: false
@@ -73,6 +73,6 @@ export class ContainerComponent implements OnInit {
 
   setPageName(urlFragments: string[]) {
     this.currentPage = urlFragments[3][0].toUpperCase() + urlFragments[3].slice(1);
-    if (urlFragments[4]) this.currentPage += ` - ${urlFragments[4]}`
+    if (urlFragments[4]) this.currentPage;
   }
 }
