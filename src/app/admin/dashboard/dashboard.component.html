@@ -17,7 +17,7 @@
     <div class="horizontal-space-between-center margin-top-3em">
         <mat-card class="width-46 dashboard-card" *ngFor="let chart of charts">
             <h1 class="bold primary-color margin-bottom-05em center-text">{{ chart.title }}</h1>
-            <canvas baseChart [data]="chart.data" [labels]="chart.labels" [chartType]="chart.type" [colors]="chart.colors" [legend]="chart.type != 'bar' ? true : false" [datasets]="chart.datasets">
+            <canvas baseChart [data]="chart.data" [labels]="chart.labels" [chartType]="chart.type" [colors]="chart.colors" [legend]="chart.type != 'bar' ? true : false" [datasets]="chart.datasets" [options]="chartsOptions">
             </canvas>
         </mat-card>
     </div>

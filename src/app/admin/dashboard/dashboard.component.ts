@@ -53,7 +53,18 @@ export class DashboardComponent implements OnInit {
   ]
 
   charts: Chart[] = []
-
+  chartsOptions = {
+    scales: {
+      yAxes: [{
+        display: true,
+        ticks: {
+          suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+          // OR //
+          beginAtZero: true   // minimum value will be 0.
+        }
+      }]
+    }
+  };
   admin: any = {};
 
   constructor(private sharedService: SharedService, private applicationService: ApplicationsService) { }
@@ -98,13 +109,13 @@ export class DashboardComponent implements OnInit {
 
   fetchApplications() {
     this.applicationService.genericFetchApplications(`applications/fetchApplications?type=dashboard`).subscribe(counts => {
-      console.log(counts);
-      this.counts = counts;
+      let chartCount = counts.map((count: number) => count)
+      this.createCharts(chartCount);
+      this.counts = counts.splice(2, 1);;
       if (counts) {
         counts.forEach((count: number, i: number) => {
           this.cards[i]['count'] = count;
         });
-        this.createCharts(this.counts);
       }
     }, err => {
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
