@@ -24,4 +24,9 @@ export class ApplicationsService {
     const url = `${this.backendUrl}/${endpoint}`;
     return this.http.get(url);
   }
+
+  deleteApplication(endpoint: string) {
+    const url = `${this.backendUrl}/${endpoint}`;
+    return this.http.delete(url);
+  }
 }

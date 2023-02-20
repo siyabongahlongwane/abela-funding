@@ -64,7 +64,7 @@ export class ApplicationsComponent implements OnInit {
     this.fetchApplicationsData(filter);
   }
 
-  openConfirmDialog(application: any) {
+  openConfirmDialog(applicationId: string) {
     const dialogRef = this.dialog.open(ConfirmPopupComponent, {
       disableClose: true,
       hasBackdrop: true,
@@ -74,12 +74,18 @@ export class ApplicationsComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe(res => {
-      if (res) this.deleteApplication(res);
+      if (res) this.deleteApplication(applicationId);
     });
   }
 
   deleteApplication(applicationId: string) {
-    console.log(`Application with ID: ${applicationId} has been Deleted`);
+    this.applicationService.deleteApplication(`applications/deleteApplication/${applicationId}`).subscribe((data: any) => {
+      this.sharedService.openSnackbar(data.msg);
+      this.fetchApplicationsData('');
+      this.fetchApplicationsCount('?type=dashboard');
+    }, err => {
+      this.sharedService.openSnackbar(err.error.msg || 'Error Deleting Application, Try Again Later.');
+    })
   };
 
   fetchApplicationsCount(filter: any) {
