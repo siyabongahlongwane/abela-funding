@@ -25,8 +25,18 @@ export class ApplicationsService {
     return this.http.get(url);
   }
 
+  fetchMarks(endpoint: string): Observable<any> {
+    const url = `${this.backendUrl}/${endpoint}`;
+    return this.http.get(url);
+  }
+
   deleteApplication(endpoint: string) {
     const url = `${this.backendUrl}/${endpoint}`;
     return this.http.delete(url);
+  }
+
+  updateApplication(endpoint: string, body: any) {
+    const url = `${this.backendUrl}/${endpoint}`;
+    return this.http.put(url, body);
   }
 }

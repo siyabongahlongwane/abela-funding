@@ -92,13 +92,13 @@
 
                             <div class="horizontal-space-between-end width-90">
                                 <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">Course You'd Like To Study after matric</label>
+                                    <label class="bold">Course You'd Like To Study After Matric</label>
                                     <mat-form-field appearance="outline">
                                         <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
                                             matInput formControlName="course"
-                                            placeholder="Course You'd Like To Study after matric">
+                                            placeholder="Course You'd Like To Study After Matric">
                                         <mat-error *ngIf="personalDetails.get('course')?.hasError('required')">
-                                            Course You'd Like To Study after matric is
+                                            Course You'd Like To Study After Matric is
                                             <b>required!</b>
                                         </mat-error>
                                     </mat-form-field>

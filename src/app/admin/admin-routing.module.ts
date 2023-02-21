@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ApplicationsComponent } from './applications/applications.component';
 import { ContainerComponent } from './container/container.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ViewApplicationComponent } from './view-application/view-application.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,9 @@ const routes: Routes = [
       },
       {
         path: 'dashboard', component: DashboardComponent
+      },
+      {
+        path: 'applications/view/:applicationId', component: ViewApplicationComponent
       },
       {
         path: 'applications/:applicationType', component: ApplicationsComponent

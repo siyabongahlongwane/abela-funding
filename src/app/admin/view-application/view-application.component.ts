@@ -1,31 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationsService } from 'src/app/services/applications.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
-  selector: 'app-new-application',
-  templateUrl: './new-application.component.html',
-  styleUrls: ['./new-application.component.scss']
+  selector: 'app-view-application',
+  templateUrl: './view-application.component.html',
+  styleUrls: ['./view-application.component.scss']
 })
-export class NewApplicationComponent implements OnInit {
+export class ViewApplicationComponent implements OnInit {
+  application: any = {};
   applicationForm!: FormGroup;
   personalDetails!: FormGroup;
   addressDetails!: FormGroup;
+  updateStatus!: FormGroup;
   isLinear = false;
   isUpload: any;
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
   standards: string[] = ['SG - Standard Grade', 'HG - Higher Grade', 'AP - Advance Programme'];
+  statuses: string[] = ['Pending', 'In Review', 'Approved', 'Rejected'];
   options: string[] = ['Yes', 'No'];
   user: any = {};
   hasGrant: boolean = false;
   submitted: boolean = false;
   document: any = null;
+  marksDoc: any;
+  showDoc: boolean = false;
 
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router
-) {
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, private activeRoute: ActivatedRoute, public sanitizer: DomSanitizer
+  ) {
     this.personalDetails = this.personalDetailsForm();
     this.addressDetails = this.addressDetailsForm();
     this.applicationForm = this.fb.group({
@@ -34,36 +40,19 @@ export class NewApplicationComponent implements OnInit {
       subjects: this.fb.array([]),
       favouriteSubject: [null, [Validators.required]]
     });
+    this.statusUpdateForm();
   }
 
   ngOnInit(): void {
-    this.prepopulateForm();
-    this.applicationForm.patchValue({
-      "personalDetails": {
-        "name": "Siyabonga",
-        "surname": "Hlongwane",
-        "dateOfBirth": "2023-02-22T22:00:00.000Z",
-        "schoolCurrentlyAttending": "jhj",
-        "schoolWishToAttend": "hjhjh",
-        "gradeAndYearDoing": "jhjhj",
-        "hasGrant": "Yes",
-        "grantDetails": "uhghg",
-        "course": "hjhj",
-        "motivation": "sdsd",
-        "fetWishToAttend": "hjhjh",
-        "requestingFor": "hghghhgh",
-        "marksDoc": ""
-      },
-      "addressDetails": {
-        "town": "jhjHJHJ",
-        "city": "hjhj",
-        "province": "Mpumalanga",
-        "cellOne": "67676",
-        "cellTwo": "76767",
-        "email": "siyabonga@webgooru.co.za"
-      },
-      "subjects": [],
-      "favouriteSubject": "sdsd"
+    this.user = this.sharedService.get('user');
+    this.activeRoute.params.subscribe(params => {
+      if (params['applicationId']) {
+        this.fetchApplication(`?_id=${params['applicationId']}`);
+        this.fetchStudentMarks(`?_id=${params['applicationId']}`);
+      }
+      else {
+        // Return to previous page
+      }
     })
   }
 
@@ -123,6 +112,22 @@ export class NewApplicationComponent implements OnInit {
     })
   }
 
+  statusUpdateForm() {
+    this.updateStatus = this.fb.group({
+      comment: [null, []],
+      current: [null, [Validators.required]]
+    })
+  }
+
+  statusUpdate(form: any) {
+    this.applicationService.updateApplication(`applications/update/${this.application['_id']}`, form.value).subscribe((data: any) => {
+      this.sharedService.openSnackbar(data?.msg);
+      this.fetchApplication(`?_id=${this.application['_id']}`);
+    }, err => {
+      this.sharedService.openSnackbar(err.error.msg || 'Error Updating Application, Try Again Later.');
+    })
+  }
+
   // Dynamically Add Subject
   addSubject() {
     if (this.subjects.length === 9) this.snackbar.open('Max 9 subjects allowed!', 'OK');
@@ -173,9 +178,10 @@ export class NewApplicationComponent implements OnInit {
     }
   }
 
-  prepopulateForm() {
-    this.user = this.sharedService.get('user');
-    this.personalDetails.patchValue(this.user);
+  prepopulateForm(application: any) {
+    this.applicationForm.patchValue(application);
+    this.updateStatus.patchValue(application?.status);
+    console.log(this.updateStatus.value);
   }
 
   toggleDetailsInput(answer: string) {
@@ -183,18 +189,41 @@ export class NewApplicationComponent implements OnInit {
   }
 
   saveApplication(form: any) {
-    form['owner'] = 'siyabonga@webgooru.co.za';
-    form['dateCreated'] = new Date();
-    form['dateModified'] = null;
-
+    form['owner'] = this.applicationForm?.value?.personalDetails?.email;
     this.applicationService.apply(`applications/new`, form).subscribe(resp => {
       if (resp.msg) {
         this.sharedService.openSnackbar(resp.msg);
         this.router.navigate(['abela/beneficiary/applications/all']);
-        this.router.navigate(['abela/beneficiary/dashboard']);
+        // this.router.navigate(['abela/beneficiary/dashboard']);
       }
     }, err => {
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
+    })
+  }
+
+  fetchApplication(applicationId: string) {
+    this.applicationService.genericFetchApplications(`applications/fetchApplications${applicationId}`).subscribe((data: any) => {
+      this.application = data[0];
+      console.log(this.application);
+      this.application.personalDetails.dateOfBirth = new Date(this.application.personalDetails.dateOfBirth)
+      this.prepopulateForm(this.application);
+
+    }, err => {
+      this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
+    })
+  }
+
+  fetchStudentMarks(applicationId: string) {
+    this.applicationService.fetchMarks(`applications/fetchMarksDocument${applicationId}`).subscribe((data: any) => {
+      if (data?.base64) {
+        this.marksDoc = data;
+        this.showDoc = true;
+      }
+      this.application.personalDetails.dateOfBirth = new Date(this.application.personalDetails.dateOfBirth)
+      this.prepopulateForm(this.application);
+
+    }, err => {
+      this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Document, Try Again Later.');
     })
   }
 }

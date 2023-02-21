@@ -19,8 +19,11 @@
         </div>
     </div>
 
-    <div class="horizontal-start-stretch full-width white-bg table-container">
-        <div class="horizontal-start full-width">
+    <div class="horizontal-start-stretch full-width white-bg table-container full-width">
+        <div *ngIf="dataSource.length == 0" class="horizontal-center-center full-width">
+            <h1 class="bold padding-3em" >No data under this filter</h1>
+        </div>
+        <div *ngIf="dataSource.length > 0" class="horizontal-start full-width">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width">
 
                 <!--- Note that these columns can be defined in any order.
@@ -74,7 +77,8 @@
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let application">
                         <div class="horizontal-start-center gap-5px">
-                            <mat-icon class="light-blue-color pointer" matTooltip="View">visibility_on</mat-icon>
+                            <mat-icon (click)="viewApplication(application['_id'])" class="light-blue-color pointer"
+                                matTooltip="View">visibility_on</mat-icon>
                             <mat-icon class="green-color pointer" matTooltip="Edit">edit</mat-icon>
                             <mat-icon (click)="openConfirmDialog(application['_id'])" class="red-color pointer"
                                 matTooltip="Delete">delete</mat-icon>

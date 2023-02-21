@@ -8,6 +8,8 @@ import { MaterialModule } from '../modules/material/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ApplicationsComponent } from './applications/applications.component';
 import { ChartsModule } from 'ng2-charts';
+import { ViewApplicationComponent } from './view-application/view-application.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,13 +17,15 @@ import { ChartsModule } from 'ng2-charts';
     DashboardComponent,
     ContainerComponent,
     NavbarComponent,
-    ApplicationsComponent
+    ApplicationsComponent,
+    ViewApplicationComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     MaterialModule,
-    ChartsModule
+    ChartsModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

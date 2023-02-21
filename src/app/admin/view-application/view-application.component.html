@@ -1,0 +1,131 @@
+<div class="horizontal-center-stretch white-bg padding-2em-zero">
+    <div class="vertical-start-center width-90 gap-2em">
+        <div class="horizontal-start-stretch gap-1em full-width">
+            <div class=" rounded">
+                <img src="../../../assets/icon.png" width="100px">
+            </div>
+            <div class="vertical-start-stretch">
+                <h3 class="secondary-color bold">{{ application?.personalDetails?.name }} {{
+                    application?.personalDetails?.surname }}</h3>
+                <div class="vertical-start-stretch">
+                    <h4 class="bold">Application Date: <span class="fw-500">{{ application?.dateCreated | date:
+                            'mediumDate' }}</span>
+                    </h4>
+                    <h4 class="bold">Status: <span class="fw-500"
+                            [ngClass]="application?.status?.current ==  'Approved' ? 'green-color' : application?.status?.current ==  'Rejected' ? 'red-color' : application?.status?.current == 'In Review' ? 'secondary-color' : 'orange-color'">{{
+                            application?.status?.current }}</span> </h4>
+                    <h4 class="bold">Comment: <span class="fw-500">{{ application?.status?.comment || 'N/A' }}</span>
+                    </h4>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="horizontal-space-between-stretch gap-1em full-width">
+            <div class="vertical-start-stretch width-48 gap-1em">
+                <h3 class="secondary-color bold border-bottom-secondary">Personal Details</h3>
+                <div class="vertical-start-stretch">
+                    <h4 class="bold">Date of Birth: <span class="fw-500">{{ application?.personalDetails?.dateOfBirth |
+                            date:
+                            'mediumDate' }}</span></h4>
+                    <h4 class="bold">School Currently Attending: <span class="fw-500">{{
+                            application?.personalDetails?.schoolCurrentlyAttending }}</span></h4>
+                    <h4 class="bold">School Wish To Attend: <span class="fw-500">{{
+                            application?.personalDetails?.schoolWishToAttend
+                            }}</span></h4>
+                    <h4 class="bold">Grade and Year: <span class="fw-500">{{
+                            application?.personalDetails?.gradeAndYearDoing }}</span>
+                    </h4>
+                    <h4 class="bold">Has Study Grant: <span class="fw-500">{{ application?.personalDetails?.hasGrant
+                            }}</span></h4>
+
+                    <h4 class="bold">Additional Grant Comments: <span class="fw-500">{{
+                            application?.personalDetails?.grantDetails ||
+                            '-' }}</span></h4>
+                    <h4 class="bold">Course Wishing To Study After Matric: <span class="fw-500">{{
+                            application?.personalDetails?.course }}</span>
+                    </h4>
+                    <h4 class="bold">College or University: <span class="fw-500">{{
+                            application?.personalDetails?.fetWishToAttend
+                            }}</span></h4>
+                    <h4 class="bold">Requesting: <span class="fw-500">{{ application?.personalDetails?.requestingFor
+                            }}</span></h4>
+                    <h4 class="bold">Motivation: <span class="fw-500">{{ application?.personalDetails?.motivation
+                            }}</span></h4>
+
+
+                </div>
+
+            </div>
+            <div class="vertical-start-stretch width-48 gap-1em">
+                <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
+                <div class="vertical-start-stretch">
+                    <h4 class="bold">Cell One: <span class="fw-500">{{ application?.addressDetails?.cellOne}}</span>
+                    </h4>
+                    <h4 class="bold">Cell Two: <span class="fw-500">{{ application?.addressDetails?.cellTwo ||
+                            '-'}}</span></h4>
+                    <h4 class="bold">Email: <span class="fw-500">{{ application?.addressDetails?.email}}</span></h4>
+                    <h4 class="bold">Town: <span class="fw-500">{{ application?.addressDetails?.town}}</span></h4>
+                    <h4 class="bold">City: <span class="fw-500">{{ application?.addressDetails?.city}}</span> </h4>
+                    <h4 class="bold">Province: <span class="fw-500">{{ application?.addressDetails?.province}}</span>
+                    </h4>
+                </div>
+
+            </div>
+        </div>
+        <div class="vertical-start-stretch full-width gap-1em">
+            <h3 class="secondary-color bold border-bottom-secondary">Subject Details</h3>
+            <div *ngIf="showDoc" class="vertical-start-stretch">
+                <iframe [src]="this.sanitizer.bypassSecurityTrustResourceUrl(marksDoc?.base64)" frameborder="0"
+                    height="400px" width="100%"></iframe>
+            </div>
+
+            <div *ngIf="!showDoc" class="vertical-start-stretch max-width-930">
+                <div *ngFor="let subject of application?.subjects; let i = index;"
+                    class="horizontal-space-between-stretch gap-1em">
+                    <h4 class="bold width-24">Subject {{ i + 1 }}: <span class="fw-500">{{ subject?.subject}}</span>
+                    </h4>
+                    <h4 class="bold width-24">Standard {{ i + 1 }}: <span class="fw-500">{{ subject?.standard}}</span>
+                    </h4>
+                    <h4 class="bold width-24">Percentage {{ i + 1 }}: <span class="fw-500">{{ subject?.mark}}</span>
+                    </h4>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div *ngIf="user?.role?.description?.includes('Admin')" class="vertical-start-stretch full-width gap-1em">
+            <h3 class="secondary-color bold border-bottom-secondary">Application Status Update</h3>
+            <div class="horizontal-space-between-stretch full-width">
+                <form class="full-width" [formGroup]="updateStatus">
+                    <div class="vertical-start-stretch full-width gap-1em">
+                        <div class="vertical-start-stretch grey-input-container width-30">
+                            <label class="bold">Update Status</label>
+                            <mat-form-field appearance="outline" [floatLabel]="'never'">
+                                <mat-select formControlName="current" placeholder="Update Status">
+                                    <mat-option *ngFor="let status of statuses" [value]="status">{{
+                                        status }}</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="updateStatus.get('current')?.hasError('required')">
+                                    Status is <b>required!</b>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="vertical-start-stretch grey-input-container width-30">
+                            <label class="bold">Comment</label>
+                            <mat-form-field appearance="outline">
+                                <textarea formControlName="comment" placeholder="Comment" matInput></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="width-30 horizontal-start-stretch">
+                <button [disabled]="updateStatus.invalid" (click)="statusUpdate(updateStatus)"
+                    class="primary-bg white-color round" mat-raised-button>Update Status</button>
+            </div>
+        </div>
+    </div>
+</div>
