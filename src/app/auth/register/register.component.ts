@@ -22,10 +22,13 @@ export class RegisterComponent implements OnInit {
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
 
   constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private authService: AuthService) {
+    this.personalDetailsForm();
+    this.contactDetailsForm();
+    this.addressDetailsForm();
     this.registerForm = this.fb.group({
-      personalDetails: this.personalDetails,
-      contactDetails: this.contactDetails,
-      addressDetails: this.addressDetails,
+      personalDetails: this.personalDetailsForm(),
+      contactDetails: this.contactDetailsForm(),
+      addressDetails: this.addressDetailsForm(),
       role: new FormGroup({
         id: new FormControl(null, Validators.required),
         description: new FormControl(null, Validators.required)
@@ -33,38 +36,62 @@ export class RegisterComponent implements OnInit {
       privileges: this.privileges,
       refId: null,
       password: [null, [Validators.required]],
-    })
+    });
   }
 
   ngOnInit(): void {
     this.setFormData();
-    this.personalDetails = this.personalDetailsForm();
-    this.contactDetails = this.contactDetailsForm();
-    this.addressDetails = this.addressDetailsForm();
+  //   this.registerForm.patchValue({
+  //     "personalDetails": {
+  //         "name": "Siyabonga",
+  //         "surname": "Hlongwane",
+  //         "dateOfBirth": "1998-01-07T22:00:00.000Z"
+  //     },
+  //     "contactDetails": {
+  //         "cellOne": "0670146942",
+  //         "cellTwo": "",
+  //         "email": "hlongwanesiyabonga6@gmail.com"
+  //     },
+  //     "addressDetails": {
+  //         "town": "Roodepoort",
+  //         "city": "Johannesburg",
+  //         "province": "Gauteng"
+  //     },
+  //     "role": {
+  //         "id": "ST",
+  //         "description": "Student"
+  //     },
+  //     "privileges": {},
+  //     "refId": "",
+  //     "password": "123456"
+  // })
   }
 
   personalDetailsForm(): FormGroup {
-    return new FormGroup({
+    this.personalDetails = new FormGroup({
       name: new FormControl(null, Validators.required),
       surname: new FormControl(null, Validators.required),
       dateOfBirth: new FormControl(null, Validators.required),
-    })
+    });
+    return this.personalDetails;
   }
 
   contactDetailsForm(): FormGroup {
-    return new FormGroup({
+    this.contactDetails = new FormGroup({
       cellOne: new FormControl(null, [Validators.required, Validators.maxLength(13)]),
       cellTwo: new FormControl(null),
       email: new FormControl(null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]),
-    })
+    });
+    return this.contactDetails;
   }
 
   addressDetailsForm(): FormGroup {
-    return new FormGroup({
+    this.addressDetails = new FormGroup({
       town: new FormControl(null, Validators.required),
       city: new FormControl(null, Validators.required),
       province: new FormControl(null, Validators.required)
-    })
+    });
+    return this.addressDetails;
   }
 
   register(form: FormGroup) {
@@ -90,7 +117,7 @@ export class RegisterComponent implements OnInit {
   }
 
   createRefId() {
-    let refId = this.registerForm.value.name + '-' + (Math.random() + 1).toString(36).substring(2);
+    let refId = this.registerForm.value.personalDetails.name + '-' + (Math.random() + 1).toString(36).substring(2);
     this.registerForm.patchValue({ refId });
   }
 }

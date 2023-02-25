@@ -32,12 +32,10 @@ export class LoginComponent implements OnInit {
     } else {
       // Process the form
       this.authService.login(`auth/login?email=${form.value.email}&password=${form.value.password}`).subscribe(resp => {
+        console.log(resp);
         if (resp.user) {
           this.sharedService.set('user', resp.user);
-          this.router.navigate(['abela/admin/dashboard']);
-          this.snackbar.open('Logged in', 'Close', {
-            duration: 3000
-          });
+          this.sharedService.openSnackbar(resp?.msg);
           if (resp.user.role.description.includes('Admin')) this.router.navigate(['abela/admin/dashboard']);
           else this.router.navigate(['abela/beneficiary/applications/my-applications']);
         }

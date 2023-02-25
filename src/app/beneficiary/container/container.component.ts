@@ -11,13 +11,13 @@ export class ContainerComponent implements OnInit {
   active: boolean = false;
   sideNavItems: any[] = [
     {
-      url: 'abela/beneficiary/applications/all',
+      url: 'abela/beneficiary/applications/my-applications',
       title: 'Applications',
       icon: 'assignment_add',
       isActive: false
     },
     {
-      url: 'profile',
+      url: 'abela/beneficiary/profile',
       title: 'My Profile',
       icon: 'account_circle',
       isActive: false

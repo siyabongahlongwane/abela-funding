@@ -4,30 +4,39 @@ import { ViewApplicationComponent } from '../admin/view-application/view-applica
 import { ContainerComponent } from './container/container.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { NewApplicationComponent } from './new-application/new-application.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'abela/beneficiary/applications/my-applications', pathMatch: 'full'
-  },
-  {
-    path: 'abela/beneficiary/applications', component: ContainerComponent, children: [
+    path: 'abela/beneficiary', component: ContainerComponent, children: [
       {
-        path: '', redirectTo: 'my-applications', pathMatch: 'full'
+        path: '', redirectTo: 'applications/my-applications', pathMatch: 'full'
       },
       {
-        path: 'my-applications', component: MyApplicationsComponent
+        path: 'profile', component: ProfileComponent
       },
       {
-        path: 'apply', component: NewApplicationComponent
+        path: 'applications', children: [
+          {
+            path: '', redirectTo: 'my-applications', pathMatch: 'full'
+          },
+          {
+            path: 'my-applications', component: MyApplicationsComponent
+          },
+          {
+            path: 'apply', component: NewApplicationComponent
+          },
+          {
+            path: 'my-applications', component: MyApplicationsComponent
+          },
+          {
+            path: 'view/:applicationId', component: ViewApplicationComponent
+          }
+        ]
       },
-      {
-        path: 'my-applications', component: MyApplicationsComponent
-      },
-      {
-        path: 'view/:applicationId', component: ViewApplicationComponent
-      }
     ]
-  },
+  }
+
 ];
 
 @NgModule({

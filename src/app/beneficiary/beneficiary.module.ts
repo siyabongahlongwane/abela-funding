@@ -10,6 +10,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
     ContainerComponent,
     DashboardComponent,
     NavbarComponent,
-    MyApplicationsComponent
+    MyApplicationsComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

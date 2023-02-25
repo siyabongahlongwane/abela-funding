@@ -51,7 +51,7 @@ export class MyApplicationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.sharedService.get('user');
-    this.fetchApplicationsData(`?owner=${this.user?.email}`);
+    this.fetchApplicationsData(`?addressDetails.email=${this.user?.contactDetails?.email}`);
   }
 
   // filterTableData(filter: string) {
