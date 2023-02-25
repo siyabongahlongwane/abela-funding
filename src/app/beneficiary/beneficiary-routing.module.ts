@@ -1,24 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ViewApplicationComponent } from '../admin/view-application/view-application.component';
 import { ContainerComponent } from './container/container.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { NewApplicationComponent } from './new-application/new-application.component';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'abela/beneficiary/dashboard', pathMatch: 'full'
-  }
-  ,
+    path: '', redirectTo: 'abela/beneficiary/applications/my-applications', pathMatch: 'full'
+  },
   {
-    path: 'abela/beneficiary', component: ContainerComponent, children: [
+    path: 'abela/beneficiary/applications', component: ContainerComponent, children: [
       {
-        path: '', redirectTo: 'dashboard', pathMatch: 'full'
+        path: '', redirectTo: 'my-applications', pathMatch: 'full'
       },
       {
-        path: 'dashboard', component: DashboardComponent
+        path: 'my-applications', component: MyApplicationsComponent
       },
       {
-        path: 'applications/:applicationType', component: NewApplicationComponent
+        path: 'apply', component: NewApplicationComponent
+      },
+      {
+        path: 'my-applications', component: MyApplicationsComponent
+      },
+      {
+        path: 'view/:applicationId', component: ViewApplicationComponent
       }
     ]
   },

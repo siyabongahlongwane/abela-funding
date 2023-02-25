@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -10,7 +11,7 @@ export class NavbarComponent implements OnInit {
   @Input() drawer: any;
   @Input() user: any;
   @Input() currentPage: any;
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, public location: Location) { }
 
   ngOnInit(): void {
   }

@@ -6,11 +6,11 @@ import { ApplicationsService } from 'src/app/services/applications.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
-  selector: 'app-applications',
-  templateUrl: './applications.component.html',
-  styleUrls: ['./applications.component.scss']
+  selector: 'app-my-applications',
+  templateUrl: './my-applications.component.html',
+  styleUrls: ['./my-applications.component.scss']
 })
-export class ApplicationsComponent implements OnInit {
+export class MyApplicationsComponent implements OnInit {
   displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'phone', 'requestingFor', 'status', 'action'];
   dataSource: any[] = []
 
@@ -46,26 +46,24 @@ export class ApplicationsComponent implements OnInit {
   counts: number[] = [0, 0, 0, 0, 0];
   selectedButton: number = 0;
   filter: string = '';
-  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router) { }
+  user: any = {};
+  constructor(private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.filter = params['applicationType'];
-      this.filterTableData(this.filter);
-      this.fetchApplicationsCount('?type=dashboard');
-    });
+    this.user = this.sharedService.get('user');
+    this.fetchApplicationsData(`?owner=${this.user?.email}`);
   }
 
-  filterTableData(filter: string) {
-    this.filter = filter;
-    let selectedBtn = filter;
-    this.filter == 'All' ? this.filter = '' : this.filter = `?status.current=${this.filter}`;
-    this.filterButtons.forEach((button, i) => {
-      this.filterButtons[i]['selected'] = button.filter == selectedBtn ? true : false;
-    })
-    console.log(this.filter, 'ft')
-    this.fetchApplicationsData(this.filter);
-  }
+  // filterTableData(filter: string) {
+  //   this.filter = filter;
+  //   let selectedBtn = filter;
+  //   this.filter == 'All' ? this.filter = '' : this.filter = `?status.current=${this.filter}`;
+  //   this.filterButtons.forEach((button, i) => {
+  //     this.filterButtons[i]['selected'] = button.filter == selectedBtn ? true : false;
+  //   })
+  //   console.log(this.filter, 'ft')
+  //   this.fetchApplicationsData(this.filter);
+  // }
 
   openConfirmDialog(applicationId: string) {
     const dialogRef = this.dialog.open(ConfirmPopupComponent, {
@@ -100,7 +98,6 @@ export class ApplicationsComponent implements OnInit {
   }
 
   fetchApplicationsData(filter: any) {
-    console.log(filter);
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
       this.dataSource = data;
     }, err => {
@@ -109,6 +106,7 @@ export class ApplicationsComponent implements OnInit {
   }
 
   viewApplication(applicationId: string) {
-    this.router.navigate([`abela/admin/applications/view/${applicationId}`]);
+    this.router.navigate([`abela/beneficiary/applications/view/${applicationId}`]);
   }
+
 }

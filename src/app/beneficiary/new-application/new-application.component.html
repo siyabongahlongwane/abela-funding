@@ -1,5 +1,5 @@
 <div class="horizontal-center-stretch full-width full-height">
-    <mat-card class="full-width full-height">
+    <mat-card class="full-width">
         <div class="vertical-start-stretch stepper-container">
             <mat-stepper [linear]="" #stepper>
                 <mat-step [stepControl]="personalDetails">
@@ -35,11 +35,11 @@
                                 <div class="vertical-start-stretch grey-input-container width-30 date-picker">
                                     <label class="bold">Date of Birth</label>
                                     <mat-form-field appearance="outline">
-                                        <input (click)="picker.open()" matInput [matDatepicker]="picker"
+                                        <input [max]="max" (click)="picker.open()" matInput [matDatepicker]="picker"
                                             formControlName="dateOfBirth" placeholder="Date of Birth">
                                         <mat-icon (click)="picker.open()" matSuffix>event_note</mat-icon>
                                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker  #picker></mat-datepicker>
                                         <mat-error *ngIf="personalDetails.get('dateOfBirth')?.hasError('required')">
                                             Date of Birth is <b>required!</b>
                                         </mat-error>

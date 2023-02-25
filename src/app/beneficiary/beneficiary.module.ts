@@ -9,6 +9,7 @@ import { MaterialModule } from '../modules/material/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MyApplicationsComponent } from './my-applications/my-applications.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NewApplicationComponent,
     ContainerComponent,
     DashboardComponent,
-    NavbarComponent
+    NavbarComponent,
+    MyApplicationsComponent
   ],
   imports: [
     CommonModule,

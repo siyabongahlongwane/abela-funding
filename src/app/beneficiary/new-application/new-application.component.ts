@@ -23,7 +23,7 @@ export class NewApplicationComponent implements OnInit {
   hasGrant: boolean = false;
   submitted: boolean = false;
   document: any = null;
-
+  max: Date = new Date();
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router
 ) {
     this.personalDetails = this.personalDetailsForm();
@@ -38,33 +38,33 @@ export class NewApplicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.prepopulateForm();
-    this.applicationForm.patchValue({
-      "personalDetails": {
-        "name": "Siyabonga",
-        "surname": "Hlongwane",
-        "dateOfBirth": "2023-02-22T22:00:00.000Z",
-        "schoolCurrentlyAttending": "jhj",
-        "schoolWishToAttend": "hjhjh",
-        "gradeAndYearDoing": "jhjhj",
-        "hasGrant": "Yes",
-        "grantDetails": "uhghg",
-        "course": "hjhj",
-        "motivation": "sdsd",
-        "fetWishToAttend": "hjhjh",
-        "requestingFor": "hghghhgh",
-        "marksDoc": ""
-      },
-      "addressDetails": {
-        "town": "jhjHJHJ",
-        "city": "hjhj",
-        "province": "Mpumalanga",
-        "cellOne": "67676",
-        "cellTwo": "76767",
-        "email": "siyabonga@webgooru.co.za"
-      },
-      "subjects": [],
-      "favouriteSubject": "sdsd"
-    })
+    // this.applicationForm.patchValue({
+    //   "personalDetails": {
+    //     "name": "Siyabonga",
+    //     "surname": "Hlongwane",
+    //     "dateOfBirth": "2023-02-22T22:00:00.000Z",
+    //     "schoolCurrentlyAttending": "jhj",
+    //     "schoolWishToAttend": "hjhjh",
+    //     "gradeAndYearDoing": "jhjhj",
+    //     "hasGrant": "Yes",
+    //     "grantDetails": "uhghg",
+    //     "course": "hjhj",
+    //     "motivation": "sdsd",
+    //     "fetWishToAttend": "hjhjh",
+    //     "requestingFor": "hghghhgh",
+    //     "marksDoc": ""
+    //   },
+    //   "addressDetails": {
+    //     "town": "jhjHJHJ",
+    //     "city": "hjhj",
+    //     "province": "Mpumalanga",
+    //     "cellOne": "67676",
+    //     "cellTwo": "76767",
+    //     "email": "siyabonga@webgooru.co.za"
+    //   },
+    //   "subjects": [],
+    //   "favouriteSubject": "sdsd"
+    // })
   }
 
   toggleState(state: boolean) {
@@ -190,8 +190,7 @@ export class NewApplicationComponent implements OnInit {
     this.applicationService.apply(`applications/new`, form).subscribe(resp => {
       if (resp.msg) {
         this.sharedService.openSnackbar(resp.msg);
-        this.router.navigate(['abela/beneficiary/applications/all']);
-        this.router.navigate(['abela/beneficiary/dashboard']);
+        this.router.navigate(['abela/beneficiary/applications/my-applications']);
       }
     }, err => {
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');

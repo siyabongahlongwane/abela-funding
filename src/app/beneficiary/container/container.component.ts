@@ -11,15 +11,15 @@ export class ContainerComponent implements OnInit {
   active: boolean = false;
   sideNavItems: any[] = [
     {
-      url: 'abela/beneficiary/dashboard',
-      title: 'Dashboard',
-      icon: 'dashboard',
-      isActive: false
-    },
-    {
       url: 'abela/beneficiary/applications/all',
       title: 'Applications',
       icon: 'assignment_add',
+      isActive: false
+    },
+    {
+      url: 'profile',
+      title: 'My Profile',
+      icon: 'account_circle',
       isActive: false
     },
     {
@@ -51,7 +51,7 @@ export class ContainerComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (this.router.url.includes('applications')) {
-          this.selectedItem = 1;
+          this.selectedItem = 0;
         }
         else {
           this.selectedItem = this.sideNavItems.findIndex((item: any) => event.url.includes(item.url));
@@ -73,6 +73,6 @@ export class ContainerComponent implements OnInit {
 
   setPageName(urlFragments: string[]) {
     this.currentPage = urlFragments[3][0].toUpperCase() + urlFragments[3].slice(1);
-    if (urlFragments[4]) this.currentPage += ` - ${urlFragments[4]}`
+    // if (urlFragments[4]) this.currentPage += ` - ${urlFragments[4]}`
   }
 }

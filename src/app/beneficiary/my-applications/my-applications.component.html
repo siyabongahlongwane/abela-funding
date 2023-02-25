@@ -1,27 +1,20 @@
 <div class="vertical-start-stretch full-width full-height gap-1em">
     <div class="horizontal-space-between-center full-width height-40px">
         <div class="vertical-start-stretch full-width">
-            <div class="horizontal-start-center full-width">
+            <div class="horizontal-space-between-center full-width">
                 <div class="vertical-start-stretch width-25">
-                    <span class="bold">Showing {{counts[0]}} Application(s)</span>
-                    <small>Based on your preferences</small>
+                    <span class="bold">Showing {{ dataSource && dataSource.length }} Application(s)</span>
                 </div>
-                <div class="horizontal-space-between-center gap-1em ">
-                    <div class="vertical-start-stretch" *ngFor="let filterButton of filterButtons; let i = index;">
-                        <button (click)="filterTableData(filterButton.text)"
-                            [ngClass]="{'primary-bg': filterButton?.selected, 'secondary-bg': !filterButton?.selected}"
-                            class="white-color border-radius-2em" mat-raised-button>{{ filterButton.text
-                            }} <span class="count">({{ counts[i] }})</span></button>
-                    </div>
+                <div class="vertical-start-stretch" routerLink="../apply">
+                    <button class="primary-bg white-color" mat-raised-button>New Application</button>
                 </div>
-                <div class="width-25"></div>
             </div>
         </div>
     </div>
 
     <div class="horizontal-start-stretch full-width white-bg table-container full-width">
         <div *ngIf="dataSource.length == 0" class="horizontal-center-center full-width">
-            <h1 class="bold padding-3em" >No data under this filter</h1>
+            <h1 class="bold padding-3em">No applications found</h1>
         </div>
         <div *ngIf="dataSource.length > 0" class="horizontal-start full-width">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width">

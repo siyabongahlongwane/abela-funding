@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
             duration: 3000
           });
           if (resp.user.role.description.includes('Admin')) this.router.navigate(['abela/admin/dashboard']);
-          else this.router.navigate(['abela/beneficiary/dashboard']);
+          else this.router.navigate(['abela/beneficiary/applications/my-applications']);
         }
       })
     }
