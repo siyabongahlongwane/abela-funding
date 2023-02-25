@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
@@ -20,8 +21,7 @@ export class RegisterComponent implements OnInit {
   role: any = {};
   refId: string = '';
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
-
-  constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<RegisterComponent>) {
     this.personalDetailsForm();
     this.contactDetailsForm();
     this.addressDetailsForm();
@@ -40,31 +40,34 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.data) {
+      this.registerForm.patchValue(this.data);
+    }
     this.setFormData();
-  //   this.registerForm.patchValue({
-  //     "personalDetails": {
-  //         "name": "Siyabonga",
-  //         "surname": "Hlongwane",
-  //         "dateOfBirth": "1998-01-07T22:00:00.000Z"
-  //     },
-  //     "contactDetails": {
-  //         "cellOne": "0670146942",
-  //         "cellTwo": "",
-  //         "email": "hlongwanesiyabonga6@gmail.com"
-  //     },
-  //     "addressDetails": {
-  //         "town": "Roodepoort",
-  //         "city": "Johannesburg",
-  //         "province": "Gauteng"
-  //     },
-  //     "role": {
-  //         "id": "ST",
-  //         "description": "Student"
-  //     },
-  //     "privileges": {},
-  //     "refId": "",
-  //     "password": "123456"
-  // })
+    //   this.registerForm.patchValue({
+    //     "personalDetails": {
+    //         "name": "Siyabonga",
+    //         "surname": "Hlongwane",
+    //         "dateOfBirth": "1998-01-07T22:00:00.000Z"
+    //     },
+    //     "contactDetails": {
+    //         "cellOne": "0670146942",
+    //         "cellTwo": "",
+    //         "email": "hlongwanesiyabonga6@gmail.com"
+    //     },
+    //     "addressDetails": {
+    //         "town": "Roodepoort",
+    //         "city": "Johannesburg",
+    //         "province": "Gauteng"
+    //     },
+    //     "role": {
+    //         "id": "ST",
+    //         "description": "Student"
+    //     },
+    //     "privileges": {},
+    //     "refId": "",
+    //     "password": "123456"
+    // })
   }
 
   personalDetailsForm(): FormGroup {
@@ -119,5 +122,9 @@ export class RegisterComponent implements OnInit {
   createRefId() {
     let refId = this.registerForm.value.personalDetails.name + '-' + (Math.random() + 1).toString(36).substring(2);
     this.registerForm.patchValue({ refId });
+  }
+
+  close(data?: any) {
+    this.dialogRef.close(data && data || false);
   }
 }

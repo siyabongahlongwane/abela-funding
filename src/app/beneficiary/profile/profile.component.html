@@ -1,0 +1,28 @@
+<div class="horizontal-center-stretch white-bg padding-2em-zero full-height">
+    <div class="vertical-start-center width-90 gap-1em">
+        <div class="vertical-start-center">
+            <img src="../../../assets/icon.png" width="150px">
+            <h2 class="bold secondary-color">{{ user?.personalDetails?.name }} {{ user?.personalDetails?.surname
+                }}</h2>
+            <h3 class="bold" for="role">{{ user?.role?.description }}</h3>
+        </div>
+        <div class="vertical-start-stretch gap-1em">
+            <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
+            <div class="vertical-start-stretch">
+                <h4 class="bold">Cell One: <span class="fw-500">{{ user?.contactDetails?.cellOne}}</span>
+                </h4>
+                <h4 class="bold">Cell Two: <span class="fw-500">{{ user?.contactDetails?.cellTwo ||
+                        '-'}}</span></h4>
+                <h4 class="bold">Email: <span class="fw-500">{{ user?.contactDetails?.email}}</span></h4>
+                <h4 class="bold">Town: <span class="fw-500">{{ user?.addressDetails?.town}}</span></h4>
+                <h4 class="bold">City: <span class="fw-500">{{ user?.addressDetails?.city}}</span> </h4>
+                <h4 class="bold">Province: <span class="fw-500">{{ user?.addressDetails?.province}}</span>
+                </h4>
+            </div>
+        </div>
+        <div class="vertical-center-center">
+            <button (click)="openRegisterDialog()" class="primary-bg white-color border-radius-2em"
+                mat-raised-button>Edit Details</button>
+        </div>
+    </div>
+</div>

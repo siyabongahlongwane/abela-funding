@@ -2,10 +2,13 @@
     <div class="vertical-start-stretch ">
         <mat-card class="border-radius-2em">
             <div class="vertical-start-stretch gap-1em max-width-700">
-                <div class="horizontal-center-center full-width">
+                <div *ngIf="!data" class="horizontal-center-center full-width">
                     <img src="../../../assets/abela-logo.png" alt="Abela Logo" width="80px">
                 </div>
-                <h1 class="primary-color center-text bold">Register</h1>
+                <div class="horizontal-space-between-center">
+                    <h1 class="primary-color center-text bold">{{ data ? 'Edit Details' : 'Register' }}</h1>
+                    <mat-icon *ngIf="data" class="red-color pointer" (click)="close()">cancel</mat-icon>
+                </div>
                 <form [formGroup]="registerForm">
                     <div class="vertical-start-stretch gap-1em">
                         <form [formGroup]="personalDetails">
@@ -144,7 +147,7 @@
                             <div class="vertical-start-stretch grey-input-container width-30">
                                 <label class="bold">Password</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput name="search" formControlName="password"
+                                    <input [disabled]="data" matInput name="search" formControlName="password"
                                         placeholder="Enter Password" [type]="showPass ? 'text' : 'password'">
                                     <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
                                         Password is <b>required!</b>
@@ -157,12 +160,18 @@
                             </div>
                         </div>
 
-                        <div class="vertical-center-center">
+                        <div *ngIf="!data" class="vertical-center-center">
                             <button (click)="register(registerForm)"
                                 class="primary-bg white-color border-radius-2em width-30"
                                 mat-raised-button>Register</button>
                         </div>
-                        <div class="horizontal-center-center">
+
+                        <div *ngIf="data" class="vertical-center-center">
+                            <button [disabled]="registerForm.invalid" (click)="close(registerForm.value)"
+                                class="primary-bg white-color border-radius-2em width-30"
+                                mat-raised-button>Submit</button>
+                        </div>
+                        <div *ngIf="!data" class="horizontal-center-center">
                             <p>Already a user? Login <span routerLink="../login"
                                     class="bold primary-color pointer underline">here.</span></p>
                         </div>
