@@ -1,11 +1,13 @@
 <div class="horizontal-center-stretch white-bg padding-2em-zero full-height">
     <div class="vertical-start-center width-90 gap-1em">
         <div class="vertical-start-center">
-            <img src="../../../assets/icon.png" width="150px">
+            <img src="../../../assets/icon.png" width="70px">
             <h2 class="bold secondary-color">{{ user?.personalDetails?.name }} {{ user?.personalDetails?.surname
                 }}</h2>
-            <h3 class="bold" for="role">{{ user?.role?.description }}</h3>
-        </div>
+                <div>
+            <small>Click <span (click)="copyRefId()" class="primary-color bold pointer">here</span> to copy your code and share with others to stand a chance to win data.</small>
+                </div>
+            </div>
         <div class="vertical-start-stretch gap-1em">
             <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
             <div class="vertical-start-stretch">

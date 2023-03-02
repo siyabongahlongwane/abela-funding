@@ -175,7 +175,7 @@ export class NewApplicationComponent implements OnInit {
 
   prepopulateForm() {
     this.user = this.sharedService.get('user');
-    this.personalDetails.patchValue(this.user);
+    this.personalDetails.patchValue(this.user?.personalDetails);
   }
 
   toggleDetailsInput(answer: string) {
@@ -183,7 +183,6 @@ export class NewApplicationComponent implements OnInit {
   }
 
   saveApplication(form: any) {
-    form['owner'] = 'siyabonga@webgooru.co.za';
     form['dateCreated'] = new Date();
     form['dateModified'] = null;
 

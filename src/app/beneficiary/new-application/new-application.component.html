@@ -60,7 +60,7 @@
                                     </mat-form-field>
                                 </div>
 
-                                <input formControlName="marksDoc" type="file" #upload [required]="this.isUpload"
+                                <input type="file" #upload [required]="this.isUpload"
                                     (change)="uploadDoc($event)" hidden />
 
 
@@ -357,7 +357,7 @@
                                     </div>
                                 </button>
                                 <mat-error
-                                    *ngIf="submitted && personalDetails.get('marksDoc')?.hasError('required')">Please
+                                    *ngIf="submitted && !applicationForm.value?.personalDetails?.marksDoc">Please
                                     upload
                                     your marks!</mat-error>
                             </div>

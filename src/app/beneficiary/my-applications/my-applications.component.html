@@ -70,11 +70,12 @@
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let application">
                         <div class="horizontal-start-center gap-5px">
-                            <mat-icon (click)="viewApplication(application['_id'])" class="light-blue-color pointer"
+                            <mat-icon (click)="goTo(application['_id'], 'view')" class="light-blue-color pointer"
                                 matTooltip="View">visibility_on</mat-icon>
-                            <mat-icon class="green-color pointer" matTooltip="Edit">edit</mat-icon>
-                            <mat-icon (click)="openConfirmDialog(application['_id'])" class="red-color pointer"
-                                matTooltip="Delete">delete</mat-icon>
+                            <!-- <mat-icon (click)="goTo(application['_id'], 'edit')" class="green-color pointer"
+                                matTooltip="Edit">edit</mat-icon> -->
+                            <!-- <mat-icon (click)="openConfirmDialog(application['_id'])" class="red-color pointer"
+                                matTooltip="Delete">delete</mat-icon> -->
                         </div>
                     </td>
                 </ng-container>

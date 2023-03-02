@@ -43,4 +43,10 @@ export class ProfileComponent implements OnInit {
       this.sharedService.openSnackbar(err.error.msg || 'Error updating profile');
     })
   }
+
+  copyRefId() {
+    // Copy text to clipboard
+    navigator.clipboard.writeText(`Click on this link to join: http://localhost:4000/abela/auth/register?refId=${this.user.refId}`);
+    this.sharedService.openSnackbar('Text Copied');
+  }
 }

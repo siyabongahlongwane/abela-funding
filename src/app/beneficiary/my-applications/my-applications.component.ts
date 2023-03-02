@@ -105,8 +105,8 @@ export class MyApplicationsComponent implements OnInit {
     })
   }
 
-  viewApplication(applicationId: string) {
-    this.router.navigate([`abela/beneficiary/applications/view/${applicationId}`]);
+  goTo(applicationId: string, route: string) {
+    this.router.navigate([`abela/beneficiary/applications/${route}/${applicationId}`]);
   }
 
 }

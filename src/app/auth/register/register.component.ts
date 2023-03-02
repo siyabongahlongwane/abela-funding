@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { AuthService } from '../auth.service';
 
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   role: any = {};
   refId: string = '';
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
-  constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<RegisterComponent>) {
+  constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, @Optional() public dialogRef: MatDialogRef<RegisterComponent>) {
     this.personalDetailsForm();
     this.contactDetailsForm();
     this.addressDetailsForm();
@@ -35,6 +35,7 @@ export class RegisterComponent implements OnInit {
       }),
       privileges: this.privileges,
       refId: null,
+      referredBy: null,
       password: [null, [Validators.required]],
     });
   }
@@ -44,30 +45,28 @@ export class RegisterComponent implements OnInit {
       this.registerForm.patchValue(this.data);
     }
     this.setFormData();
-    //   this.registerForm.patchValue({
-    //     "personalDetails": {
-    //         "name": "Siyabonga",
-    //         "surname": "Hlongwane",
-    //         "dateOfBirth": "1998-01-07T22:00:00.000Z"
-    //     },
-    //     "contactDetails": {
-    //         "cellOne": "0670146942",
-    //         "cellTwo": "",
-    //         "email": "hlongwanesiyabonga6@gmail.com"
-    //     },
-    //     "addressDetails": {
-    //         "town": "Roodepoort",
-    //         "city": "Johannesburg",
-    //         "province": "Gauteng"
-    //     },
-    //     "role": {
-    //         "id": "ST",
-    //         "description": "Student"
-    //     },
-    //     "privileges": {},
-    //     "refId": "",
-    //     "password": "123456"
-    // })
+      this.registerForm.patchValue({
+        "personalDetails": {
+            "name": "Sinenhlanhla",
+            "surname": "Tele",
+            "dateOfBirth": "1998-11-02T22:00:00.000Z"
+        },
+        "contactDetails": {
+            "cellOne": "0726326716",
+            "cellTwo": null,
+            "email": "telesinenhlanhla@gmail.com"
+        },
+        "addressDetails": {
+            "town": "Cosmo City",
+            "city": "Roodepoort",
+            "province": "Gauteng"
+        },
+        "password": "123456",
+        "role": {
+            "id": "ST",
+            "description": "Student"
+        }
+    })
   }
 
   personalDetailsForm(): FormGroup {
@@ -101,8 +100,8 @@ export class RegisterComponent implements OnInit {
     if (form.invalid) {
       return this.sharedService.openSnackbar('Please enter all required fields correctly!');
     } else {
-      // Process the form
       this.createRefId();
+      this.checkIfReferred();
       this.authService.register(`auth/register`, this.registerForm.value).subscribe(resp => {
         if (resp.msg) {
           this.sharedService.openSnackbar(resp.msg);
@@ -122,6 +121,14 @@ export class RegisterComponent implements OnInit {
   createRefId() {
     let refId = this.registerForm.value.personalDetails.name + '-' + (Math.random() + 1).toString(36).substring(2);
     this.registerForm.patchValue({ refId });
+  }
+
+  checkIfReferred() {
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      if (Object.keys(queryParams).includes('refId')) {
+        this.registerForm.value.referredBy = queryParams['refId'];
+      }
+    });
   }
 
   close(data?: any) {
