@@ -23,17 +23,23 @@ export class ContainerComponent implements OnInit {
       isActive: false
     },
     {
-      url: 'beneficiaries',
-      title: 'Beneficiaries',
-      icon: 'diversity_3',
-      isActive: false
-    },
-    {
-      url: 'teammates',
-      title: 'Teammates',
+      url: 'abela/admin/referrals',
+      title: 'Referrals',
       icon: 'groups',
       isActive: false
-    },
+    }
+    // {
+    //   url: 'beneficiaries',
+    //   title: 'Beneficiaries',
+    //   icon: 'diversity_3',
+    //   isActive: false
+    // },
+    // {
+    //   url: 'teammates',
+    //   title: 'Teammates',
+    //   icon: 'groups',
+    //   isActive: false
+    // },
   ];
 
   selectedItem: number = 0;

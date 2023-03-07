@@ -10,11 +10,13 @@ import { AuthModule } from './auth/auth.module';
 import { ConfirmPopupComponent } from './components/confirm-popup/confirm-popup.component';
 import { MaterialModule } from './modules/material/material.module';
 import { BeneficiaryModule } from './beneficiary/beneficiary.module';
+import { ReferralsComponent } from './components/admin/referrals/referrals.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConfirmPopupComponent
+    ConfirmPopupComponent,
+    ReferralsComponent
   ],
   imports: [
     BrowserModule,

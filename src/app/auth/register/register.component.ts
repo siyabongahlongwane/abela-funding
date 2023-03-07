@@ -45,28 +45,28 @@ export class RegisterComponent implements OnInit {
       this.registerForm.patchValue(this.data);
     }
     this.setFormData();
-      this.registerForm.patchValue({
-        "personalDetails": {
-            "name": "Sinenhlanhla",
-            "surname": "Tele",
-            "dateOfBirth": "1998-11-02T22:00:00.000Z"
-        },
-        "contactDetails": {
-            "cellOne": "0726326716",
-            "cellTwo": null,
-            "email": "telesinenhlanhla@gmail.com"
-        },
-        "addressDetails": {
-            "town": "Cosmo City",
-            "city": "Roodepoort",
-            "province": "Gauteng"
-        },
-        "password": "123456",
-        "role": {
-            "id": "ST",
-            "description": "Student"
-        }
-    })
+    //   this.registerForm.patchValue({
+    //     "personalDetails": {
+    //         "name": "Sinenhlanhla",
+    //         "surname": "Tele",
+    //         "dateOfBirth": "1998-11-02T22:00:00.000Z"
+    //     },
+    //     "contactDetails": {
+    //         "cellOne": "0726326716",
+    //         "cellTwo": null,
+    //         "email": "telesinenhlanhla@gmail.com"
+    //     },
+    //     "addressDetails": {
+    //         "town": "Cosmo City",
+    //         "city": "Roodepoort",
+    //         "province": "Gauteng"
+    //     },
+    //     "password": "123456",
+    //     "role": {
+    //         "id": "ST",
+    //         "description": "Student"
+    //     }
+    // })
   }
 
   personalDetailsForm(): FormGroup {
@@ -127,6 +127,7 @@ export class RegisterComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(queryParams => {
       if (Object.keys(queryParams).includes('refId')) {
         this.registerForm.value.referredBy = queryParams['refId'];
+        this.registerForm.value.referralDate = new Date();
       }
     });
   }

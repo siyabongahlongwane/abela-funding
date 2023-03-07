@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ReferralsComponent } from '../components/admin/referrals/referrals.component';
 import { ApplicationsComponent } from './applications/applications.component';
 import { ContainerComponent } from './container/container.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -23,6 +24,9 @@ const routes: Routes = [
       },
       {
         path: 'applications/:applicationType', component: ApplicationsComponent
+      },
+      {
+        path: 'referrals', component: ReferralsComponent
       }
     ]
   },
