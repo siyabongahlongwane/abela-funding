@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-popup.component';
 import { ApplicationsService } from 'src/app/services/applications.service';
@@ -12,7 +13,7 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class ApplicationsComponent implements OnInit {
   displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'phone', 'requestingFor', 'status', 'action'];
-  dataSource: any[] = []
+  dataSource: any;
 
   filterButtons: any[] = [
     {
@@ -42,17 +43,19 @@ export class ApplicationsComponent implements OnInit {
     }
   ]
 
+
   selectedRow: any = {};
   counts: number[] = [0, 0, 0, 0, 0];
   selectedButton: number = 0;
   filter: string = '';
+  applicationsCount: number = 0;
+  tableData: any[] = [];
   constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.filter = params['applicationType'];
       this.filterTableData(this.filter);
-      this.fetchApplicationsCount('?type=dashboard');
     });
   }
 
@@ -84,29 +87,42 @@ export class ApplicationsComponent implements OnInit {
     this.applicationService.deleteApplication(`applications/deleteApplication/${applicationId}`).subscribe((data: any) => {
       this.sharedService.openSnackbar(data.msg);
       this.fetchApplicationsData(this.filter);
-      this.fetchApplicationsCount('?type=dashboard');
     }, err => {
       console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Deleting Application, Try Again Later.');
     })
   };
 
-  fetchApplicationsCount(filter: any) {
-    this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: number[]) => {
-      this.counts = data;
-    }, err => {
-      console.log(err);
-      this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application Counts, Try Again Later.');
-    })
-  }
 
   fetchApplicationsData(filter: any) {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
-      this.dataSource = data;
+      console.log(data);
+      data.forEach((application: any) => {
+        let temp = {};
+        temp = {
+          date: application.dateCreated,
+          name: application.personalDetails.name,
+          surname: application.personalDetails.surname,
+          email: application.addressDetails.email,
+          phone: application.addressDetails.cellOne,
+          status: application.status.current,
+          requestingFor: application.personalDetails.requestingFor
+        };
+
+        this.tableData.push(temp);
+      })
+      this.dataSource = new MatTableDataSource(this.tableData);
+      this.applicationsCount = data.length;
     }, err => {
       console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
     })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(`Filter: ${this.dataSource.filter}`);
   }
 
   viewApplication(applicationId: string) {
