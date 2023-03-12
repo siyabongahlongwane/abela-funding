@@ -85,6 +85,7 @@ export class MyApplicationsComponent implements OnInit {
       this.fetchApplicationsData(this.filter);
       this.fetchApplicationsCount('?type=dashboard');
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Deleting Application, Try Again Later.');
     })
   };
@@ -93,6 +94,7 @@ export class MyApplicationsComponent implements OnInit {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: number[]) => {
       this.counts = data;
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application Counts, Try Again Later.');
     })
   }
@@ -101,6 +103,7 @@ export class MyApplicationsComponent implements OnInit {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
       this.dataSource = data;
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
     })
   }

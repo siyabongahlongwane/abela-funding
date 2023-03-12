@@ -16,17 +16,17 @@
                       The actual rendered columns are set as a property on the row definition" -->
 
                 <!-- Position Column -->
-                <ng-container matColumnDef="dateCreated">
+                <ng-container matColumnDef="referralDate">
                     <th mat-header-cell *matHeaderCellDef> Referral Date </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application.dateCreated}}">
+                    <td mat-cell *matCellDef="let application" matTooltip="{{application.referralDate}}">
                         {{application.dateCreated | date: 'mediumDate'}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="requestingFor">
+                <ng-container matColumnDef="referredBy">
                     <th mat-header-cell *matHeaderCellDef> Referred Person </th>
                     <td mat-cell *matCellDef="let application"
-                        matTooltip="{{application?.personalDetails?.requestingFor}}">
-                        {{application?.personalDetails?.requestingFor}} </td>
+                        matTooltip="{{application?.personalDetails?.referredBy}}">
+                        {{application?.personalDetails?.referredBy}} </td>
                 </ng-container>
 
                 <!-- Name Column -->
@@ -66,7 +66,7 @@
                             <mat-icon (click)="viewApplication(application['_id'])" class="light-blue-color pointer"
                                 matTooltip="View">visibility_on</mat-icon>
                             <!-- <mat-icon class="green-color pointer" matTooltip="Edit">edit</mat-icon> -->
-                            <mat-icon (click)="openConfirmDialog(application['_id'])" class="red-color pointer"
+                            <mat-icon class="red-color pointer"
                                 matTooltip="Delete">delete</mat-icon>
                         </div>
                     </td>

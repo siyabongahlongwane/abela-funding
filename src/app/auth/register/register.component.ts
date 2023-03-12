@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
+import { UserService } from 'src/app/services/user.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -20,8 +20,9 @@ export class RegisterComponent implements OnInit {
   privileges: any = {};
   role: any = {};
   refId: string = '';
+  referrer: any = null;
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
-  constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, @Optional() public dialogRef: MatDialogRef<RegisterComponent>) {
+  constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, @Optional() public dialogRef: MatDialogRef<RegisterComponent>, private userService: UserService) {
     this.personalDetailsForm();
     this.contactDetailsForm();
     this.addressDetailsForm();
@@ -35,7 +36,6 @@ export class RegisterComponent implements OnInit {
       }),
       privileges: this.privileges,
       refId: null,
-      referredBy: null,
       password: [null, [Validators.required]],
     });
   }
@@ -101,15 +101,19 @@ export class RegisterComponent implements OnInit {
       return this.sharedService.openSnackbar('Please enter all required fields correctly!');
     } else {
       this.createRefId();
-      this.checkIfReferred();
-      this.authService.register(`auth/register`, this.registerForm.value).subscribe(resp => {
-        if (resp.msg) {
-          this.sharedService.openSnackbar(resp.msg);
-          this.router.navigate(['abela/auth/login']);
+      this.activatedRoute.queryParams.subscribe(queryParams => {
+        if (Object.keys(queryParams).includes('refId')) {
+          this.userService.fetchReferrer(`auth/fetchReferrer?refId=${queryParams['refId']}`).subscribe(referrer => {
+            if (referrer.length > 0) {
+              this.registerForm.value.referrer = referrer[0];
+              this.registerForm.value.referralDate = new Date();
+              this.saveUserDetails();
+            }
+          }, err => this.sharedService.openSnackbar(err.error.msg || 'Error fetching Referrer Details'));
+        } else {
+          this.saveUserDetails();
         }
-      }, err => {
-        this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
-      })
+      });
     }
   }
 
@@ -123,16 +127,19 @@ export class RegisterComponent implements OnInit {
     this.registerForm.patchValue({ refId });
   }
 
-  checkIfReferred() {
-    this.activatedRoute.queryParams.subscribe(queryParams => {
-      if (Object.keys(queryParams).includes('refId')) {
-        this.registerForm.value.referredBy = queryParams['refId'];
-        this.registerForm.value.referralDate = new Date();
-      }
-    });
-  }
-
   close(data?: any) {
     this.dialogRef.close(data && data || false);
+  }
+
+  saveUserDetails() {
+    this.authService.register(`auth/register`, this.registerForm.value).subscribe(resp => {
+      if (resp.msg) {
+        this.sharedService.openSnackbar(resp.msg);
+        this.router.navigate(['abela/auth/login']);
+      }
+    }, err => {
+console.log(err)
+      this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
+    })
   }
 }

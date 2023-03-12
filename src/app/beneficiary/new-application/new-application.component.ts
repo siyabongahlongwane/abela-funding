@@ -68,7 +68,6 @@ export class NewApplicationComponent implements OnInit {
   }
 
   toggleState(state: boolean) {
-    console.log(state);
     this.isUpload = state;
     let length = this.subjects.length;
     if (!this.isUpload) {
@@ -145,7 +144,6 @@ export class NewApplicationComponent implements OnInit {
   }
 
   uploadDoc($event: any): void {
-    console.log('events')
     if ($event) {
       this.readThis($event.target);
     }
@@ -154,7 +152,6 @@ export class NewApplicationComponent implements OnInit {
   readThis(inputValue: any): void {
     if (inputValue) {
       let file: File = inputValue.files[0];
-      console.log(file.type);
 
       if (['jpeg', 'jpg', 'pdf', 'png'].includes(file.type.split('/')[1])) {
         let myReader: FileReader = new FileReader();
@@ -192,6 +189,7 @@ export class NewApplicationComponent implements OnInit {
         this.router.navigate(['abela/beneficiary/applications/my-applications']);
       }
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
     })
   }

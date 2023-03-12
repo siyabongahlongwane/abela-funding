@@ -118,6 +118,7 @@ export class DashboardComponent implements OnInit {
         });
       }
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
     })
   }

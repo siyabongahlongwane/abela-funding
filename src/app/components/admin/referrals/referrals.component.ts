@@ -49,11 +49,7 @@ export class ReferralsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.filter = params['applicationType'];
-      this.filterTableData(this.filter);
-      this.fetchApplicationsCount('?type=dashboard');
-    });
+    this.fetchReferrals();
   }
 
   filterTableData(filter: string) {
@@ -63,47 +59,24 @@ export class ReferralsComponent implements OnInit {
     this.filterButtons.forEach((button, i) => {
       this.filterButtons[i]['selected'] = button.filter == selectedBtn ? true : false;
     })
-    console.log(this.filter, 'ft')
-    this.fetchApplicationsData(this.filter);
   }
 
-  openConfirmDialog(applicationId: string) {
-    const dialogRef = this.dialog.open(ConfirmPopupComponent, {
-      disableClose: true,
-      hasBackdrop: true,
-      data: {
-        heading: 'Confirmation',
-        text: 'Delete this application?',
-      }
-    })
-    dialogRef.afterClosed().subscribe(res => {
-      if (res) this.deleteApplication(applicationId);
-    });
-  }
 
-  deleteApplication(applicationId: string) {
-    this.applicationService.deleteApplication(`applications/deleteApplication/${applicationId}`).subscribe((data: any) => {
-      this.sharedService.openSnackbar(data.msg);
-      this.fetchApplicationsData(this.filter);
-      this.fetchApplicationsCount('?type=dashboard');
-    }, err => {
-      this.sharedService.openSnackbar(err.error.msg || 'Error Deleting Application, Try Again Later.');
-    })
-  };
 
   fetchApplicationsCount(filter: any) {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: number[]) => {
       this.counts = data;
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application Counts, Try Again Later.');
     })
   }
 
-  fetchApplicationsData(filter: any) {
-    console.log(filter);
-    this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
+  fetchReferrals() {
+    this.applicationService.fetchReferrals(`applications/fetchReferrals`).subscribe((data: any) => {
       this.dataSource = data;
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
     })
   }

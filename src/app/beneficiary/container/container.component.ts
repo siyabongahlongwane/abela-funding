@@ -21,19 +21,7 @@ export class ContainerComponent implements OnInit {
       title: 'My Profile',
       icon: 'account_circle',
       isActive: false
-    },
-    {
-      url: 'beneficiaries',
-      title: 'Beneficiaries',
-      icon: 'diversity_3',
-      isActive: false
-    },
-    {
-      url: 'teammates',
-      title: 'Teammates',
-      icon: 'groups',
-      isActive: false
-    },
+    }
   ];
 
   selectedItem: number = 0;

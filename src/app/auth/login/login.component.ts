@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
     } else {
       // Process the form
       this.authService.login(`auth/login?email=${form.value.email}&password=${form.value.password}`).subscribe(resp => {
-        console.log(resp);
         if (resp.user) {
           this.sharedService.set('user', resp.user);
           this.sharedService.openSnackbar(resp?.msg);

@@ -13,4 +13,9 @@ export class UserService {
     const url = `${this.backendUrl}/${endpoint}`;
     return this.http.put(url, body);
   }
+
+  fetchReferrer(endpoint: string): Observable<any> {
+    const url = `${this.backendUrl}/${endpoint}`;
+    return this.http.get(url);
+  }
 }

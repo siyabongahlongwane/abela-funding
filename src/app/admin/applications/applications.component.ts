@@ -63,7 +63,6 @@ export class ApplicationsComponent implements OnInit {
     this.filterButtons.forEach((button, i) => {
       this.filterButtons[i]['selected'] = button.filter == selectedBtn ? true : false;
     })
-    console.log(this.filter, 'ft')
     this.fetchApplicationsData(this.filter);
   }
 
@@ -87,6 +86,7 @@ export class ApplicationsComponent implements OnInit {
       this.fetchApplicationsData(this.filter);
       this.fetchApplicationsCount('?type=dashboard');
     }, err => {
+      console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Deleting Application, Try Again Later.');
     })
   };
@@ -95,15 +95,16 @@ export class ApplicationsComponent implements OnInit {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: number[]) => {
       this.counts = data;
     }, err => {
+      console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application Counts, Try Again Later.');
     })
   }
 
   fetchApplicationsData(filter: any) {
-    console.log(filter);
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
       this.dataSource = data;
     }, err => {
+      console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
     })
   }

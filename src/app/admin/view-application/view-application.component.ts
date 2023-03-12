@@ -58,7 +58,6 @@ export class ViewApplicationComponent implements OnInit {
   }
 
   toggleState(state: boolean) {
-    console.log(state);
     this.isUpload = state;
     let length = this.subjects.length;
     if (!this.isUpload) {
@@ -125,6 +124,7 @@ export class ViewApplicationComponent implements OnInit {
       this.sharedService.openSnackbar(data?.msg);
       this.fetchApplication(`?_id=${this.application['_id']}`);
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Updating Application, Try Again Later.');
     })
   }
@@ -151,7 +151,6 @@ export class ViewApplicationComponent implements OnInit {
   }
 
   uploadDoc($event: any): void {
-    console.log('events')
     if ($event) {
       this.readThis($event.target);
     }
@@ -160,7 +159,6 @@ export class ViewApplicationComponent implements OnInit {
   readThis(inputValue: any): void {
     if (inputValue) {
       let file: File = inputValue.files[0];
-      console.log(file.type);
 
       if (['jpeg', 'jpg', 'pdf', 'png'].includes(file.type.split('/')[1])) {
         let myReader: FileReader = new FileReader();
@@ -182,7 +180,6 @@ export class ViewApplicationComponent implements OnInit {
   prepopulateForm(application: any) {
     this.applicationForm.patchValue(application);
     this.updateStatus.patchValue(application?.status);
-    console.log(this.updateStatus.value);
   }
 
   toggleDetailsInput(answer: string) {
@@ -198,6 +195,7 @@ export class ViewApplicationComponent implements OnInit {
         // this.router.navigate(['abela/beneficiary/dashboard']);
       }
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
     })
   }
@@ -205,11 +203,11 @@ export class ViewApplicationComponent implements OnInit {
   fetchApplication(applicationId: string) {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${applicationId}`).subscribe((data: any) => {
       this.application = data[0];
-      console.log(this.application);
       this.application.personalDetails.dateOfBirth = new Date(this.application.personalDetails.dateOfBirth)
       this.prepopulateForm(this.application);
 
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
     })
   }
@@ -224,6 +222,7 @@ export class ViewApplicationComponent implements OnInit {
       this.prepopulateForm(this.application);
 
     }, err => {
+console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Document, Try Again Later.');
     })
   }

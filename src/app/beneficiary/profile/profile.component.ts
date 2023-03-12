@@ -41,6 +41,7 @@ export class ProfileComponent implements OnInit {
         window.location.reload();
       }
     }, err => {
+console.log(err)
       console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error updating profile');
     })
