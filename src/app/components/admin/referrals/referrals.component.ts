@@ -1,87 +1,70 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApplicationsService } from 'src/app/services/applications.service';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
-import { ConfirmPopupComponent } from '../../confirm-popup/confirm-popup.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-referrals',
   templateUrl: './referrals.component.html',
   styleUrls: ['./referrals.component.scss']
 })
-export class ReferralsComponent implements OnInit {
-  displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'phone', 'requestingFor', 'status', 'action'];
-  dataSource: any[] = []
-
-  filterButtons: any[] = [
-    {
-      text: 'All',
-      filter: 'All',
-      slelected: false
-    },
-    {
-      text: 'Pending',
-      filter: 'Pending',
-      slelected: false
-    },
-    {
-      text: 'In Review',
-      filter: 'In Review',
-      slelected: false
-    },
-    {
-      text: 'Approved',
-      filter: 'Approved',
-      slelected: false
-    },
-    {
-      text: 'Rejected',
-      filter: 'Rejected',
-      slelected: false
-    }
-  ]
-
-  selectedRow: any = {};
-  counts: number[] = [0, 0, 0, 0, 0];
-  selectedButton: number = 0;
-  filter: string = '';
-  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router) { }
+export class ReferralsComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['referralDate', 'referredPerson', 'referredBy', 'email', 'phone'];
+  dataSource: any;
+  tableData: any[] = [];
+  referralsCount: number = 0;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  constructor(private sharedService: SharedService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.fetchReferrals();
   }
 
-  filterTableData(filter: string) {
-    this.filter = filter;
-    let selectedBtn = filter;
-    this.filter == 'All' ? this.filter = '' : this.filter = `?status.current=${this.filter}`;
-    this.filterButtons.forEach((button, i) => {
-      this.filterButtons[i]['selected'] = button.filter == selectedBtn ? true : false;
-    })
-  }
-
-
-
-  fetchApplicationsCount(filter: any) {
-    this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: number[]) => {
-      this.counts = data;
-    }, err => {
-console.log(err)
-      this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application Counts, Try Again Later.');
-    })
-  }
-
   fetchReferrals() {
-    this.applicationService.fetchReferrals(`applications/fetchReferrals`).subscribe((data: any) => {
-      this.dataSource = data;
+    this.userService.fetchAllReferrals(`users/fetchReferrals`).subscribe((data: any) => {
+      this.referralsCount = data.length;
+      data.forEach((obj: any) => {
+        let temp = {}
+        temp = Object.assign(temp, {
+          referralDate: obj.referralDate,
+          referredPerson: `${obj.personalDetails.name} ${obj.personalDetails.surname}`,
+          referredBy: `${obj.referrer.personalDetails.name} ${obj.referrer.personalDetails.surname}`,
+          referrerEmail: `${obj.referrer.contactDetails.email}`,
+          referrerPhone: `${obj.referrer.contactDetails.cellOne}`
+        });
+
+        this.tableData.push(temp);
+      });
+
+      this.dataSource = new MatTableDataSource(this.tableData);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      console.log(this.sort)
     }, err => {
-console.log(err)
+      console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
     })
   }
 
+  ngAfterViewInit() {
+    console.log('log')
+    console.log(this.sort)
+
+    // this.dataSource.paginator = this?.paginator;
+    // this.dataSource.sort = this?.sort;
+  }
+
   viewApplication(applicationId: string) {
     this.router.navigate([`abela/admin/applications/view/${applicationId}`]);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(`Filter: ${this.dataSource.filter}`);
   }
 }

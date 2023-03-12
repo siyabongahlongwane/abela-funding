@@ -39,9 +39,4 @@ export class ApplicationsService {
     const url = `${this.backendUrl}/${endpoint}`;
     return this.http.put(url, body);
   }
-
-  fetchReferrals(endpoint: string) {
-    const url = `${this.backendUrl}/${endpoint}`;
-    return this.http.get(url);
-  }
 }

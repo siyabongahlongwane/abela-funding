@@ -18,4 +18,10 @@ export class UserService {
     const url = `${this.backendUrl}/${endpoint}`;
     return this.http.get(url);
   }
+
+
+  fetchAllReferrals(endpoint: string) {
+    const url = `${this.backendUrl}/${endpoint}`;
+    return this.http.get(url);
+  }
 }

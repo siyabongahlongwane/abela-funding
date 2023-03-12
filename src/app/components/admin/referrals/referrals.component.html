@@ -1,89 +1,70 @@
 <div class="vertical-start-stretch full-width full-height gap-1em">
     <div class="horizontal-space-between-center full-width height-40px">
         <div class="vertical-start-stretch full-width">
-            <span class="bold">Showing {{counts[0]}} Application(s)</span>
+            <span class="bold">Showing {{referralsCount}} Referral(s)</span>
+        </div>
+        <div class="vertical-start-stretch grey-input-container width-25">
+            <mat-form-field appearance="outline">
+                <input (keyup)="applyFilter($event)" #input matInput type="text" placeholder="Filter Referrals">
+                <mat-icon matSuffix>filter_alt</mat-icon>
+            </mat-form-field>
         </div>
     </div>
 
-    <div class="horizontal-start-stretch full-width white-bg table-container full-width  full-height">
-        <div *ngIf="dataSource.length == 0" class="horizontal-center-center full-width">
-            <h1 class="bold padding-3em">No referrals yet.</h1>
+    <div class="vertical-start-stretch full-width">
+        <div class="horizontal-start-stretch full-width white-bg table-container full-width  full-height">
+            <div *ngIf="referralsCount == 0" class="horizontal-center-center full-width">
+                <h1 class="bold padding-3em">No referrals yet.</h1>
+            </div>
+            <div [hidden]="referralsCount > 0" class="horizontal-start full-width">
+                <table mat-table [dataSource]="dataSource" #table matSort class="mat-elevation-z8 full-width">
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="referralDate">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Referral Date </th>
+                        <td mat-cell *matCellDef="let referral"
+                            matTooltip="{{referral?.referralDate | date: 'mediumDate'}}">
+                            {{referral?.referralDate | date: 'mediumDate'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="referredPerson">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Referred Person </th>
+                        <td mat-cell *matCellDef="let referral" matTooltip="{{referral?.referredPerson}}">
+                            {{referral?.referredPerson}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="referredBy">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Referred By </th>
+                        <td mat-cell *matCellDef="let referral" matTooltip="{{referral?.referredBy}}">
+                            {{referral?.referredBy}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Referrer Email </th>
+                        <td mat-cell *matCellDef="let referral" matTooltip="{{referral?.referrerEmail}}">
+                            {{referral?.referrerEmail}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="phone">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef> Referrer Phone </th>
+                        <td mat-cell *matCellDef="let referral"
+                            matTooltip="{{referral?.referrerPhone}}">
+                            {{referral?.referrerPhone}}
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                      </tr>
+                </table>
+            </div>
         </div>
-        <div *ngIf="dataSource.length > 0" class="horizontal-start full-width">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width">
-
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
-
-                <!-- Position Column -->
-                <ng-container matColumnDef="referralDate">
-                    <th mat-header-cell *matHeaderCellDef> Referral Date </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application.referralDate}}">
-                        {{application.dateCreated | date: 'mediumDate'}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="referredBy">
-                    <th mat-header-cell *matHeaderCellDef> Referred Person </th>
-                    <td mat-cell *matCellDef="let application"
-                        matTooltip="{{application?.personalDetails?.referredBy}}">
-                        {{application?.personalDetails?.referredBy}} </td>
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Referred By </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application?.personalDetails?.name}}">
-                        {{application?.personalDetails?.name}}
-                    </td>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="surname">
-                    <th mat-header-cell *matHeaderCellDef> Surname </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application?.personalDetails?.surname}}">
-                        {{application?.personalDetails?.surname}}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef> Email </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application?.addressDetails?.email}}">
-                        {{application?.addressDetails?.email}}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="phone">
-                    <th mat-header-cell *matHeaderCellDef> Phone </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application?.addressDetails?.cellOne}}">
-                        {{application?.addressDetails?.cellOne}}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let application">
-                        <div class="horizontal-start-center gap-5px">
-                            <mat-icon (click)="viewApplication(application['_id'])" class="light-blue-color pointer"
-                                matTooltip="View">visibility_on</mat-icon>
-                            <!-- <mat-icon class="green-color pointer" matTooltip="Edit">edit</mat-icon> -->
-                            <mat-icon class="red-color pointer"
-                                matTooltip="Delete">delete</mat-icon>
-                        </div>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
-                    <td mat-cell *matCellDef="let application">
-                        <div [ngClass]="application?.status.current ==  'Approved' ? 'green-color' : application?.status?.current ==  'Rejected' ? 'red-color' : application?.status?.current == 'In Review' ? 'dark-grey-color' : 'orange-color'"
-                            class="status-btn">
-                            {{application?.status?.current}}
-                        </div>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true;"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </div>
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="5"
+            [length]="referralsCount"></mat-paginator>
     </div>
 </div>
