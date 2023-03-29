@@ -15,15 +15,28 @@
     <div class="vertical-start-end width-25">
         <div class="horizontal-start-center gap-1em">
             <div class="white-bg dark-grey-color rounded icons vertical-center-center pointer">
-                <mat-icon class="bold" matBadge="15" matBadgeColor="accent">notifications</mat-icon>
-            </div>
-            <div class="white-bg dark-grey-color rounded icons vertical-center-center pointer">
                 <h2 class="bold">{{ user?.personalDetails?.name?.charAt(0) }}</h2>
             </div>
-            <div class="white-bg dark-grey-color bold rounded icons horizontal-center-center pointer">
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="hide-menu">
+                <mat-icon>menu</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button [routerLink]="item?.url" *ngFor="let item of sideNavItems" mat-menu-item>
+                  <mat-icon>{{ item?.icon }}</mat-icon>
+                  <span>{{ item?.title }}</span>
+                </button>
+
+                <button mat-menu-item>
+                    <mat-icon (click)="authService.logout()">power_settings_new</mat-icon>
+                    <span>Logout</span>
+                  </button>
+                
+              </mat-menu>
+              
+            <div class="white-bg dark-grey-color bold rounded icons horizontal-center-center pointer hidden">
                 <mat-icon (click)="authService.logout()" class="bold">power_settings_new</mat-icon>
             </div>
-            <div class="vertical-start-stretch">
+            <div class="vertical-start-stretch hidden">
                 <label class="bold">{{ user?.personalDetails?.name }}</label>
                 <label class="dark-grey-color">{{ user?.role?.description }}</label>
             </div>

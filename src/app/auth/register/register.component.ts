@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   role: any = {};
   refId: string = '';
   referrer: any = null;
+  width: any = 0;
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
   constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, @Optional() public dialogRef: MatDialogRef<RegisterComponent>, private userService: UserService) {
     this.personalDetailsForm();
@@ -45,28 +46,7 @@ export class RegisterComponent implements OnInit {
       this.registerForm.patchValue(this.data);
     }
     this.setFormData();
-    //   this.registerForm.patchValue({
-    //     "personalDetails": {
-    //         "name": "Sinenhlanhla",
-    //         "surname": "Tele",
-    //         "dateOfBirth": "1998-11-02T22:00:00.000Z"
-    //     },
-    //     "contactDetails": {
-    //         "cellOne": "0726326716",
-    //         "cellTwo": null,
-    //         "email": "telesinenhlanhla@gmail.com"
-    //     },
-    //     "addressDetails": {
-    //         "town": "Cosmo City",
-    //         "city": "Roodepoort",
-    //         "province": "Gauteng"
-    //     },
-    //     "password": "123456",
-    //     "role": {
-    //         "id": "ST",
-    //         "description": "Student"
-    //     }
-    // })
+    this.width = '';
   }
 
   personalDetailsForm(): FormGroup {

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-popup.component';
 import { ApplicationsService } from 'src/app/services/applications.service';
@@ -11,59 +14,22 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./my-applications.component.scss']
 })
 export class MyApplicationsComponent implements OnInit {
-  displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'phone', 'requestingFor', 'status', 'action'];
-  dataSource: any[] = []
-
-  filterButtons: any[] = [
-    {
-      text: 'All',
-      filter: 'All',
-      slelected: false
-    },
-    {
-      text: 'Pending',
-      filter: 'Pending',
-      slelected: false
-    },
-    {
-      text: 'In Review',
-      filter: 'In Review',
-      slelected: false
-    },
-    {
-      text: 'Approved',
-      filter: 'Approved',
-      slelected: false
-    },
-    {
-      text: 'Rejected',
-      filter: 'Rejected',
-      slelected: false
-    }
-  ]
-
-  selectedRow: any = {};
+  displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'requestingFor', 'status', 'action'];
+  dataSource: any;
   counts: number[] = [0, 0, 0, 0, 0];
-  selectedButton: number = 0;
   filter: string = '';
   user: any = {};
+  applicationsCount: number = 0;
+  tableData: any[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   constructor(private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router) { }
 
   ngOnInit(): void {
     this.user = this.sharedService.get('user');
     this.fetchApplicationsData(`?addressDetails.email=${this.user?.contactDetails?.email}`);
   }
-
-  // filterTableData(filter: string) {
-  //   this.filter = filter;
-  //   let selectedBtn = filter;
-  //   this.filter == 'All' ? this.filter = '' : this.filter = `?status.current=${this.filter}`;
-  //   this.filterButtons.forEach((button, i) => {
-  //     this.filterButtons[i]['selected'] = button.filter == selectedBtn ? true : false;
-  //   })
-  //   console.log(this.filter, 'ft')
-  //   this.fetchApplicationsData(this.filter);
-  // }
 
   openConfirmDialog(applicationId: string) {
     const dialogRef = this.dialog.open(ConfirmPopupComponent, {
@@ -83,27 +49,35 @@ export class MyApplicationsComponent implements OnInit {
     this.applicationService.deleteApplication(`applications/deleteApplication/${applicationId}`).subscribe((data: any) => {
       this.sharedService.openSnackbar(data.msg);
       this.fetchApplicationsData(this.filter);
-      this.fetchApplicationsCount('?type=dashboard');
     }, err => {
-console.log(err)
+      console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Deleting Application, Try Again Later.');
     })
   };
 
-  fetchApplicationsCount(filter: any) {
-    this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: number[]) => {
-      this.counts = data;
-    }, err => {
-console.log(err)
-      this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application Counts, Try Again Later.');
-    })
-  }
-
   fetchApplicationsData(filter: any) {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
-      this.dataSource = data;
+      data.forEach((application: any) => {
+        let temp = {}
+        temp = Object.assign(temp, {
+          _id: application._id,
+          date: application.dateCreated,
+          name: application.personalDetails.name,
+          surname: application.personalDetails.surname,
+          email: application.addressDetails.email,
+          status: application.status.current,
+          requestingFor: application.personalDetails.requestingFor,
+        });
+
+        this.tableData.push(temp);
+      });
+
+      this.dataSource = new MatTableDataSource(this.tableData);
+      this.applicationsCount = data.length;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }, err => {
-console.log(err)
+      console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
     })
   }
@@ -112,4 +86,8 @@ console.log(err)
     this.router.navigate([`abela/beneficiary/applications/${route}/${applicationId}`]);
   }
 
+  applyFilter(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }

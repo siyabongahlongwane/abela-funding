@@ -9,6 +9,7 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class ContainerComponent implements OnInit {
   active: boolean = false;
+  width: number = 0;
   sideNavItems: any[] = [
     {
       url: 'abela/beneficiary/applications/my-applications',
@@ -29,6 +30,7 @@ export class ContainerComponent implements OnInit {
   currentPage: string = '';
   constructor(private router: Router, private sharedService: SharedService) {
     this.checkActiveRoute();
+    this.width = this.sharedService.detectScreenSize();
   }
 
   ngOnInit(): void {

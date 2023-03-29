@@ -20,14 +20,26 @@ export class ProfileComponent implements OnInit {
 
   getUser() {
     this.user = this.sharedService.get('user');
-    this.message = `Click on this link to join: http://localhost:4000/abela/auth/register?refId=${this.user.refId}`
+    this.message = `Looking for educational Support? Need a Bursary? Need Books?
+    \n
+    Is Registration fee a problem....?
+    \n
+    \n
+    Abela Trust is a registered entity focussing on the upliftment of education is south Africa and aiming to assist as many learners as possible to reach their educational goals.
+    \n
+    \n
+    To Apply, click on the link: http://localhost:4000/abela/auth/register?refId=${this.user.refId}
+    \n
+    \n
+    Please share this opportunity with someone you know who might need it and you could win yourself a mini tablet or smartphone...!:`;
   }
 
   openRegisterDialog() {
     let dialog = this.dialog.open(RegisterComponent, {
       data: this.user,
       disableClose: true,
-      hasBackdrop: true
+      hasBackdrop: true,
+      maxHeight: '80vh'
     });
 
     dialog.afterClosed().subscribe(data => data && this.updateDetails(data));

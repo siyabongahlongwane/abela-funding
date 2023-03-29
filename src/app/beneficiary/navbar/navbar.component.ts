@@ -11,6 +11,20 @@ export class NavbarComponent implements OnInit {
   @Input() drawer: any;
   @Input() user: any;
   @Input() currentPage: any;
+  sideNavItems: any[] = [
+    {
+      url: '/abela/beneficiary/applications/my-applications',
+      title: 'Applications',
+      icon: 'assignment_add',
+      isActive: false
+    },
+    {
+      url: '/abela/beneficiary/profile',
+      title: 'My Profile',
+      icon: 'account_circle',
+      isActive: false
+    }
+  ];
   constructor(public authService: AuthService, public location: Location) { }
 
   ngOnInit(): void {

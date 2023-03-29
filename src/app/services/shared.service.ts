@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { HostListener, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -6,7 +6,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class SharedService {
 
-  constructor(private snackbar: MatSnackBar) { }
+  constructor(private snackbar: MatSnackBar) {
+    this.detectScreenSize();
+  }
+
+  // ========================================================
+  // Detect Screen Size Start
+  // ========================================================
+  @HostListener("window:resize", [])
+  public onResize() {
+    this.detectScreenSize();
+  }
+
+
+  detectScreenSize() {
+    return window.innerWidth;
+  }
+  // ========================================================
+  // End
+  // ========================================================
 
   get(key: string): any {
     const data = localStorage.getItem(key);

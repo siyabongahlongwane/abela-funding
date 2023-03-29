@@ -29,7 +29,6 @@ export class ViewApplicationComponent implements OnInit {
   document: any = null;
   marksDoc: any;
   showDoc: boolean = false;
-
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, private activeRoute: ActivatedRoute, public sanitizer: DomSanitizer
   ) {
     this.personalDetails = this.personalDetailsForm();

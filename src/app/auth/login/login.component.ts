@@ -13,6 +13,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
   loginForm: any = {};
   showPass: boolean = false;
+  width: any = 0;
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
@@ -21,6 +22,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.width = '';
+    console.log(this.width);
   }
 
   login(form: FormGroup) {

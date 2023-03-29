@@ -1,15 +1,15 @@
-<div class="horizontal-center-stretch full-width full-height">
+<div class="horizontal-center-stretch full-width full-height new-app">
     <mat-card class="full-width">
         <div class="vertical-start-stretch stepper-container">
-            <mat-stepper [linear]="" #stepper>
+            <mat-stepper [linear]="true" #stepper [orientation]="orientation">
                 <mat-step [stepControl]="personalDetails">
                     <form [formGroup]="personalDetails">
                         <ng-template matStepLabel>Personal Details</ng-template>
                         <div class="vertical-center-center gap-1em">
-                            <div class="horizontal-start-stretch width-90">
+                            <div class="horizontal-start-stretch width-90"  [class.full-width]="width <= 768">
                                 <h1 class="bold">Your Details</h1>
                             </div>
-                            <div class="horizontal-space-between-stretch width-90">
+                            <div class="horizontal-space-between-stretch width-90 col-sm"  [class.full-width]="width <= 768">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Name</label>
                                     <mat-form-field appearance="outline">
@@ -46,7 +46,7 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="horizontal-space-between-end width-90">
+                            <div class="horizontal-space-between-end width-90 col-sm"  [class.full-width]="width <= 768">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">School Currently Attending</label>
                                     <mat-form-field appearance="outline">
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
 
-                            <div class="horizontal-space-between-end width-90">
+                            <div class="horizontal-space-between-end width-90 col-sm"  [class.full-width]="width <= 768">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Course You'd Like To Study After Matric</label>
                                     <mat-form-field appearance="outline">
@@ -131,7 +131,7 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="horizontal-space-between-end width-90">
+                            <div class="horizontal-space-between-end width-90 col-sm"  [class.full-width]="width <= 768">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Details About The Grant</label>
                                     <mat-form-field appearance="outline">
@@ -180,10 +180,10 @@
                     <form [formGroup]="addressDetails">
                         <ng-template matStepLabel>Address</ng-template>
                         <div class="vertical-center-center gap-1em">
-                            <div class="horizontal-start-stretch width-90">
+                            <div class="horizontal-start-stretch width-90"  [class.full-width]="width <= 768">
                                 <h1 class="bold">Address Details</h1>
                             </div>
-                            <div class="horizontal-space-between-stretch width-90">
+                            <div class="horizontal-space-between-stretch width-90 col-sm"  [class.full-width]="width <= 768">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Town</label>
                                     <mat-form-field appearance="outline">
@@ -220,10 +220,10 @@
                                 </div>
                             </div>
 
-                            <div class="horizontal-start-stretch width-90">
+                            <div class="horizontal-start-stretch width-90"  [class.full-width]="width <= 768">
                                 <h1 class="bold">Contact Details</h1>
                             </div>
-                            <div class="horizontal-space-between-stretch width-90">
+                            <div class="horizontal-space-between-stretch width-90 col-sm"  [class.full-width]="width <= 768">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Cell Number 1</label>
                                     <mat-form-field appearance="outline">
@@ -268,8 +268,8 @@
                 <mat-step [stepControl]="applicationForm">
                     <form [formGroup]="applicationForm">
                         <ng-template matStepLabel>Subjects</ng-template>
-                        <div class="vertical-center-center gap-1em" [ngClass]="{'full-width': subjects.length === 0, ' width-90' : subjects.length > 0}">
-                            <div class="horizontal-start-stretch width-90">
+                        <div class="vertical-center-center gap-1em" [ngClass]="{'full-width': subjects.length === 0, ' width-90' : subjects.length > 0}"  [class.full-width]="width <= 768">
+                            <div class="horizontal-start-stretch width-90"  [class.full-width]="width <= 768">
                                 <h1 class="bold">Subjects & Marks</h1>
                             </div>
                             <div class="horizontal-start-stretch gap-1em">
@@ -279,9 +279,9 @@
                                     Manually</mat-radio-button>
                             </div>
                             <div [ngClass]="{'vertical-start-center': subjects.length === 0, 'vertical-start-stretch' : subjects.length > 0}"
-                                class=" width-90">
+                                class=" width-90"  [class.full-width]="width <= 768">
                                 <div *ngIf="isUpload || isUpload == false"
-                                    class="vertical-start-stretch grey-input-container width-25">
+                                    class="vertical-start-stretch grey-input-container width-25" [class.full-width]="width <= 768">
                                     <label class="bold">Favourite Subject</label>
                                     <mat-form-field appearance="outline">
                                         <input type="text" matInput formControlName="favouriteSubject"
@@ -293,10 +293,10 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div *ngIf="isUpload == false" class="vertical-center-stretch width-90 gap-1em">
-                                <div *ngFor="let subject of subjects.controls; let i = index" formArrayName="subjects"
+                            <div *ngIf="isUpload == false" class="vertical-center-stretch width-90 gap-1em"   [class.full-width]="width <= 768">
+                                <div  [class.flex-wrap]="width <= 768" *ngFor="let subject of subjects.controls; let i = index" formArrayName="subjects"
                                     class="horizontal-space-between-center">
-                                    <div class="vertical-start-stretch grey-input-container width-25"
+                                    <div class="vertical-start-stretch grey-input-container width-25" [class.width-48]="width <= 768"
                                         [formGroupName]="i">
                                         <label class="bold">Subject {{ i + 1}}</label>
                                         <mat-form-field appearance="outline">
@@ -308,7 +308,7 @@
                                         </mat-form-field>
                                     </div>
 
-                                    <div class="vertical-start-stretch grey-input-container width-25"
+                                    <div class="vertical-start-stretch grey-input-container width-25" [class.width-48]="width <= 768"
                                         [formGroupName]="i">
                                         <label class="bold">Standard {{ i + 1 }}</label>
                                         <mat-form-field appearance="outline" [floatLabel]="'never'">
@@ -322,7 +322,7 @@
                                         </mat-form-field>
                                     </div>
 
-                                    <div class="vertical-start-stretch grey-input-container width-25"
+                                    <div class="vertical-start-stretch grey-input-container width-25" [class.width-48]="width <= 768"
                                         [formGroupName]="i">
                                         <label class="bold">Mark {{ i + 1 }}</label>
                                         <mat-form-field appearance="outline">
@@ -337,11 +337,11 @@
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="horizontal-start-stretch gap-1em margin-top-1-5em">
-                                        <button (click)="addSubject()" class="primary-bg white-color round height-3em"
+                                    <div class="horizontal-start-stretch gap-1em margin-top-1-5em"  [class.width-48]="width <= 768">
+                                        <button (click)="addSubject()" class="primary-bg white-color round height-3em full-width"
                                             mat-raised-button><mat-icon>add</mat-icon></button>
                                         <button *ngIf="subjects.length > 1" color="warn" (click)="removeSubject(i)"
-                                            class="round height-3em"
+                                            class="round height-3em full-width"
                                             mat-raised-button><mat-icon>remove</mat-icon></button>
                                     </div>
                                 </div>

@@ -1,0 +1,62 @@
+@media (max-width: 600px) {
+    .col-sm {
+        flex-direction: column !important;
+        width: 100%;
+
+        .width-30,
+        .btn-sm {
+            width: 100% !important;
+        }
+    }
+
+    .card-container {
+        width: 95% !important;
+    }
+
+    .register {
+        height: 120vh !important;
+    }
+
+    .row-sm {
+        gap: 1em !important;
+        justify-content: start !important;
+    }
+}
+
+@media (max-width: 880px) {
+    .hidden {
+        display: none !important;
+    }
+
+    .visible {
+        display: block;
+    }
+
+    .mat-drawer-content.content-width {
+        width: calc(100% - 6em) !important;
+    }
+
+    .border-radius-zero {
+        border-radius: 0 !important;
+    }
+
+    .section-width {
+        width: 100% !important;
+    }
+
+    .flex-wrap {
+        flex-wrap: wrap !important;
+    }
+
+    .new-app {
+        .col-sm {
+            gap: 1em !important;
+        }
+    }
+}
+
+@media (min-width: 885px) {
+    .hide-menu {
+        display: none !important;
+    }
+}

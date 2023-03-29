@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import './flex.scss';
+@import './responsive.scss';
 
 html,
 body {
@@ -188,7 +189,7 @@ body {
 }
 
 .full-width {
-    width: 100%;
+    width: 100% !important;
 }
 
 .full-height {
@@ -298,7 +299,7 @@ body {
 }
 
 .content-width {
-    width: calc(100% - 250px - 6em);
+    width: calc(100% - 250px - 6em) !important;
 }
 
 .width-25 {
@@ -326,7 +327,11 @@ body {
 }
 
 .width-90 {
-    width: 90%;
+    width: 90% !important;
+}
+
+.width-95 {
+    width: 95% !important;
 }
 
 .half-width {
@@ -347,6 +352,14 @@ body {
 
 .width-300 {
     width: 300px;
+}
+
+.max-width-500 {
+    max-width: 500px;
+}
+
+.max-width-600 {
+    max-width: 600px;
 }
 
 .rounded {
@@ -453,6 +466,10 @@ body {
     height: 3em !important;
 }
 
+.height-fit-content {
+    height: fit-content;
+}
+
 .status-btn {
     width: fit-content;
     padding: 0.7em;
@@ -473,10 +490,31 @@ body {
     text-decoration: underline;
 }
 
-.date-picker .mat-form-field-infix .mat-icon-button {
+.date-picker .mat-form-field-infix .mat-icon-button,
+.display-none {
     display: none !important;
 }
 
 .border-bottom-secondary {
     border-bottom: 5px solid $secondary;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: $black;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $primary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: $darkGrey;
 }

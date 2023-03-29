@@ -2,7 +2,7 @@
     <div class="vertical-start-center width-90 gap-2em">
         <div class="horizontal-start-stretch gap-1em full-width">
             <div class=" rounded">
-                <img src="../../../assets/icon.png" width="100px">
+                <mat-icon class="primary-color" style="font-size: 100px; width: 100px !important">account_circle</mat-icon>
             </div>
             <div class="vertical-start-stretch">
                 <h3 class="secondary-color bold">{{ application?.personalDetails?.name }} {{
@@ -21,8 +21,8 @@
             </div>
         </div>
 
-        <div class="horizontal-space-between-stretch gap-1em full-width">
-            <div class="vertical-start-stretch width-48 gap-1em">
+        <div class="horizontal-space-between-stretch gap-1em full-width col-sm">
+            <div class="vertical-start-stretch width-48 gap-1em section-width">
                 <h3 class="secondary-color bold border-bottom-secondary">Personal Details</h3>
                 <div class="vertical-start-stretch">
                     <h4 class="bold">Date of Birth: <span class="fw-500">{{ application?.personalDetails?.dateOfBirth |
@@ -57,7 +57,7 @@
                 </div>
 
             </div>
-            <div class="vertical-start-stretch width-48 gap-1em">
+            <div class="vertical-start-stretch width-48 gap-1em section-width">
                 <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
                 <div class="vertical-start-stretch">
                     <h4 class="bold">Cell One: <span class="fw-500">{{ application?.addressDetails?.cellOne}}</span>
@@ -73,7 +73,7 @@
 
             </div>
         </div>
-        <div class="vertical-start-stretch full-width gap-1em">
+        <div class="vertical-start-stretch full-width gap-1em section-width">
             <h3 class="secondary-color bold border-bottom-secondary">Subject Details</h3>
             <div *ngIf="showDoc" class="vertical-start-stretch">
                 <iframe [src]="this.sanitizer.bypassSecurityTrustResourceUrl(marksDoc?.base64)" frameborder="0"

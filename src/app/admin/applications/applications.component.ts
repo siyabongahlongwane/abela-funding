@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-popup.component';
@@ -14,7 +16,8 @@ import { SharedService } from 'src/app/services/shared.service';
 export class ApplicationsComponent implements OnInit {
   displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'phone', 'requestingFor', 'status', 'action'];
   dataSource: any;
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator; 
+  @ViewChild(MatSort) sort!: MatSort; 
   filterButtons: any[] = [
     {
       text: 'All',
@@ -100,6 +103,7 @@ export class ApplicationsComponent implements OnInit {
       data.forEach((application: any) => {
         let temp = {};
         temp = {
+          _id: application._id,
           date: application.dateCreated,
           name: application.personalDetails.name,
           surname: application.personalDetails.surname,
@@ -112,6 +116,8 @@ export class ApplicationsComponent implements OnInit {
         this.tableData.push(temp);
       })
       this.dataSource = new MatTableDataSource(this.tableData);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
       this.applicationsCount = data.length;
     }, err => {
       console.log(err);

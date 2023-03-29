@@ -1,11 +1,11 @@
-<div class="horizontal-center-center full-height full-width">
-    <div class="vertical-start-stretch ">
+<div class="horizontal-center-center full-height register">
+    <div class="vertical-start-stretch max-width-600 card-container full-height">
         <mat-card class="border-radius-2em">
-            <div class="vertical-start-stretch gap-1em max-width-700">
+            <div class="vertical-start-stretch gap-1em max-width-600 full-height">
                 <div *ngIf="!data" class="horizontal-center-center full-width">
                     <img src="../../../assets/abela-logo.png" alt="Abela Logo" width="80px">
                 </div>
-                <div class="horizontal-center-center">
+                <div *ngIf="!data" class="horizontal-center-center">
                     <h1 class="primary-color center-text bold">Register</h1>
                 </div>
                 <div *ngIf="data" class="horizontal-space-between-center">
@@ -15,7 +15,7 @@
                 <form [formGroup]="registerForm">
                     <div class="vertical-start-stretch gap-1em">
                         <form [formGroup]="personalDetails">
-                            <div class="horizontal-space-between-stretch">
+                            <div class="horizontal-space-between-stretch col-sm">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Name</label>
                                     <mat-form-field appearance="outline">
@@ -57,7 +57,7 @@
                         </form>
 
                         <form [formGroup]="contactDetails">
-                            <div class="horizontal-space-between-stretch">
+                            <div class="horizontal-space-between-stretch col-sm">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Email</label>
                                     <mat-form-field appearance="outline">
@@ -98,7 +98,7 @@
 
                         <form [formGroup]="addressDetails">
 
-                            <div class="horizontal-space-between-stretch width">
+                            <div class="horizontal-space-between-stretch col-sm full-width">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Town</label>
                                     <mat-form-field appearance="outline">
@@ -137,7 +137,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="horizontal-space-between-stretch full-width">
+                        <div class="horizontal-space-between-stretch col-sm full-width">
                             <div class="vertical-start-stretch grey-input-container width-30">
                                 <label class="bold">Role</label>
                                 <mat-form-field appearance="outline">
@@ -150,8 +150,9 @@
                             <div class="vertical-start-stretch grey-input-container width-30">
                                 <label class="bold">Password</label>
                                 <mat-form-field appearance="outline">
-                                    <input autocomplete="new-password" [disabled]="data" matInput name="search" formControlName="password"
-                                        placeholder="Enter Password" [type]="showPass ? 'text' : 'password'">
+                                    <input autocomplete="new-password" [disabled]="data" matInput name="search"
+                                        formControlName="password" placeholder="Enter Password"
+                                        [type]="showPass ? 'text' : 'password'">
                                     <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
                                         Password is <b>required!</b>
                                     </mat-error>
@@ -165,13 +166,13 @@
 
                         <div *ngIf="!data" class="vertical-center-center">
                             <button (click)="register(registerForm)"
-                                class="primary-bg white-color border-radius-2em width-30"
+                                class="primary-bg white-color border-radius-2em btn-sm"
                                 mat-raised-button>Register</button>
                         </div>
 
                         <div *ngIf="data" class="vertical-center-center">
                             <button [disabled]="registerForm.invalid" (click)="close(registerForm.value)"
-                                class="primary-bg white-color border-radius-2em width-30"
+                                class="primary-bg white-color border-radius-2em btn-sm"
                                 mat-raised-button>Submit</button>
                         </div>
                         <div *ngIf="!data" class="horizontal-center-center">

@@ -24,6 +24,9 @@ export class NewApplicationComponent implements OnInit {
   submitted: boolean = false;
   document: any = null;
   max: Date = new Date();
+  width: number = 0;
+  orientation: any = 'horizontal';
+
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router
 ) {
     this.personalDetails = this.personalDetailsForm();
@@ -34,6 +37,12 @@ export class NewApplicationComponent implements OnInit {
       subjects: this.fb.array([]),
       favouriteSubject: [null, [Validators.required]]
     });
+    this.width = this.sharedService.detectScreenSize();
+    if (window.innerWidth <= 768) {
+      this.orientation = 'vertical';
+    } else {
+      this.orientation = 'horizontal';
+    }
   }
 
   ngOnInit(): void {
@@ -172,7 +181,10 @@ export class NewApplicationComponent implements OnInit {
 
   prepopulateForm() {
     this.user = this.sharedService.get('user');
-    this.personalDetails.patchValue(this.user?.personalDetails);
+    const addressDetails = Object.assign(this.user?.addressDetails, this.user?.contactDetails);
+    const userDetails = Object.assign({}, this.user?.personalDetails);
+    this.personalDetails.patchValue(userDetails);
+    this.addressDetails.patchValue(addressDetails);
   }
 
   toggleDetailsInput(answer: string) {
