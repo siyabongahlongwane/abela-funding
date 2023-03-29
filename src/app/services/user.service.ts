@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  backendUrl: string = 'http://localhost:5000/api'
+    // backendUrl: string = 'http://localhost:5000/api';
+    backendUrl: string = 'https://abela-trust.onrender.com';
   constructor(private http: HttpClient) { }
 
   update(endpoint: string, body: any): Observable<any> {
