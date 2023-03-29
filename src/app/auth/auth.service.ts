@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   // backendUrl: string = 'http://localhost:5000/api';
-  backendUrl: string = 'https://abela-trust.onrender.com';
+  backendUrl: string = 'https://abela-trust.onrender.com/api';
   constructor(private http: HttpClient, public router: Router) { }
 
   register(endpoint: string, body: any): Observable<any> {

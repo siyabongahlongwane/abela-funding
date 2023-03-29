@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ApplicationsService {
     // backendUrl: string = 'http://localhost:5000/api';
-    backendUrl: string = 'https://abela-trust.onrender.com';
+    backendUrl: string = 'https://abela-trust.onrender.com/api';
   constructor(private http: HttpClient, public router: Router) { }
 
   apply(endpoint: string, body: any): Observable<any> {
