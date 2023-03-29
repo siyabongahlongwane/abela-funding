@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "abelatrust-funding": {
+      "hosting": {
+        "Abela": [
+          "abelatrust-funding"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "abelatrust-funding"
+  }
+}

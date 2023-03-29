@@ -135,6 +135,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "Abela:build:production",
+            "firebaseProject": "abelatrust-funding",
+            "firebaseHostingSite": "abelatrust-funding"
+          }
         }
       }
     }
