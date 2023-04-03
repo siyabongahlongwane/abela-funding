@@ -37,7 +37,7 @@
     }
 
     .mat-drawer-content.content-width {
-        width: calc(100% - 6em) !important;
+        width: calc(100% - 2em) !important;
     }
 
     .border-radius-zero {
@@ -56,6 +56,14 @@
         .col-sm {
             gap: 1em !important;
         }
+    }
+
+    .content-height {
+        height: 100vh !important;
+    }
+
+    .container .padding-3em {
+        padding: 2em 1em 4em 1em !important;
     }
 }
 

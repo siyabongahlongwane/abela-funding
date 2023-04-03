@@ -1,5 +1,5 @@
-<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
-<div class="vertical-start-stretch full-width full-height gap-1em">
+<div class="vertical-start-stretch full-width full-height gap-1em relative">
+    <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
     <div class="horizontal-space-between-center full-width height-40px">
         <div class="vertical-start-stretch full-width">
             <div class="horizontal-space-between-center full-width">
@@ -21,7 +21,8 @@
     </div>
 
     <div class="vertical-start-stretch full-width white-bg table-container full-width full-height">
-        <div *ngIf="applicationsCount == 0 || (loading$ | async)" class="horizontal-center-center full-width full-height">
+        <div *ngIf="applicationsCount && applicationsCount == 0 && (loading$ | async)"
+            class="horizontal-center-center full-width full-height">
             <h1 class="bold">No applications found</h1>
         </div>
         <div class="vertical-start full-width">
@@ -36,8 +37,7 @@
 
                 <ng-container matColumnDef="requestingFor">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef> Requesting For </th>
-                    <td mat-cell *matCellDef="let application"
-                        matTooltip="{{application?.requestingFor}}">
+                    <td mat-cell *matCellDef="let application" matTooltip="{{application?.requestingFor}}">
                         {{application?.requestingFor}} </td>
                 </ng-container>
 
@@ -92,6 +92,6 @@
             </table>
         </div>
         <mat-paginator [class.display-none]="applicationsCount == 0" #paginator showFirstLastButtons [pageSize]="6"
-        [pageSizeOptions]="[6, 12, 18]"></mat-paginator>
+            [pageSizeOptions]="[6, 12, 18]"></mat-paginator>
     </div>
 </div>

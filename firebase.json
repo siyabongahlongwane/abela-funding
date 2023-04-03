@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "dist",
+    "site": "abela-trust-funding",
     "ignore": [
       "firebase.json",
       "**/.*",

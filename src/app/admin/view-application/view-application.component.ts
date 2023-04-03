@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationsService } from 'src/app/services/applications.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -29,7 +30,8 @@ export class ViewApplicationComponent implements OnInit {
   document: any = null;
   marksDoc: any;
   showDoc: boolean = false;
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, private activeRoute: ActivatedRoute, public sanitizer: DomSanitizer
+  loading$ = this.loader.loading$;
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, private activeRoute: ActivatedRoute, public sanitizer: DomSanitizer, public loader: LoadingService
   ) {
     this.personalDetails = this.personalDetailsForm();
     this.addressDetails = this.addressDetailsForm();
