@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ReferralsComponent } from '../components/admin/referrals/referrals.component';
+import { AdminGuard } from '../guards/admin.guard';
 import { ApplicationsComponent } from './applications/applications.component';
 import { ContainerComponent } from './container/container.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -12,7 +13,7 @@ const routes: Routes = [
   }
   ,
   {
-    path: 'abela/admin', component: ContainerComponent, children: [
+    path: 'abela/admin', component: ContainerComponent, canActivate: [AdminGuard], children: [
       {
         path: '', redirectTo: 'dashboard', pathMatch: 'full'
       },

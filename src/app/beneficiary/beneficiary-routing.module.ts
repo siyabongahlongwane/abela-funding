@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ViewApplicationComponent } from '../admin/view-application/view-application.component';
+import { BeneficiaryGuard } from '../guards/beneficiary.guard';
 import { ContainerComponent } from './container/container.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { NewApplicationComponent } from './new-application/new-application.component';
@@ -8,7 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
-    path: 'abela/beneficiary', component: ContainerComponent, children: [
+    path: 'abela/beneficiary', component: ContainerComponent, canActivate: [BeneficiaryGuard], children: [
       {
         path: '', redirectTo: 'applications/my-applications', pathMatch: 'full'
       },

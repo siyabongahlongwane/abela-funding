@@ -1,3 +1,4 @@
+<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
 <div class="vertical-start-stretch full-width full-height gap-1em">
     <div class="horizontal-space-between-center full-width height-40px">
         <div class="vertical-start-stretch full-width">
@@ -20,8 +21,8 @@
     </div>
 
     <div class="vertical-start-stretch full-width white-bg table-container full-width full-height">
-        <div *ngIf="applicationsCount == 0" class="horizontal-center-center full-width full-height">
-            <h1 class="bold padding-3em">No applications found</h1>
+        <div *ngIf="applicationsCount == 0 || (loading$ | async)" class="horizontal-center-center full-width full-height">
+            <h1 class="bold">No applications found</h1>
         </div>
         <div class="vertical-start full-width">
             <table [hidden]="applicationsCount === 0" mat-table [dataSource]="dataSource" matSort

@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-popup.component';
 import { ApplicationsService } from 'src/app/services/applications.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -23,8 +24,8 @@ export class MyApplicationsComponent implements OnInit {
   tableData: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
-  constructor(private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router) { }
+  loading$ = this.loader.loading$;
+  constructor(private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, public loader: LoadingService) { }
 
   ngOnInit(): void {
     this.user = this.sharedService.get('user');
@@ -79,14 +80,14 @@ export class MyApplicationsComponent implements OnInit {
     }, err => {
       console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
-    })
+    });
   }
 
   goTo(applicationId: string, route: string) {
     this.router.navigate([`abela/beneficiary/applications/${route}/${applicationId}`]);
   }
 
-  applyFilter(event: Event){
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

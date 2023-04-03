@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
           if (resp.user.role.description.includes('Admin')) this.router.navigate(['abela/admin/dashboard']);
           else this.router.navigate(['abela/beneficiary/applications/my-applications']);
         }
+      }, err => {
+        this.sharedService.openSnackbar(err.error.msg || 'Internal Server Error');
       })
     }
   }
