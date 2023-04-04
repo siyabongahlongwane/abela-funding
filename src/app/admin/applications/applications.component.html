@@ -1,3 +1,5 @@
+<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
+
 <div class="vertical-start-stretch full-width full-height gap-1em">
     <div class="horizontal-space-between-center full-width height-40px">
         <div class="vertical-start-stretch full-width">
@@ -20,16 +22,11 @@
     </div>
 
     <div class="vertical-start-stretch full-width white-bg table-container full-width full-height">
-        <div *ngIf="applicationsCount === 0" class="horizontal-center-center full-width full-height">
+        <div *ngIf="!(loading$ | async) && (applicationsCount && applicationsCount) == 0" class="horizontal-center-center full-width full-height">
             <h1 class="bold padding-3em">No data under this filter</h1>
         </div>
         <div class="vertical-start full-width">
             <table [hidden]="applicationsCount === 0"  mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 full-width">
-
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
-
-                <!-- Position Column -->
                 <ng-container matColumnDef="dateCreated">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef> Application Date </th>
                     <td mat-cell *matCellDef="let application" matTooltip="{{application.date | date: 'mediumDate'}}">
@@ -43,7 +40,6 @@
                         {{application?.requestingFor}} </td>
                 </ng-container>
 
-                <!-- Name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
                     <td mat-cell *matCellDef="let application" matTooltip="{{application?.name}}">
@@ -51,7 +47,6 @@
                     </td>
                 </ng-container>
 
-                <!-- Weight Column -->
                 <ng-container matColumnDef="surname">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef> Surname </th>
                     <td mat-cell *matCellDef="let application" matTooltip="{{application?.surname}}">
@@ -79,7 +74,6 @@
                         <div class="horizontal-start-center gap-5px">
                             <mat-icon (click)="viewApplication(application['_id'])" class="light-blue-color pointer"
                                 matTooltip="View">visibility_on</mat-icon>
-                            <!-- <mat-icon class="green-color pointer" matTooltip="Edit">edit</mat-icon> -->
                             <mat-icon (click)="openConfirmDialog(application['_id'])" class="red-color pointer"
                                 matTooltip="Delete">delete</mat-icon>
                         </div>

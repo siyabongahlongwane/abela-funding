@@ -1,3 +1,4 @@
+<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
 <div class="vertical-start-stretch">
     <div class="horizontal-space-between-stretch">
         <div [routerLink]="card.route" class="vertical-start-stretch width-24 dash-card white-color pointer"

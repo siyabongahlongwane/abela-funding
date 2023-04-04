@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -18,7 +19,9 @@ export class ReferralsComponent implements OnInit, AfterViewInit {
   referralsCount: number = 0;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  constructor(private sharedService: SharedService, private router: Router, private userService: UserService) { }
+  loading$ = this.loader.loading$;
+
+  constructor(private sharedService: SharedService, private router: Router, private userService: UserService, public loader: LoadingService) { }
 
   ngOnInit(): void {
     this.fetchReferrals();

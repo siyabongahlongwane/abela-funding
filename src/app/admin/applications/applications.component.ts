@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-popup.component';
 import { ApplicationsService } from 'src/app/services/applications.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -45,7 +46,7 @@ export class ApplicationsComponent implements OnInit {
       slelected: false
     }
   ]
-
+  loading$ = this.loader.loading$;
 
   selectedRow: any = {};
   counts: number[] = [0, 0, 0, 0, 0];
@@ -53,7 +54,7 @@ export class ApplicationsComponent implements OnInit {
   filter: string = '';
   applicationsCount: number = 0;
   tableData: any[] = [];
-  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, public loader: LoadingService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -82,14 +83,16 @@ export class ApplicationsComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe(res => {
-      if (res) this.deleteApplication(applicationId);
+      if (res){
+        this.deleteApplication(applicationId);
+      };
     });
   }
 
   deleteApplication(applicationId: string) {
     this.applicationService.deleteApplication(`applications/deleteApplication/${applicationId}`).subscribe((data: any) => {
       this.sharedService.openSnackbar(data.msg);
-      this.fetchApplicationsData(this.filter);
+      this.fetchApplicationsData('');
     }, err => {
       console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Deleting Application, Try Again Later.');
@@ -98,8 +101,8 @@ export class ApplicationsComponent implements OnInit {
 
 
   fetchApplicationsData(filter: any) {
+    console.log(filter);
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
-      console.log(data);
       data.forEach((application: any) => {
         let temp = {};
         temp = {

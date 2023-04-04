@@ -1,3 +1,4 @@
+<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
 <div class="vertical-start-stretch full-width full-height gap-1em">
     <div class="horizontal-space-between-center full-width height-40px">
         <div class="vertical-start-stretch full-width">
@@ -11,15 +12,14 @@
         </div>
     </div>
 
-    <div class="vertical-start-stretch full-width">
+    <div class="vertical-start-stretch full-width full-height">
         <div class="horizontal-start-stretch full-width white-bg table-container full-width full-height">
-            <div *ngIf="referralsCount == 0" class="horizontal-center-center full-width full-height">
-                <h1 class="bold padding-3em">No referrals yet.</h1>
+            <div *ngIf="!(loading$ | async) && (referralsCount && referralsCount) == 0" class="horizontal-center-center full-width full-height">
+                <h1 class="bold padding-3em center-text">No referrals yet.</h1>
             </div>
-            <div class="horizontal-start full-width">
+            <div class="horizontal-start full-width" [class.display-none]="loading$ && referralsCount == 0">
                 <table [hidden]="referralsCount == 0"  mat-table [dataSource]="dataSource" #table matSort class="mat-elevation-z8 full-width">
 
-                    <!-- Position Column -->
                     <ng-container matColumnDef="referralDate">
                         <th mat-header-cell mat-sort-header *matHeaderCellDef> Referral Date </th>
                         <td mat-cell *matCellDef="let referral"
@@ -33,7 +33,6 @@
                             {{referral?.referredPerson}} </td>
                     </ng-container>
 
-                    <!-- Name Column -->
                     <ng-container matColumnDef="referredBy">
                         <th mat-header-cell mat-sort-header *matHeaderCellDef> Referred By </th>
                         <td mat-cell *matCellDef="let referral" matTooltip="{{referral?.referredBy}}">
@@ -41,7 +40,6 @@
                         </td>
                     </ng-container>
 
-                    <!-- Weight Column -->
                     <ng-container matColumnDef="email">
                         <th mat-header-cell mat-sort-header *matHeaderCellDef> Referrer Email </th>
                         <td mat-cell *matCellDef="let referral" matTooltip="{{referral?.referrerEmail}}">

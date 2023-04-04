@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartType } from 'chart.js';
 import { Label, MultiDataSet } from 'ng2-charts';
 import { ApplicationsService } from 'src/app/services/applications.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 interface Chart {
@@ -66,8 +67,9 @@ export class DashboardComponent implements OnInit {
     }
   };
   admin: any = {};
+  loading$ = this.loader.loading$;
 
-  constructor(private sharedService: SharedService, private applicationService: ApplicationsService) { }
+  constructor(private sharedService: SharedService, private applicationService: ApplicationsService, public loader: LoadingService) { }
 
   ngOnInit(): void {
     this.fetchApplications();
