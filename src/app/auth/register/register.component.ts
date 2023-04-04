@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from '../auth.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-register',
@@ -22,8 +23,9 @@ export class RegisterComponent implements OnInit {
   refId: string = '';
   referrer: any = null;
   width: any = 0;
+  loading$ = this.loader.loading$;
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
-  constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, @Optional() public dialogRef: MatDialogRef<RegisterComponent>, private userService: UserService) {
+  constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, @Optional() public dialogRef: MatDialogRef<RegisterComponent>, private userService: UserService, public loader: LoadingService) {
     this.personalDetailsForm();
     this.contactDetailsForm();
     this.addressDetailsForm();
@@ -118,7 +120,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['abela/auth/login']);
       }
     }, err => {
-console.log(err)
+      console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
     })
   }

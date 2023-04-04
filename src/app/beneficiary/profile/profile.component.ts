@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from 'src/app/auth/register/register.component';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,7 +13,9 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileComponent implements OnInit {
   user: any = {};
   message: string = '';
-  constructor(private sharedService: SharedService, private userService: UserService, private dialog: MatDialog) { }
+  loading$ = this.loader.loading$;
+  url: string = 'https://abela-trust-funding.web.app/abela/auth/register';
+  constructor(private sharedService: SharedService, private userService: UserService, private dialog: MatDialog, public loader: LoadingService) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -21,17 +24,10 @@ export class ProfileComponent implements OnInit {
   getUser() {
     this.user = this.sharedService.get('user');
     this.message = `Looking for educational Support? Need a Bursary? Need Books?
-    \n
     Is Registration fee a problem....?
-    \n
-    \n
-    Abela Trust is a registered entity focussing on the upliftment of education is south Africa and aiming to assist as many learners as possible to reach their educational goals.
-    \n
-    \n
-    To Apply, click on the link: http://localhost:4000/abela/auth/register?refId=${this.user.refId}
-    \n
-    \n
-    Please share this opportunity with someone you know who might need it and you could win yourself a mini tablet or smartphone...!:`;
+    Abela Trust is a registered entity focusing on the upliftment of education in South Africa and aiming to assist as many learners as possible to reach their educational goals.
+    To Apply, click on the link: ${this.url}?refId=${this.user.refId}
+    Please share this opportunity with someone you know who might need it and you could win yourself a mini tablet or smartphone!`;
   }
 
   openRegisterDialog() {
@@ -50,10 +46,8 @@ export class ProfileComponent implements OnInit {
       if (resp.msg) {
         this.sharedService.openSnackbar(resp.msg);
         this.sharedService.set('user', resp.updatedProfile);
-        window.location.reload();
       }
     }, err => {
-console.log(err)
       console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error updating profile');
     })
@@ -66,12 +60,12 @@ console.log(err)
   }
 
   shareLink() {
-    const message = `Click on this link to join: http://localhost:4000/abela/auth/register?refId=${this.user.refId}`
+    const message = `Click on this link to join: ${this.url}?refId=${this.user.refId}`
 
   }
 
   facebook() {
-    const facebookApi = `https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/abela/auth/register?refId=${this.user.refId}`;
+    const facebookApi = `https://www.facebook.com/sharer/sharer.php?u=${this.url}?refId=${this.user.refId}`;
     window.open(facebookApi, '_blank')
   }
   twitter() {

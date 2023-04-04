@@ -3,6 +3,7 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ApplicationsService } from 'src/app/services/applications.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -26,9 +27,10 @@ export class NewApplicationComponent implements OnInit {
   max: Date = new Date();
   width: number = 0;
   orientation: any = 'horizontal';
+  loading$ = this.loader.loading$;
 
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router
-) {
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, public loader: LoadingService
+  ) {
     this.personalDetails = this.personalDetailsForm();
     this.addressDetails = this.addressDetailsForm();
     this.applicationForm = this.fb.group({
@@ -47,33 +49,33 @@ export class NewApplicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.prepopulateForm();
-    // this.applicationForm.patchValue({
-    //   "personalDetails": {
-    //     "name": "Siyabonga",
-    //     "surname": "Hlongwane",
-    //     "dateOfBirth": "2023-02-22T22:00:00.000Z",
-    //     "schoolCurrentlyAttending": "jhj",
-    //     "schoolWishToAttend": "hjhjh",
-    //     "gradeAndYearDoing": "jhjhj",
-    //     "hasGrant": "Yes",
-    //     "grantDetails": "uhghg",
-    //     "course": "hjhj",
-    //     "motivation": "sdsd",
-    //     "fetWishToAttend": "hjhjh",
-    //     "requestingFor": "hghghhgh",
-    //     "marksDoc": ""
-    //   },
-    //   "addressDetails": {
-    //     "town": "jhjHJHJ",
-    //     "city": "hjhj",
-    //     "province": "Mpumalanga",
-    //     "cellOne": "67676",
-    //     "cellTwo": "76767",
-    //     "email": "siyabonga@webgooru.co.za"
-    //   },
-    //   "subjects": [],
-    //   "favouriteSubject": "sdsd"
-    // })
+    this.applicationForm.patchValue({
+      "personalDetails": {
+        "name": "Siyabonga",
+        "surname": "Hlongwane",
+        "dateOfBirth": "2023-02-22T22:00:00.000Z",
+        "schoolCurrentlyAttending": "jhj",
+        "schoolWishToAttend": "hjhjh",
+        "gradeAndYearDoing": "jhjhj",
+        "hasGrant": "Yes",
+        "grantDetails": "uhghg",
+        "course": "hjhj",
+        "motivation": "sdsd",
+        "fetWishToAttend": "hjhjh",
+        "requestingFor": "hghghhgh",
+        "marksDoc": ""
+      },
+      "addressDetails": {
+        "town": "jhjHJHJ",
+        "city": "hjhj",
+        "province": "Mpumalanga",
+        "cellOne": "67676",
+        "cellTwo": "76767",
+        "email": "siyabonga@webgooru.co.za"
+      },
+      "subjects": [],
+      "favouriteSubject": "sdsd"
+    })
   }
 
   toggleState(state: boolean) {
@@ -201,7 +203,7 @@ export class NewApplicationComponent implements OnInit {
         this.router.navigate(['abela/beneficiary/applications/my-applications']);
       }
     }, err => {
-console.log(err)
+      console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
     })
   }

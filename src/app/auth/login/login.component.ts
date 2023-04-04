@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { AuthService } from '../auth.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,9 @@ export class LoginComponent implements OnInit {
   loginForm: any = {};
   showPass: boolean = false;
   width: any = 0;
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private router: Router, private authService: AuthService) {
+  loading$ = this.loader.loading$;
+
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private router: Router, private authService: AuthService, public loader: LoadingService) {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
       password: [null, [Validators.required]],

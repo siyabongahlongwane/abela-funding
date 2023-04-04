@@ -204,7 +204,7 @@ console.log(err)
   fetchApplication(applicationId: string) {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${applicationId}`).subscribe((data: any) => {
       this.application = data[0];
-      this.application.personalDetails.dateOfBirth = new Date(this.application.personalDetails.dateOfBirth)
+      this.application.personalDetails.dateOfBirth = new Date(this.application?.personalDetails?.dateOfBirth)
       this.prepopulateForm(this.application);
 
     }, err => {
@@ -219,7 +219,7 @@ console.log(err)
         this.marksDoc = data;
         this.showDoc = true;
       }
-      this.application.personalDetails.dateOfBirth = new Date(this.application.personalDetails.dateOfBirth)
+      this.application.personalDetails.dateOfBirth = new Date(this.application?.personalDetails?.dateOfBirth)
       this.prepopulateForm(this.application);
 
     }, err => {

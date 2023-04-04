@@ -1,3 +1,4 @@
+<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
 <div class="horizontal-center-stretch full-width full-height new-app">
     <mat-card class="full-width">
         <div class="vertical-start-stretch stepper-container">
@@ -272,7 +273,7 @@
                             <div class="horizontal-start-stretch width-90"  [class.full-width]="width <= 768">
                                 <h1 class="bold">Subjects & Marks</h1>
                             </div>
-                            <div class="horizontal-start-stretch gap-1em">
+                            <div class="horizontal-start-stretch gap-1em col-sm">
                                 <mat-radio-button value="upload" (click)="toggleState(true)">Upload Marks
                                     Document</mat-radio-button>
                                 <mat-radio-button value="insert" (click)="toggleState(false)">Insert Marks
@@ -295,8 +296,8 @@
                             </div>
                             <div *ngIf="isUpload == false" class="vertical-center-stretch width-90 gap-1em"   [class.full-width]="width <= 768">
                                 <div  [class.flex-wrap]="width <= 768" *ngFor="let subject of subjects.controls; let i = index" formArrayName="subjects"
-                                    class="horizontal-space-between-center">
-                                    <div class="vertical-start-stretch grey-input-container width-25" [class.width-48]="width <= 768"
+                                    class="horizontal-space-between-center col-sm">
+                                    <div class="vertical-start-stretch grey-input-container width-25" [class.full-width]="width <= 768"
                                         [formGroupName]="i">
                                         <label class="bold">Subject {{ i + 1}}</label>
                                         <mat-form-field appearance="outline">
@@ -308,7 +309,7 @@
                                         </mat-form-field>
                                     </div>
 
-                                    <div class="vertical-start-stretch grey-input-container width-25" [class.width-48]="width <= 768"
+                                    <div class="vertical-start-stretch grey-input-container width-25" [class.full-width]="width <= 768"
                                         [formGroupName]="i">
                                         <label class="bold">Standard {{ i + 1 }}</label>
                                         <mat-form-field appearance="outline" [floatLabel]="'never'">
@@ -322,7 +323,7 @@
                                         </mat-form-field>
                                     </div>
 
-                                    <div class="vertical-start-stretch grey-input-container width-25" [class.width-48]="width <= 768"
+                                    <div class="vertical-start-stretch grey-input-container width-25" [class.full-width]="width <= 768"
                                         [formGroupName]="i">
                                         <label class="bold">Mark {{ i + 1 }}</label>
                                         <mat-form-field appearance="outline">

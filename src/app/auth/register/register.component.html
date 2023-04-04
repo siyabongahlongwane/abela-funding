@@ -1,3 +1,4 @@
+<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
 <div class="horizontal-center-center full-height register">
     <div class="vertical-start-stretch max-width-600 card-container full-height">
         <mat-card class="border-radius-2em">
@@ -13,9 +14,9 @@
                     <mat-icon class="red-color pointer" (click)="close()">cancel</mat-icon>
                 </div>
                 <form [formGroup]="registerForm">
-                    <div class="vertical-start-stretch gap-1em">
+                    <div class="vertical-start-stretch gap-1em gap-sm">
                         <form [formGroup]="personalDetails">
-                            <div class="horizontal-space-between-stretch col-sm">
+                            <div class="horizontal-space-between-stretch col-sm gap-sm">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Name</label>
                                     <mat-form-field appearance="outline">
@@ -57,7 +58,7 @@
                         </form>
 
                         <form [formGroup]="contactDetails">
-                            <div class="horizontal-space-between-stretch col-sm">
+                            <div class="horizontal-space-between-stretch col-sm gap-sm">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Email</label>
                                     <mat-form-field appearance="outline">
@@ -98,7 +99,7 @@
 
                         <form [formGroup]="addressDetails">
 
-                            <div class="horizontal-space-between-stretch col-sm full-width">
+                            <div class="horizontal-space-between-stretch col-sm gap-sm full-width">
                                 <div class="vertical-start-stretch grey-input-container width-30">
                                     <label class="bold">Town</label>
                                     <mat-form-field appearance="outline">
@@ -137,7 +138,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="horizontal-space-between-stretch col-sm full-width">
+                        <div class="horizontal-space-between-stretch col-sm gap-sm full-width">
                             <div class="vertical-start-stretch grey-input-container width-30">
                                 <label class="bold">Role</label>
                                 <mat-form-field appearance="outline">
