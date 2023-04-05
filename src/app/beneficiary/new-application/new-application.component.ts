@@ -49,33 +49,33 @@ export class NewApplicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.prepopulateForm();
-    this.applicationForm.patchValue({
-      "personalDetails": {
-        "name": "Siyabonga",
-        "surname": "Hlongwane",
-        "dateOfBirth": "2023-02-22T22:00:00.000Z",
-        "schoolCurrentlyAttending": "jhj",
-        "schoolWishToAttend": "hjhjh",
-        "gradeAndYearDoing": "jhjhj",
-        "hasGrant": "Yes",
-        "grantDetails": "uhghg",
-        "course": "hjhj",
-        "motivation": "sdsd",
-        "fetWishToAttend": "hjhjh",
-        "requestingFor": "hghghhgh",
-        "marksDoc": ""
-      },
-      "addressDetails": {
-        "town": "jhjHJHJ",
-        "city": "hjhj",
-        "province": "Mpumalanga",
-        "cellOne": "67676",
-        "cellTwo": "76767",
-        "email": "siyabonga@webgooru.co.za"
-      },
-      "subjects": [],
-      "favouriteSubject": "sdsd"
-    })
+    // this.applicationForm.patchValue({
+    //   "personalDetails": {
+    //     "name": "Siyabonga",
+    //     "surname": "Hlongwane",
+    //     "dateOfBirth": "2023-02-22T22:00:00.000Z",
+    //     "schoolCurrentlyAttending": "jhj",
+    //     "schoolWishToAttend": "hjhjh",
+    //     "gradeAndYearDoing": "jhjhj",
+    //     "hasGrant": "Yes",
+    //     "grantDetails": "uhghg",
+    //     "course": "hjhj",
+    //     "motivation": "sdsd",
+    //     "fetWishToAttend": "hjhjh",
+    //     "requestingFor": "hghghhgh",
+    //     "marksDoc": ""
+    //   },
+    //   "addressDetails": {
+    //     "town": "jhjHJHJ",
+    //     "city": "hjhj",
+    //     "province": "Mpumalanga",
+    //     "cellOne": "67676",
+    //     "cellTwo": "76767",
+    //     "email": "siyabonga@webgooru.co.za"
+    //   },
+    //   "subjects": [],
+    //   "favouriteSubject": "sdsd"
+    // })
   }
 
   toggleState(state: boolean) {
