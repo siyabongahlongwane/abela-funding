@@ -38,7 +38,11 @@ export class ProfileComponent implements OnInit {
       maxHeight: '80vh'
     });
 
-    dialog.afterClosed().subscribe(data => data && this.updateDetails(data));
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
+        this.updateDetails(data);
+      }
+    });
   }
 
   updateDetails(data: any) {
@@ -46,6 +50,7 @@ export class ProfileComponent implements OnInit {
       if (resp.msg) {
         this.sharedService.openSnackbar(resp.msg);
         this.sharedService.set('user', resp.updatedProfile);
+        this.getUser();
       }
     }, err => {
       console.log(err);

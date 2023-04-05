@@ -7,5 +7,6 @@ export const environment = {
     authDomain: 'abelatrust-funding.firebaseapp.com',
     messagingSenderId: '744740162231',
   },
+  backendUrl: 'https://abela-trust.onrender.com/api',
   production: true
 };

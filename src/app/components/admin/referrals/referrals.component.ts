@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './referrals.component.html',
   styleUrls: ['./referrals.component.scss']
 })
-export class ReferralsComponent implements OnInit, AfterViewInit {
+export class ReferralsComponent implements OnInit {
   displayedColumns: string[] = ['referralDate', 'referredPerson', 'referredBy', 'email', 'phone'];
   dataSource: any;
   tableData: any[] = [];
@@ -29,7 +29,8 @@ export class ReferralsComponent implements OnInit, AfterViewInit {
 
   fetchReferrals() {
     this.userService.fetchAllReferrals(`users/fetchReferrals`).subscribe((data: any) => {
-      this.referralsCount = data.length;
+    this.tableData = [];
+    this.referralsCount = data.length;
       data.forEach((obj: any) => {
         let temp = {}
         temp = Object.assign(temp, {
@@ -51,14 +52,6 @@ export class ReferralsComponent implements OnInit, AfterViewInit {
       console.log(err);
       this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
     })
-  }
-
-  ngAfterViewInit() {
-    console.log('log')
-    console.log(this.sort)
-
-    // this.dataSource.paginator = this?.paginator;
-    // this.dataSource.sort = this?.sort;
   }
 
   viewApplication(applicationId: string) {

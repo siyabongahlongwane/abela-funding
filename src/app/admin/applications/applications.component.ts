@@ -101,9 +101,9 @@ export class ApplicationsComponent implements OnInit {
 
 
   fetchApplicationsData(filter: any) {
-    console.log(filter);
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
-      data.forEach((application: any) => {
+    this.tableData = [];
+    data.forEach((application: any) => {
         let temp = {};
         temp = {
           _id: application._id,

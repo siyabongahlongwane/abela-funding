@@ -21,7 +21,7 @@
     </div>
 
     <div class="vertical-start-stretch full-width white-bg table-container full-width full-height">
-        <div *ngIf="applicationsCount && applicationsCount == 0 && (loading$ | async)"
+        <div *ngIf="(applicationsCount == 0) && !(loading$ | async)"
             class="horizontal-center-center full-width full-height">
             <h1 class="bold">No applications found</h1>
         </div>

@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-    // backendUrl: string = 'http://localhost:5000/api';
-    backendUrl: string = 'https://abela-trust.onrender.com/api';
+    backendUrl: string = environment.backendUrl;
   constructor(private http: HttpClient) { }
 
   update(endpoint: string, body: any): Observable<any> {
