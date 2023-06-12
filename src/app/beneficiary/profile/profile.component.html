@@ -3,8 +3,8 @@
     <div class="vertical-start-center width-90 gap-1em">
         <div class="vertical-start-center  gap-5px">
             <div class="vertical-start-center gap-5px">
-                <h2 class="bold secondary-color">Hi, {{ user?.personalDetails?.name }} {{ user?.personalDetails?.surname
-                    }}</h2>
+                <h2 class="bold secondary-color">Hi, {{ user?.personalDetails?.name }} {{ user?.personalDetails?.surname }}
+                </h2>
                 <div class="half-width share-text">
                     <!-- <small>Click <span (click)="copyRefId()" class="primary-color bold pointer">here</span> to copy your
             code and share with others to stand a chance to win data.</small> -->
@@ -18,7 +18,7 @@
                 <div title="facebook" class="icon pointer white-bg vertical-start-stretch" (click)="facebook()">
                     <img src="../../../assets/facebook.png" alt="facebook">
                 </div>
-                <div title="twitter" class="icon pointer white-bg vertical-start-stretch" (click)="twitter()">
+                <div title="twitter" class="icon pointer white-bg vertical-start-stretch" (click)="tiktok()">
                     <img src="../../../assets/twitter.svg" alt="twitter">
                 </div>
             </div>
@@ -37,8 +37,7 @@
                 </div>
             </div>
             <div class="vertical-center-center">
-                <button (click)="openRegisterDialog()" class="primary-bg white-color border-radius-2em"
-                    mat-raised-button>Edit Details</button>
+                <button (click)="openRegisterDialog()" class="primary-bg white-color border-radius-2em" mat-raised-button>Edit Details</button>
             </div>
         </div>
     </div>

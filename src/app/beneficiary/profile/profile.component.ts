@@ -73,14 +73,10 @@ export class ProfileComponent implements OnInit {
     const facebookApi = `https://www.facebook.com/sharer/sharer.php?u=${this.url}?refId=${this.user.refId}`;
     window.open(facebookApi, '_blank')
   }
-  twitter() {
+  tiktok() {
     const twitterApi = `https://twitter.com/intent/tweet?text=${this.message}`;
     window.open(twitterApi, '_blank')
   }
-  instagram() {
-
-  }
-
   whatsapp() {
     window.open(`https://wa.me/?text=${this.message}`, '_blank')
 
