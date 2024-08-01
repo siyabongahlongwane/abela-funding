@@ -219,7 +219,6 @@ console.log(err)
         this.marksDoc = data;
         this.showDoc = true;
       }
-      this.application.personalDetails.dateOfBirth = new Date(this.application?.personalDetails?.dateOfBirth)
       this.prepopulateForm(this.application);
 
     }, err => {

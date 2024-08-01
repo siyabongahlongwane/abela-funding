@@ -15,7 +15,7 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./my-applications.component.scss']
 })
 export class MyApplicationsComponent implements OnInit {
-  displayedColumns: string[] = ['dateCreated', 'name', 'surname', 'email', 'requestingFor', 'status', 'action'];
+  displayedColumns: string[] = ['dateCreated', 'name', 'email', 'requestingFor', 'status', 'action'];
   dataSource: any;
   counts: number[] = [0, 0, 0, 0, 0];
   filter: string = '';

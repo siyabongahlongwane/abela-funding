@@ -1,0 +1,137 @@
+<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
+<div class="vertical-start-stretch full-width full-height docs-upload" [ngClass]="{'disable-all': loading$ | async}">
+    <mat-card class="full-width gap-2em vertical-start-stretch">
+        <h1>Upload Documents</h1>
+        <form [formGroup]="personalDetails">
+            <div class="vertical-center-center gap-2em  full-width">
+                <div class="horizontal-space-between-stretch col-sm full-width input-container"
+                    [class.full-width]="width <= 768">
+                    <div class="vertical-start-stretch grey-input-container width-48" [class.full-width]="width <= 768">
+                        <label class="bold">Name</label>
+                        <mat-form-field appearance="outline">
+                            <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')" matInput
+                                formControlName="name" placeholder="Name">
+                            <mat-error *ngIf="personalDetails.get('name')?.hasError('required')">
+                                Name is <b>required!</b>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="vertical-start-stretch grey-input-container width-48" [class.full-width]="width <= 768">
+                        <label class="bold">Surname</label>
+                        <mat-form-field appearance="outline">
+                            <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')" matInput
+                                formControlName="surname" placeholder="Surname">
+                            <mat-error *ngIf="personalDetails.get('surname')?.hasError('required')">
+                                Surname is <b>required!</b>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-center-center gap-2em  full-width">
+                <div class="horizontal-space-between-stretch col-sm full-width input-container"
+                    [class.full-width]="width <= 768">
+                    <div class="vertical-start-stretch grey-input-container width-48" [class.full-width]="width <= 768">
+                        <label class="bold">Race</label>
+                        <mat-form-field appearance="outline">
+                            <mat-select formControlName="race" placeholder="Race">
+                                <mat-option *ngFor="let race of ['Black', 'Coloured', 'Indian', 'White', 'Other']"
+                                    [value]="race">{{
+                                    race }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="personalDetails.get('race')?.hasError('required')">
+                                Race is <b>required!</b>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="vertical-start-stretch grey-input-container width-48" [class.full-width]="width <= 768">
+                        <label class="bold">Gender</label>
+                        <mat-form-field appearance="outline">
+                            <mat-select formControlName="gender" placeholder="Gender">
+                                <mat-option *ngFor="let gender of ['Male', 'Female', 'Other']" [value]="gender">{{
+                                    gender }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="personalDetails.get('gender')?.hasError('required')">
+                                Gender is <b>required!</b>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-center-center gap-2em  full-width">
+                <div class="horizontal-space-between-stretch col-sm full-width input-container"
+                    [class.full-width]="width <= 768">
+                    <div class="vertical-start-stretch grey-input-container width-48" [class.full-width]="width <= 768">
+                        <label class="bold">School Name</label>
+                        <mat-form-field appearance="outline">
+                            <input type="text" matInput formControlName="schoolName" placeholder="School Name">
+                            <mat-error *ngIf="personalDetails.get('schoolName')?.hasError('required')">
+                                School Name is <b>required!</b>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="vertical-start-stretch grey-input-container width-48" [class.full-width]="width <= 768">
+                        <label class="bold">Principal Contact Details</label>
+                        <mat-form-field appearance="outline">
+                            <input type="text" matInput formControlName="principalContactDetails"
+                                placeholder="Principal Contact Details">
+                            <mat-error *ngIf="personalDetails.get('principalContactDetails')?.hasError('required')">
+                                Principal Contact Details is <b>required!</b>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-center-center gap-2em  full-width">
+                <div class="horizontal-space-between-stretch col-sm full-width input-container"
+                    [class.full-width]="width <= 768">
+
+                    <div class="vertical-start-stretch grey-input-container width-48" [class.full-width]="width <= 768">
+                        <label class="bold">Accounts Contact Details</label>
+                        <mat-form-field appearance="outline">
+                            <input type="text" matInput formControlName="accountsContactDetails"
+                                placeholder="Accounts Contact Details">
+                            <mat-error *ngIf="personalDetails.get('accountsContactDetails')?.hasError('required')">
+                                Accounts Contact Details is <b>required!</b>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="horizontal-space-between wrap">
+            <div *ngFor="let doc of docs; let i = index;" class="vertical-start-stretch gap-1em width-48">
+                <div class="vertical-start-stretch gap-1em  ">
+                    <input type="file" #upload [required]="true" (change)="uploadDoc($event, i)" hidden />
+                    <span>{{ doc.label }}<br> <span class="bold">{{ doc.name || 'N/A' }}</span></span>
+                    <button (click)="upload.click()" class="secondary-bg white-color roundt" mat-raised-button>
+                        <div class="horizontal-center-center gap-1em">
+                            Choose File<mat-icon>cloud</mat-icon>
+                        </div>
+                    </button>
+                    <!-- <mat-error
+                        *ngIf="submitted && !applicationForm.value?.personalDetails?.marksDoc">Please
+                        upload
+                        your marks!</mat-error> -->
+                </div>
+                <div class="vertical-start-stretch gap-1em">
+                    <div class="horizontal-start-stretch full-width">
+                        <img *ngIf="doc.base64 && doc.type == 'img'" width="150px" [src]="doc.base64" [alt]="doc.label">
+                        <span *ngIf="doc.base64 && doc.type == 'pdf'" class="bold primary-color">Uploaded Successfully,
+                            no preview available.</span>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-text">
+            <button (click)="uploadDocs(personalDetails)" class="primary-bg white-color round mt-2" mat-raised-button>
+                Submit
+            </button>
+        </div>
+    </mat-card>
+</div>

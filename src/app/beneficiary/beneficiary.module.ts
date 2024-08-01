@@ -11,6 +11,8 @@ import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { ProfileComponent } from './profile/profile.component';
+import { DocumentsUploadComponent } from './documents-upload/documents-upload.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { ProfileComponent } from './profile/profile.component';
     DashboardComponent,
     NavbarComponent,
     MyApplicationsComponent,
-    ProfileComponent
+    ProfileComponent,
+    DocumentsUploadComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +31,8 @@ import { ProfileComponent } from './profile/profile.component';
     MaterialModule,
     MaterialModule,
     ChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PdfViewerModule
   ]
 })
 export class BeneficiaryModule { }

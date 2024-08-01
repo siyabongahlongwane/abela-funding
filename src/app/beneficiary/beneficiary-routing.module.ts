@@ -6,6 +6,7 @@ import { ContainerComponent } from './container/container.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { NewApplicationComponent } from './new-application/new-application.component';
 import { ProfileComponent } from './profile/profile.component';
+import { DocumentsUploadComponent } from './documents-upload/documents-upload.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,9 @@ const routes: Routes = [
           },
           {
             path: 'view/:applicationId', component: ViewApplicationComponent
+          },
+          {
+            path: 'upload-documents/:applicationId', component: DocumentsUploadComponent
           }
         ]
       },

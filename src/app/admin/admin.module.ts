@@ -10,6 +10,7 @@ import { ApplicationsComponent } from './applications/applications.component';
 import { ChartsModule } from 'ng2-charts';
 import { ViewApplicationComponent } from './view-application/view-application.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AdminRoutingModule,
     MaterialModule,
     ChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PdfViewerModule
   ]
 })
 export class AdminModule { }

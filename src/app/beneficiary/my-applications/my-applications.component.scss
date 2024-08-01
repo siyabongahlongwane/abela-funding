@@ -6,3 +6,10 @@
     overflow-y: auto;
     height: calc(100vh - 226px);
 }
+
+.upload-button {
+    padding: 4px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: .8rem;
+}

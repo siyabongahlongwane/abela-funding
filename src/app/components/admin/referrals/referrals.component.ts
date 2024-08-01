@@ -61,6 +61,5 @@ export class ReferralsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(`Filter: ${this.dataSource.filter}`);
   }
 }

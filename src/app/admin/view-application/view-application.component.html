@@ -3,7 +3,8 @@
     <div class="vertical-start-center width-90 gap-2em">
         <div class="horizontal-start-stretch gap-1em full-width">
             <div class=" rounded">
-                <mat-icon class="primary-color" style="font-size: 100px; width: 100px !important">account_circle</mat-icon>
+                <mat-icon class="primary-color"
+                    style="font-size: 100px; width: 100px !important">account_circle</mat-icon>
             </div>
             <div class="vertical-start-stretch">
                 <h3 class="secondary-color bold">{{ application?.personalDetails?.name }} {{
@@ -90,6 +91,29 @@
                     </h4>
                     <h4 class="bold width-24">Percentage {{ i + 1 }}: <span class="fw-500">{{ subject?.mark}}</span>
                     </h4>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="vertical-start-stretch full-width gap-1em section-width">
+            <h3 class="secondary-color bold border-bottom-secondary">Extra Documents Info</h3>
+            <div *ngIf="showDoc" class="vertical-start-stretch">
+                <iframe [src]="this.sanitizer.bypassSecurityTrustResourceUrl(marksDoc?.base64)" frameborder="0"
+                    height="400px" width="100%"></iframe>
+            </div>
+
+            <div class="vertical-start-stretch max-width-930">
+                <div *ngFor="let doc of application?.documents; let i = index;" class="vertical-start-stretch gap-1em">
+                    <div>
+                        <h4 class="bold">{{doc.label}}</h4>
+                    </div>
+                    <img *ngIf="!doc.base64.includes('pdf')" width="80px"
+                        [src]="this.sanitizer.bypassSecurityTrustResourceUrl(doc.base64)" [alt]="doc.label">
+
+                    <pdf-viewer *ngIf="doc.base64.includes('pdf')" [src]="doc.file" [render-text]="true"
+                        [original-size]="false" style="width: 100%; height: 500px"></pdf-viewer>
 
                 </div>
 
