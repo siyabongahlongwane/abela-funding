@@ -11,8 +11,7 @@ import { ChartsModule } from 'ng2-charts';
 import { ViewApplicationComponent } from './view-application/view-application.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { KeyValueListComponent } from './key-value-list/key-value-list.component';
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,6 @@ import { KeyValueListComponent } from './key-value-list/key-value-list.component
     NavbarComponent,
     ApplicationsComponent,
     ViewApplicationComponent,
-    KeyValueListComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +27,8 @@ import { KeyValueListComponent } from './key-value-list/key-value-list.component
     MaterialModule,
     ChartsModule,
     ReactiveFormsModule,
-    PdfViewerModule
+    PdfViewerModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

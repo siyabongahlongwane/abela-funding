@@ -13,6 +13,7 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
 import { ProfileComponent } from './profile/profile.component';
 import { DocumentsUploadComponent } from './documents-upload/documents-upload.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     MaterialModule,
     ChartsModule,
     ReactiveFormsModule,
-    PdfViewerModule
+    PdfViewerModule,
+    SharedModule
   ]
 })
 export class BeneficiaryModule { }
