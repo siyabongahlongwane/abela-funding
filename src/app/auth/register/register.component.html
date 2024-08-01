@@ -1,6 +1,6 @@
 <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
 <div class="horizontal-center-center full-height register">
-    <div class="vertical-start-stretch max-width-600 card-container full-height">
+    <div class="vertical-center-stretch max-width-600 card-container full-height">
         <mat-card class="border-radius-2em">
             <div class="vertical-start-stretch gap-1em max-width-600 full-height">
                 <div *ngIf="!data" class="horizontal-center-center full-width">
@@ -44,7 +44,7 @@
                                 <div class="vertical-start-stretch grey-input-container width-30 date-picker">
                                     <label class="bold">Date of Birth</label>
                                     <mat-form-field appearance="outline">
-                                        <input (click)="picker.open()" matInput [matDatepicker]="picker"
+                                        <input [max]="today" (click)="picker.open()" matInput [matDatepicker]="picker"
                                             formControlName="dateOfBirth" placeholder="Date of Birth">
                                         <mat-icon (click)="picker.open()" matSuffix>event_note</mat-icon>
                                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

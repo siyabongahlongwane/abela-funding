@@ -49,33 +49,33 @@ export class NewApplicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.prepopulateForm();
-    // this.applicationForm.patchValue({
-    //   "personalDetails": {
-    //     "name": "Siyabonga",
-    //     "surname": "Hlongwane",
-    //     "dateOfBirth": "2023-02-22T22:00:00.000Z",
-    //     "schoolCurrentlyAttending": "jhj",
-    //     "schoolWishToAttend": "hjhjh",
-    //     "gradeAndYearDoing": "jhjhj",
-    //     "hasGrant": "Yes",
-    //     "grantDetails": "uhghg",
-    //     "course": "hjhj",
-    //     "motivation": "sdsd",
-    //     "fetWishToAttend": "hjhjh",
-    //     "requestingFor": "hghghhgh",
-    //     "marksDoc": ""
-    //   },
-    //   "addressDetails": {
-    //     "town": "jhjHJHJ",
-    //     "city": "hjhj",
-    //     "province": "Mpumalanga",
-    //     "cellOne": "67676",
-    //     "cellTwo": "76767",
-    //     "email": "siyabonga@webgooru.co.za"
-    //   },
-    //   "subjects": [],
-    //   "favouriteSubject": "sdsd"
-    // })
+    this.applicationForm.patchValue({
+      "personalDetails": {
+        "name": "Siyabonga",
+        "surname": "Hlongwane",
+        "dateOfBirth": "2000-02-22T22:00:00.000Z",
+        "schoolCurrentlyAttending": "Boksburg",
+        "schoolWishToAttend": "Voortrekker",
+        "gradeAndYearDoing": "9 in 2025",
+        "hasGrant": "No",
+        "grantDetails": "None",
+        "course": "Doctor",
+        "motivation": "I work hard bro.",
+        "fetWishToAttend": "DUT",
+        "requestingFor": "Bursary",
+        "marksDoc": ""
+      },
+      "addressDetails": {
+        "town": "Boksburg",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "cellOne": "0846843654",
+        "cellTwo": "086054056",
+        "email": "siyabonga@webgooru.co.za"
+      },
+      "subjects": [],
+      "favouriteSubject": "Maths."
+    })
   }
 
   toggleState(state: boolean) {
@@ -170,7 +170,9 @@ export class NewApplicationComponent implements OnInit {
         myReader.onloadend = (e) => {
           this.applicationForm.value.personalDetails.marksDoc = this.document = {
             base64: myReader.result,
-            name: file.name
+            name: file.name,
+            file,
+            type: file.type.split('/')[1]
           };
         }
         myReader.readAsDataURL(file);
@@ -196,8 +198,25 @@ export class NewApplicationComponent implements OnInit {
   saveApplication(form: any) {
     form['dateCreated'] = new Date();
     form['dateModified'] = null;
+    this.loader.showLoader();
+    console.log(this.document);
+    this.applicationService.uploadFiles([this.document.file]).then((URLs: string[]) => {
 
-    this.applicationService.apply(`applications/new`, form).subscribe(resp => {
+      const body = {
+        ...this.applicationForm.value,
+        personalDetails: { ...this.personalDetails.value, marksDoc: { name: 'Term Results', file: URLs[0],type: this.document.type } }
+      }
+      console.log(body);
+
+      this.startNewApplication(body)
+    }).catch((err) => {
+      this.sharedService.openSnackbar('Something went wrong');
+      console.log(err);
+    }).finally(() => this.loader.hideLoader());
+  }
+
+  startNewApplication(body: any) {
+    this.applicationService.apply(`applications/new`, body).subscribe(resp => {
       if (resp.msg) {
         this.sharedService.openSnackbar(resp.msg);
         this.router.navigate(['abela/beneficiary/applications/my-applications']);

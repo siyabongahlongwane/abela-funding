@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
   width: any = 0;
   loading$ = this.loader.loading$;
   provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
+  today = new Date();
   constructor(private fb: FormBuilder, private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, @Optional() @Inject(MAT_DIALOG_DATA) public data: any, @Optional() public dialogRef: MatDialogRef<RegisterComponent>, private userService: UserService, public loader: LoadingService) {
     this.personalDetailsForm();
     this.contactDetailsForm();

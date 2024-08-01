@@ -31,6 +31,28 @@ export class ViewApplicationComponent implements OnInit {
   marksDoc: any;
   showDoc: boolean = false;
   loading$ = this.loader.loading$;
+  extraInfo: any[] = [
+    {
+      label: 'Race',
+      key: 'race' 
+    },
+    {
+      label: 'Gender',
+      key: 'gender' 
+    },
+    {
+      label: 'school Name',
+      key: 'schoolName' 
+    },
+    {
+      label: 'Principal Contact Details',
+      key: 'principalContactDetails' 
+    },
+    {
+      label: 'Accounts Contact Details',
+      key: 'accountsContactDetails' 
+    },
+  ]
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, private activeRoute: ActivatedRoute, public sanitizer: DomSanitizer, public loader: LoadingService
   ) {
     this.personalDetails = this.personalDetailsForm();
@@ -50,7 +72,7 @@ export class ViewApplicationComponent implements OnInit {
     this.activeRoute.params.subscribe(params => {
       if (params['applicationId']) {
         this.fetchApplication(`?_id=${params['applicationId']}`);
-        this.fetchStudentMarks(`?_id=${params['applicationId']}`);
+        // this.fetchStudentMarks(`?_id=${params['applicationId']}`);
       }
       else {
         // Return to previous page

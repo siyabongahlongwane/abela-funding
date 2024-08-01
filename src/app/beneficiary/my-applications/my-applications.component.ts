@@ -68,6 +68,7 @@ export class MyApplicationsComponent implements OnInit {
           email: application.addressDetails.email,
           status: application.status.current,
           requestingFor: application.personalDetails.requestingFor,
+          submittedDocs: application.submittedDocs,
         });
 
         this.tableData.push(temp);

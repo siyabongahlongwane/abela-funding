@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApplicationsService } from 'src/app/services/applications.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -46,7 +46,7 @@ export class DocumentsUploadComponent implements OnInit {
   personalDetails!: FormGroup;
   width: number = 0;
 
-  constructor(public sanitizer: DomSanitizer, private sharedService: SharedService, private applicationService: ApplicationsService, private activatedRouite: ActivatedRoute, private loaderService: LoadingService, private fb: FormBuilder) {
+  constructor(public sanitizer: DomSanitizer, private sharedService: SharedService, private applicationService: ApplicationsService, private activatedRouite: ActivatedRoute, private loaderService: LoadingService, private fb: FormBuilder, private router: Router) {
     this.personalDetails = this.personalDetailsForm();
     this.activatedRouteSub = this.activatedRouite.params.subscribe(params => {
       if (params['applicationId']) {
@@ -122,7 +122,7 @@ export class DocumentsUploadComponent implements OnInit {
           ...this.application,
           status: {
             comment: 'Awaiting verification...',
-            current: 'Documents Uploaded'
+            current: 'Approved'
           },
           submittedDocs: true,
           documents: this.docs,
@@ -145,6 +145,7 @@ export class DocumentsUploadComponent implements OnInit {
     this.applicationService.updateApplication(`applications/update/${this.application['_id']}`, data).subscribe((data: any) => {
       this.sharedService.openSnackbar(data?.msg);
       this.loaderService.hideLoader();
+      this.router.navigate(['/abela/beneficiary/applications'])
     }, err => {
       console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Updating Application, Try Again Later.');
