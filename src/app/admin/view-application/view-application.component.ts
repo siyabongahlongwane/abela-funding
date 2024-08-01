@@ -15,20 +15,9 @@ import { setUpKeyValueList } from 'src/app/utils/KeyToHumanValue';
 })
 export class ViewApplicationComponent implements OnInit {
   application: any = {};
-  applicationForm!: FormGroup;
-  personalDetails!: FormGroup;
-  addressDetails!: FormGroup;
-  updateStatus!: FormGroup;
-  isLinear = false;
-  isUpload: any;
-  provinces: string[] = ["Mpumalanga", "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Northern Cape", "North West", "Western Cape"];
-  standards: string[] = ['SG - Standard Grade', 'HG - Higher Grade', 'AP - Advance Programme'];
-  statuses: string[] = ['Pending', 'In Review', 'Approved', 'Rejected'];
-  options: string[] = ['Yes', 'No'];
   user: any = {};
-  hasGrant: boolean = false;
-  submitted: boolean = false;
-  document: any = null;
+  statuses: string[] = ['Pending', 'In Review', 'Approved', 'Rejected'];
+  updateStatus!: FormGroup;
   marksDoc: any;
   showDoc: boolean = false;
   loading$ = this.loader.loading$;
@@ -77,6 +66,7 @@ export class ViewApplicationComponent implements OnInit {
   fetchApplication(applicationId: string) {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${applicationId}`).subscribe((data: any) => {
       this.application = data[0];
+      this.updateStatus.patchValue({ ...this.application?.status });
       this.application.personalDetails.dateOfBirth = new Date(this.application?.personalDetails?.dateOfBirth);
       this.showDoc = Boolean(this.application?.personalDetails?.marksDoc?.file)
       if (this.showDoc) {
@@ -98,7 +88,9 @@ export class ViewApplicationComponent implements OnInit {
     const addressDetailsKeyList = ['cellOne', 'cellTwo', 'email', 'town', 'city', 'province'];
     this.addressDetailsList = setUpKeyValueList(addressDetails, addressDetailsKeyList);
 
-    const documentExtraDataKeyList = ['race', 'gender', 'schoolName', 'principalContactDetails', 'accountsContactDetails'];
-    this.documentExtraDataList = setUpKeyValueList(documentExtraData, documentExtraDataKeyList);
+    if (documentExtraData) {
+      const documentExtraDataKeyList = ['race', 'gender', 'schoolName', 'principalContactDetails', 'accountsContactDetails'];
+      this.documentExtraDataList = setUpKeyValueList(documentExtraData, documentExtraDataKeyList);
+    }
   }
 }

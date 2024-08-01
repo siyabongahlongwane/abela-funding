@@ -124,6 +124,7 @@ export class DocumentsUploadComponent implements OnInit {
             current: 'Approved'
           },
           submittedDocs: true,
+          checkIfUploaded: true,
           documents: this.docs,
           documentExtraData: form.value
         }

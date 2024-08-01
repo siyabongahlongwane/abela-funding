@@ -1,94 +1,98 @@
 <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
-<div class="horizontal-center-stretch white-bg padding-2em-zero">
-    <div class="vertical-start-center width-90 gap-2em">
-        <div class="full-width">
-            <app-applicant-and-status-viewer [application]="application"></app-applicant-and-status-viewer>
-        </div>
-
-        <div class="horizontal-space-between-stretch gap-1em full-width col-sm">
-            <div class="vertical-start-stretch width-48 gap-1em section-width">
-                <h3 class="secondary-color bold border-bottom-secondary">Personal Details</h3>
-                <div class="vertical-start-stretch">
-                    <app-key-value-list *ngIf="application?.personalDetails"
-                        [dataList]="personalDetailsList"></app-key-value-list>
-                </div>
-
+<div class="vertical-start-stretch white-bg  padding-2em-zero">
+    <div class="horizontal-center-stretch">
+        <div class="vertical-start-center width-90 gap-2em">
+            <div class="full-width">
+                <app-applicant-and-status-viewer [application]="application"></app-applicant-and-status-viewer>
             </div>
-            <div class="vertical-start-stretch width-48 gap-1em section-width">
-                <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
-                <div class="vertical-start-stretch">
-                    <app-key-value-list *ngIf="application?.addressDetails"
-                        [dataList]="addressDetailsList"></app-key-value-list>
-                </div>
-
-            </div>
-        </div>
-        <div class="vertical-start-stretch full-width gap-1em section-width">
-            <h3 class="secondary-color bold border-bottom-secondary">Subject Details</h3>
-            <div *ngIf="showDoc" class="vertical-start-stretch">
-                    <app-document-viewer
-                         [name]="marksDoc.name" [url]="marksDoc.file" [height]="'400px'"></app-document-viewer>
-            </div>
-
-            <div *ngIf="!showDoc" class="vertical-start-stretch max-width-930">
-                <div *ngFor="let subject of application?.subjects; let i = index;"
-                    class="horizontal-space-between-stretch gap-1em">
-                    <h4 class="bold width-24">Subject {{ i + 1 }}: <span class="fw-500">{{ subject?.subject}}</span>
-                    </h4>
-                    <h4 class="bold width-24">Standard {{ i + 1 }}: <span class="fw-500">{{ subject?.standard}}</span>
-                    </h4>
-                    <h4 class="bold width-24">Percentage {{ i + 1 }}: <span class="fw-500">{{ subject?.mark}}</span>
-                    </h4>
-
-                </div>
-
-            </div>
-        </div>
-
-        <div *ngIf="application?.documents?.length" class="vertical-start-stretch full-width gap-1em section-width">
-            <h3 class="secondary-color bold border-bottom-secondary">Extra Documents Info</h3>
-            <div class="vertical-start-stretch">
-                <app-key-value-list *ngIf="application?.documentExtraData"
-                    [dataList]="documentExtraDataList"></app-key-value-list>
-                <div class="vertical-start-stretch max-width-930">
-                    <app-document-viewer
-                        *ngFor="let item of application?.documents; let i = index;" [label]="item.label" [name]="item.name" [url]="item.file" [height]="'400px'"></app-document-viewer>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-    <div *ngIf="user?.role?.id == 'Admin'" class="vertical-start-stretch full-width gap-1em">
-        <h3 class="secondary-color bold border-bottom-secondary">Application Status Update</h3>
-        <div class="horizontal-space-between-stretch full-width">
-            <form class="full-width" [formGroup]="updateStatus">
-                <div class="vertical-start-stretch full-width gap-1em">
-                    <div class="vertical-start-stretch grey-input-container width-30">
-                        <label class="bold">Update Status</label>
-                        <mat-form-field appearance="outline" [floatLabel]="'never'">
-                            <mat-select formControlName="current" placeholder="Update Status">
-                                <mat-option *ngFor="let status of statuses" [value]="status">{{
-                                    status }}</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="updateStatus.get('current')?.hasError('required')">
-                                Status is <b>required!</b>
-                            </mat-error>
-                        </mat-form-field>
+    
+            <div class="horizontal-space-between-stretch gap-1em full-width col-sm">
+                <div class="vertical-start-stretch width-48 gap-1em section-width">
+                    <h3 class="secondary-color bold border-bottom-secondary">Personal Details</h3>
+                    <div class="vertical-start-stretch">
+                        <app-key-value-list *ngIf="application?.personalDetails"
+                            [dataList]="personalDetailsList"></app-key-value-list>
                     </div>
-
-                    <div class="vertical-start-stretch grey-input-container width-30">
-                        <label class="bold">Comment</label>
-                        <mat-form-field appearance="outline">
-                            <textarea formControlName="comment" placeholder="Comment" matInput></textarea>
-                        </mat-form-field>
-                    </div>
+    
                 </div>
-            </form>
-        </div>
-        <div class="width-30 horizontal-start-stretch">
-            <button [disabled]="updateStatus.invalid" (click)="statusUpdate(updateStatus)"
-                class="primary-bg white-color round" mat-raised-button>Update Status</button>
+                <div class="vertical-start-stretch width-48 gap-1em section-width">
+                    <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
+                    <div class="vertical-start-stretch">
+                        <app-key-value-list *ngIf="application?.addressDetails"
+                            [dataList]="addressDetailsList"></app-key-value-list>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="vertical-start-stretch full-width gap-1em section-width">
+                <h3 class="secondary-color bold border-bottom-secondary">Subject Details</h3>
+                <div *ngIf="showDoc" class="vertical-start-stretch">
+                        <app-document-viewer
+                             [name]="marksDoc.name" [url]="marksDoc.file" [height]="'400px'"></app-document-viewer>
+                </div>
+    
+                <div *ngIf="!showDoc" class="vertical-start-stretch max-width-930">
+                    <div *ngFor="let subject of application?.subjects; let i = index;"
+                        class="horizontal-space-between-stretch gap-1em">
+                        <h4 class="bold width-24">Subject {{ i + 1 }}: <span class="fw-500">{{ subject?.subject}}</span>
+                        </h4>
+                        <h4 class="bold width-24">Standard {{ i + 1 }}: <span class="fw-500">{{ subject?.standard}}</span>
+                        </h4>
+                        <h4 class="bold width-24">Percentage {{ i + 1 }}: <span class="fw-500">{{ subject?.mark}}</span>
+                        </h4>
+    
+                    </div>
+    
+                </div>
+            </div>
+    
+            <div *ngIf="application?.documents?.length" class="vertical-start-stretch full-width gap-1em section-width">
+                <h3 class="secondary-color bold border-bottom-secondary">Extra Documents Info</h3>
+                <div class="vertical-start-stretch">
+                    <app-key-value-list *ngIf="application?.documentExtraData"
+                        [dataList]="documentExtraDataList"></app-key-value-list>
+                    <div class="vertical-start-stretch max-width-930">
+                        <app-document-viewer
+                            *ngFor="let item of application?.documents; let i = index;" [label]="item.label" [name]="item.name" [url]="item.file" [height]="'400px'"></app-document-viewer>
+                    </div>
+    
+                </div>
+            </div>
+
+            <div *ngIf="user?.role?.id == 'Admin'" class="vertical-start-stretch full-width gap-1em">
+                <h3 class="secondary-color bold border-bottom-secondary">Application Status Update</h3>
+                <div class="horizontal-space-between-stretch full-width">
+                    <form class="full-width" [formGroup]="updateStatus">
+                        <div class="vertical-start-stretch full-width gap-1em">
+                            <div class="vertical-start-stretch grey-input-container width-30">
+                                <label class="bold">Update Status</label>
+                                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                                    <mat-select formControlName="current" placeholder="Update Status">
+                                        <mat-option *ngFor="let status of statuses" [value]="status">{{
+                                            status }}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="updateStatus.get('current')?.hasError('required')">
+                                        Status is <b>required!</b>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+            
+                            <div class="vertical-start-stretch grey-input-container width-30">
+                                <label class="bold">Comment</label>
+                                <mat-form-field appearance="outline">
+                                    <textarea formControlName="comment" placeholder="Comment" matInput></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="width-30 horizontal-start-stretch">
+                    <button [disabled]="updateStatus.invalid" (click)="statusUpdate(updateStatus)"
+                        class="primary-bg white-color round" mat-raised-button>Update Status</button>
+                </div>
+            </div>
+    
         </div>
     </div>
+    
 </div>

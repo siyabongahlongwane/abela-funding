@@ -199,18 +199,23 @@ export class NewApplicationComponent implements OnInit {
     form['dateCreated'] = new Date();
     form['dateModified'] = null;
     this.loader.showLoader();
-    this.applicationService.uploadFiles([this.document.file]).then((URLs: string[]) => {
+    if (this.document?.file) {
 
-      const body = {
-        ...this.applicationForm.value,
-        personalDetails: { ...this.personalDetails.value, marksDoc: { name: 'Term Results', file: URLs[0],type: this.document.type } }
-      }
+      this.applicationService.uploadFiles([this.document.file]).then((URLs: string[]) => {
 
-      this.startNewApplication(body)
-    }).catch((err) => {
-      this.sharedService.openSnackbar('Something went wrong');
-      console.log(err);
-    }).finally(() => this.loader.hideLoader());
+        const body = {
+          ...this.applicationForm.value,
+          personalDetails: { ...this.personalDetails.value, marksDoc: { name: 'Term Results', file: URLs[0], type: this.document.type } }
+        }
+
+        this.startNewApplication(body)
+      }).catch((err) => {
+        this.sharedService.openSnackbar('Something went wrong');
+        console.log(err);
+      }).finally(() => this.loader.hideLoader());
+    } else {
+      this.startNewApplication(this.applicationForm.value);
+    }
   }
 
   startNewApplication(body: any) {
