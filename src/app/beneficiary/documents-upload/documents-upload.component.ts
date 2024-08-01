@@ -90,7 +90,6 @@ export class DocumentsUploadComponent implements OnInit {
             file: file,
             type: file.type.split('/')[1] == 'pdf' ? 'pdf' : 'img'
           };
-          console.log(file, this.docs[index])
         }
         try {
           if (fileType !== 'pdf') return myReader.readAsDataURL(file);

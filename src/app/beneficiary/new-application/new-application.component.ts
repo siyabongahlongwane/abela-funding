@@ -199,14 +199,12 @@ export class NewApplicationComponent implements OnInit {
     form['dateCreated'] = new Date();
     form['dateModified'] = null;
     this.loader.showLoader();
-    console.log(this.document);
     this.applicationService.uploadFiles([this.document.file]).then((URLs: string[]) => {
 
       const body = {
         ...this.applicationForm.value,
         personalDetails: { ...this.personalDetails.value, marksDoc: { name: 'Term Results', file: URLs[0],type: this.document.type } }
       }
-      console.log(body);
 
       this.startNewApplication(body)
     }).catch((err) => {

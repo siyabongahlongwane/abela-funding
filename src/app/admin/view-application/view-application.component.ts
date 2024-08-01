@@ -82,7 +82,6 @@ export class ViewApplicationComponent implements OnInit {
       if (this.showDoc) {
         const { file, name, type } = this.application?.personalDetails?.marksDoc;
         this.marksDoc = { file, name: `${name}.${type}` };
-        console.log(this.marksDoc);
       }
       this.makeListData(this.application);
     }, err => {

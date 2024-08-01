@@ -30,7 +30,7 @@
                          [name]="marksDoc.name" [url]="marksDoc.file" [height]="'400px'"></app-document-viewer>
             </div>
 
-            <div *ngIf="!application?.personalDetails?.marksDoc?.file" class="vertical-start-stretch max-width-930">
+            <div *ngIf="!showDoc" class="vertical-start-stretch max-width-930">
                 <div *ngFor="let subject of application?.subjects; let i = index;"
                     class="horizontal-space-between-stretch gap-1em">
                     <h4 class="bold width-24">Subject {{ i + 1 }}: <span class="fw-500">{{ subject?.subject}}</span>
