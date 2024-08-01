@@ -158,6 +158,7 @@
                                         Password is <b>required!</b>
                                     </mat-error>
                                     <mat-icon matPrefix>lock</mat-icon>
+                                    <mat-icon matSuffix (click)="showPass = !showPass">{{showPass ? 'visibility' : 'visibility_off'}}</mat-icon>
                                 </mat-form-field>
                             </div>
 
