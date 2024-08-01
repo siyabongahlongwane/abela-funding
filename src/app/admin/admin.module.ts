@@ -11,6 +11,7 @@ import { ChartsModule } from 'ng2-charts';
 import { ViewApplicationComponent } from './view-application/view-application.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { KeyValueListComponent } from './key-value-list/key-value-list.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ContainerComponent,
     NavbarComponent,
     ApplicationsComponent,
-    ViewApplicationComponent
+    ViewApplicationComponent,
+    KeyValueListComponent
   ],
   imports: [
     CommonModule,

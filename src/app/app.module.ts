@@ -24,7 +24,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   declarations: [
     AppComponent,
     ConfirmPopupComponent,
-    ReferralsComponent
+    ReferralsComponent  
   ],
   imports: [
     BrowserModule,

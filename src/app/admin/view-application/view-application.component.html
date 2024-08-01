@@ -27,50 +27,16 @@
             <div class="vertical-start-stretch width-48 gap-1em section-width">
                 <h3 class="secondary-color bold border-bottom-secondary">Personal Details</h3>
                 <div class="vertical-start-stretch">
-                    <h4 class="bold">Date of Birth: <span class="fw-500">{{ application?.personalDetails?.dateOfBirth |
-                            date:
-                            'mediumDate' }}</span></h4>
-                    <h4 class="bold">School Currently Attending: <span class="fw-500">{{
-                            application?.personalDetails?.schoolCurrentlyAttending }}</span></h4>
-                    <h4 class="bold">School Wishing To Attend: <span class="fw-500">{{
-                            application?.personalDetails?.schoolWishToAttend
-                            }}</span></h4>
-                    <h4 class="bold">Grade and Year: <span class="fw-500">{{
-                            application?.personalDetails?.gradeAndYearDoing }}</span>
-                    </h4>
-                    <h4 class="bold">Has Study Grant: <span class="fw-500">{{ application?.personalDetails?.hasGrant
-                            }}</span></h4>
-
-                    <h4 class="bold">Additional Grant Comments: <span class="fw-500">{{
-                            application?.personalDetails?.grantDetails ||
-                            '-' }}</span></h4>
-                    <h4 class="bold">Course Wishing To Study After Matric: <span class="fw-500">{{
-                            application?.personalDetails?.course }}</span>
-                    </h4>
-                    <h4 class="bold">College or University: <span class="fw-500">{{
-                            application?.personalDetails?.fetWishToAttend
-                            }}</span></h4>
-                    <h4 class="bold">Requesting: <span class="fw-500">{{ application?.personalDetails?.requestingFor
-                            }}</span></h4>
-                    <h4 class="bold">Motivation: <span class="fw-500">{{ application?.personalDetails?.motivation
-                            }}</span></h4>
-
-
+                    <app-key-value-list *ngIf="application?.personalDetails"
+                        [dataList]="personalDetailsList"></app-key-value-list>
                 </div>
 
             </div>
             <div class="vertical-start-stretch width-48 gap-1em section-width">
                 <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
                 <div class="vertical-start-stretch">
-                    <h4 class="bold">Cell One: <span class="fw-500">{{ application?.addressDetails?.cellOne}}</span>
-                    </h4>
-                    <h4 class="bold">Cell Two: <span class="fw-500">{{ application?.addressDetails?.cellTwo ||
-                            '-'}}</span></h4>
-                    <h4 class="bold">Email: <span class="fw-500">{{ application?.addressDetails?.email}}</span></h4>
-                    <h4 class="bold">Town: <span class="fw-500">{{ application?.addressDetails?.town}}</span></h4>
-                    <h4 class="bold">City: <span class="fw-500">{{ application?.addressDetails?.city}}</span> </h4>
-                    <h4 class="bold">Province: <span class="fw-500">{{ application?.addressDetails?.province}}</span>
-                    </h4>
+                    <app-key-value-list *ngIf="application?.addressDetails"
+                        [dataList]="addressDetailsList"></app-key-value-list>
                 </div>
 
             </div>
@@ -103,8 +69,8 @@
         <div *ngIf="application?.documents?.length" class="vertical-start-stretch full-width gap-1em section-width">
             <h3 class="secondary-color bold border-bottom-secondary">Extra Documents Info</h3>
             <div class="vertical-start-stretch">
-                <h4 *ngFor="let item of extraInfo" class="bold">{{ item.label }}: <span class="fw-500">{{
-                        application.documentExtraData[item.key] }}</span></h4>
+                <app-key-value-list *ngIf="application?.documentExtraData"
+                    [dataList]="documentExtraDataList"></app-key-value-list>
                 <div class="vertical-start-stretch max-width-930">
                     <div *ngFor="let item of application?.documents; let i = index;"
                         class="vertical-start-stretch gap-1em">
@@ -114,7 +80,8 @@
                         {{item.name}}
                         <img *ngIf="!item.name.includes('pdf')" width="100%" [src]="item.file" [alt]="item.label">
 
-                        <iframe height="500px" *ngIf="item.name.includes('pdf')" [src]="this.sanitizer.bypassSecurityTrustResourceUrl(item.file)"></iframe>
+                        <iframe height="500px" *ngIf="item.name.includes('pdf')"
+                            [src]="this.sanitizer.bypassSecurityTrustResourceUrl(item.file)"></iframe>
                         <!-- <pdf-viewer *ngIf="item.name.includes('pdf')" [src]="item.file" [render-text]="true"
                             [original-size]="false" style="width: 100%;"></pdf-viewer> -->
 
