@@ -1,26 +1,8 @@
 <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
 <div class="horizontal-center-stretch white-bg padding-2em-zero">
     <div class="vertical-start-center width-90 gap-2em">
-        <div class="horizontal-start-stretch gap-1em full-width">
-            <div class=" rounded">
-                <mat-icon class="primary-color"
-                    style="font-size: 100px; width: 100px !important">account_circle</mat-icon>
-            </div>
-            <div class="vertical-start-stretch">
-                <h3 class="secondary-color bold">{{ application?.personalDetails?.name }} {{
-                    application?.personalDetails?.surname }}</h3>
-                <div class="vertical-start-stretch">
-                    <h4 class="bold">Application Date: <span class="fw-500">{{ application?.dateCreated | date:
-                            'mediumDate' }}</span>
-                    </h4>
-                    <h4 class="bold">Status: <span class="fw-500"
-                            [ngClass]="application?.status?.current ==  'Approved' ? 'green-color' : application?.status?.current ==  'Rejected' ? 'red-color' : application?.status?.current == 'In Review' ? 'secondary-color' : 'orange-color'">{{
-                            application?.status?.current }}</span> </h4>
-                    <h4 class="bold">Comment: <span class="fw-500">{{ application?.status?.comment || 'N/A' }}</span>
-                    </h4>
-                </div>
-
-            </div>
+        <div class="full-width">
+            <app-applicant-and-status-viewer [application]="application"></app-applicant-and-status-viewer>
         </div>
 
         <div class="horizontal-space-between-stretch gap-1em full-width col-sm">
