@@ -1,0 +1,12 @@
+<div class="vertical-start-stretch gap-1em">
+  <div style="margin-top: 1em">
+    <h2 class="bold">{{ label }}</h2>
+  </div>
+  <img *ngIf="!name?.includes('pdf')" width="100%" [src]="url" [alt]="label" />
+
+  <iframe
+    [height]="height"
+    *ngIf="name?.includes('pdf')"
+    [src]="this.sanitizer.bypassSecurityTrustResourceUrl(url)"
+  ></iframe>
+</div>
