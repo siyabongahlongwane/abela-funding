@@ -25,16 +25,7 @@
             <div class="vertical-start-stretch gap-1em">
                 <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
                 <div class="vertical-start-stretch">
-                    <!-- <app-key-value-list></app-key-value-list> -->
-                    <h4 class="bold">Cell One: <span class="fw-500">{{ user?.contactDetails?.cellOne}}</span>
-                    </h4>
-                    <h4 class="bold">Cell Two: <span class="fw-500">{{ user?.contactDetails?.cellTwo ||
-                            '-'}}</span></h4>
-                    <h4 class="bold">Email: <span class="fw-500">{{ user?.contactDetails?.email}}</span></h4>
-                    <h4 class="bold">Town: <span class="fw-500">{{ user?.addressDetails?.town}}</span></h4>
-                    <h4 class="bold">City: <span class="fw-500">{{ user?.addressDetails?.city}}</span> </h4>
-                    <h4 class="bold">Province: <span class="fw-500">{{ user?.addressDetails?.province}}</span>
-                    </h4>
+                    <app-key-value-list *ngIf="user?.contactDetails" [dataList]="userDetailsList"></app-key-value-list>
                 </div>
             </div>
             <div class="vertical-center-center">

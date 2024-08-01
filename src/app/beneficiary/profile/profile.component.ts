@@ -4,6 +4,7 @@ import { RegisterComponent } from 'src/app/auth/register/register.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
+import { setUpKeyValueList } from 'src/app/utils/KeyToHumanValue';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit {
   message: string = '';
   loading$ = this.loader.loading$;
   url: string = 'https://abela-trust-funding.web.app/abela/auth/register';
+  userDetailsList: any;
   constructor(private sharedService: SharedService, private userService: UserService, private dialog: MatDialog, public loader: LoadingService) { }
 
   ngOnInit(): void {
@@ -23,6 +25,9 @@ export class ProfileComponent implements OnInit {
 
   getUser() {
     this.user = this.sharedService.get('user');
+    const userDetailsKeyList = ['cellOne', 'cellTwo', 'email', 'town', 'city', 'province'];
+    this.userDetailsList = setUpKeyValueList({...this.user.contactDetails, ...this.user.addressDetails}, userDetailsKeyList);
+
     this.message = `Looking for educational Support? Need a Bursary? Need Books?
     Is Registration fee a problem....?
     Abela Trust is a registered entity focusing on the upliftment of education in South Africa and aiming to assist as many learners as possible to reach their educational goals.
