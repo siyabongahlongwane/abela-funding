@@ -10,7 +10,8 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "lint-fix": "eslint src/**/*.js --fix",
-    "functions": "firebase emulators:start --only functions"
+    "functions": "firebase emulators:start --only functions",
+    "login": "firebase logout && firebase login -y"
   },
   "keywords": [],
   "author": "Siyabonga Hlongwane",
