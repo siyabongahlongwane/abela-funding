@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
 
   addressDetailsForm(): FormGroup {
     this.addressDetails = new FormGroup({
-      town: new FormControl(null, Validators.required),
+      town: new FormControl(null),
       city: new FormControl(null, Validators.required),
       province: new FormControl(null, Validators.required)
     });

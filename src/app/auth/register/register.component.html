@@ -1,191 +1,336 @@
-<mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
+<mat-progress-spinner
+  [mode]="'indeterminate'"
+  *ngIf="loading$ | async"
+></mat-progress-spinner>
 <div class="horizontal-center-center full-height register">
-    <div class="vertical-center-stretch max-width-600 card-container full-height">
-        <mat-card class="border-radius-2em">
-            <div class="vertical-start-stretch gap-1em max-width-600 full-height">
-                <div *ngIf="!data" class="horizontal-center-center full-width">
-                    <img src="../../../assets/abela-logo.png" alt="Abela Logo" width="80px">
+  <div class="vertical-center-stretch max-width-600 card-container full-height">
+    <mat-card class="border-radius-2em">
+      <div class="vertical-start-stretch gap-1em max-width-600 full-height">
+        <div *ngIf="!data" class="horizontal-center-center full-width">
+          <img
+            src="../../../assets/abela-logo.png"
+            alt="Abela Logo"
+            width="80px"
+          />
+        </div>
+        <div *ngIf="!data" class="horizontal-center-center">
+          <h1 class="primary-color center-text bold">Applicant Registration</h1>
+        </div>
+        <div *ngIf="data" class="horizontal-space-between-center">
+          <h1 class="primary-color center-text bold">Edit Details</h1>
+          <mat-icon class="red-color pointer" (click)="close()"
+            >cancel</mat-icon
+          >
+        </div>
+        <form [formGroup]="registerForm">
+          <div class="vertical-start-stretch gap-1em gap-sm">
+            <form [formGroup]="personalDetails">
+              <div class="horizontal-space-between-stretch col-sm gap-sm">
+                <div
+                  class="vertical-start-stretch grey-input-container width-30"
+                >
+                  <label class="bold">Name <span class="red-color">*</span> </label>
+                  <mat-form-field appearance="outline">
+                    <input
+                      type="text"
+                      oninput="this.value = this.value.replace(/[0-9]/g, '')"
+                      matInput
+                      formControlName="name"
+                      placeholder="Name"
+                    />
+                    <mat-error
+                      *ngIf="personalDetails.get('name')?.hasError('required')"
+                    >
+                      Name is <b>required!</b>
+                    </mat-error>
+                    <!-- <mat-icon matPrefix>person</mat-icon> -->
+                  </mat-form-field>
                 </div>
-                <div *ngIf="!data" class="horizontal-center-center">
-                    <h1 class="primary-color center-text bold">Register</h1>
+
+                <div
+                  class="vertical-start-stretch grey-input-container width-30"
+                >
+                  <label class="bold">Surname <span class="red-color">*</span> </label>
+                  <mat-form-field appearance="outline">
+                    <input
+                      type="text"
+                      oninput="this.value = this.value.replace(/[0-9]/g, '')"
+                      matInput
+                      formControlName="surname"
+                      placeholder="Surname"
+                    />
+                    <mat-error
+                      *ngIf="
+                        personalDetails.get('surname')?.hasError('required')
+                      "
+                    >
+                      Surname is <b>required!</b>
+                    </mat-error>
+                    <!-- <mat-icon matPrefix>person</mat-icon> -->
+                  </mat-form-field>
                 </div>
-                <div *ngIf="data" class="horizontal-space-between-center">
-                    <h1 class="primary-color center-text bold">Edit Details</h1>
-                    <mat-icon class="red-color pointer" (click)="close()">cancel</mat-icon>
+
+                <div
+                  class="vertical-start-stretch grey-input-container width-30 date-picker"
+                >
+                  <label class="bold">Date of Birth <span class="red-color">*</span> </label>
+                  <mat-form-field appearance="outline">
+                    <input
+                      [max]="today"
+                      (click)="picker.open()"
+                      matInput
+                      [matDatepicker]="picker"
+                      formControlName="dateOfBirth"
+                      placeholder="Date of Birth"
+                    />
+                    <mat-icon (click)="picker.open()" matSuffix
+                      >event_note</mat-icon
+                    >
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error
+                      *ngIf="
+                        personalDetails.get('dateOfBirth')?.hasError('required')
+                      "
+                    >
+                      Date of Birth is <b>required!</b>
+                    </mat-error>
+                  </mat-form-field>
                 </div>
-                <form [formGroup]="registerForm">
-                    <div class="vertical-start-stretch gap-1em gap-sm">
-                        <form [formGroup]="personalDetails">
-                            <div class="horizontal-space-between-stretch col-sm gap-sm">
-                                <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">Name</label>
-                                    <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
-                                            matInput formControlName="name" placeholder="Name">
-                                        <mat-error *ngIf="personalDetails.get('name')?.hasError('required')">
-                                            Name is <b>required!</b>
-                                        </mat-error>
-                                        <mat-icon matPrefix>person</mat-icon>
-                                    </mat-form-field>
-                                </div>
+              </div>
+            </form>
 
-                                <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">Surname</label>
-                                    <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
-                                            matInput formControlName="surname" placeholder="Surname">
-                                        <mat-error *ngIf="personalDetails.get('surname')?.hasError('required')">
-                                            Surname is <b>required!</b>
-                                        </mat-error>
-                                        <mat-icon matPrefix>person</mat-icon>
-                                    </mat-form-field>
-                                </div>
+            <form [formGroup]="contactDetails">
+              <div class="horizontal-space-between-stretch col-sm gap-sm">
+                <div
+                  class="vertical-start-stretch grey-input-container width-30"
+                >
+                  <label class="bold">Email <span class="red-color">*</span> </label>
+                  <mat-form-field appearance="outline">
+                    <input
+                      type="text"
+                      matInput
+                      formControlName="email"
+                      placeholder="Email"
+                    />
+                    <mat-error
+                      *ngIf="
+                        contactDetails.get('email')?.hasError('required') &&
+                        !contactDetails.get('email')?.hasError('pattern')
+                      "
+                    >
+                      Email is <b>required!</b>
+                    </mat-error>
+                    <mat-error
+                      *ngIf="contactDetails.get('email')?.hasError('pattern')"
+                    >
+                      Email is <b>invalid!</b>
+                    </mat-error>
+                    <!-- <mat-icon matPrefix>mail</mat-icon> -->
+                  </mat-form-field>
+                </div>
 
-                                <div class="vertical-start-stretch grey-input-container width-30 date-picker">
-                                    <label class="bold">Date of Birth</label>
-                                    <mat-form-field appearance="outline">
-                                        <input [max]="today" (click)="picker.open()" matInput [matDatepicker]="picker"
-                                            formControlName="dateOfBirth" placeholder="Date of Birth">
-                                        <mat-icon (click)="picker.open()" matSuffix>event_note</mat-icon>
-                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                        <mat-error *ngIf="personalDetails.get('dateOfBirth')?.hasError('required')">
-                                            Date of Birth is <b>required!</b>
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </form>
+                <div
+                  class="vertical-start-stretch grey-input-container width-30"
+                >
+                  <label class="bold">Cell Number 1 <span class="red-color">*</span> </label>
+                  <mat-form-field appearance="outline">
+                    <input
+                      type="text"
+                      oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                      matInput
+                      formControlName="cellOne"
+                      placeholder="Cell Number 1"
+                    />
+                    <mat-error
+                      *ngIf="
+                        contactDetails.get('cellOne')?.hasError('required')
+                      "
+                    >
+                      Cell Number 1 is <b>required!</b>
+                    </mat-error>
+                    <!-- <mat-icon matPrefix>phone</mat-icon> -->
+                  </mat-form-field>
+                </div>
 
-                        <form [formGroup]="contactDetails">
-                            <div class="horizontal-space-between-stretch col-sm gap-sm">
-                                <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">Email</label>
-                                    <mat-form-field appearance="outline">
-                                        <input type="text" matInput formControlName="email" placeholder="Email">
-                                        <mat-error
-                                            *ngIf="contactDetails.get('email')?.hasError('required') && !contactDetails.get('email')?.hasError('pattern')">
-                                            Email is <b>required!</b>
-                                        </mat-error>
-                                        <mat-error *ngIf="contactDetails.get('email')?.hasError('pattern')">
-                                            Email is <b>invalid!</b>
-                                        </mat-error>
-                                        <mat-icon matPrefix>mail</mat-icon>
-                                    </mat-form-field>
-                                </div>
+                <div
+                  class="vertical-start-stretch grey-input-container width-30"
+                >
+                  <label class="bold"
+                    >Cell Number 2 <small>(optional)</small></label
+                  >
+                  <mat-form-field appearance="outline">
+                    <input
+                      type="text"
+                      oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                      matInput
+                      formControlName="cellTwo"
+                      placeholder="Cell Number 2"
+                    />
+                    <!-- <mat-icon matPrefix>phone</mat-icon> -->
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
 
-                                <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">Cell Number 1</label>
-                                    <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
-                                            matInput formControlName="cellOne" placeholder="Cell Number 1">
-                                        <mat-error *ngIf="contactDetails.get('cellOne')?.hasError('required')">
-                                            Cell Number 1 is <b>required!</b>
-                                        </mat-error>
-                                        <mat-icon matPrefix>phone</mat-icon>
-                                    </mat-form-field>
-                                </div>
+            <form [formGroup]="addressDetails">
+              <div
+                class="horizontal-space-between-stretch col-sm gap-sm full-width"
+              >
+                <div
+                  class="vertical-start-stretch grey-input-container width-30"
+                >
+                  <label class="bold">Town <small>(optional)</small></label>
+                  <mat-form-field appearance="outline">
+                    <input
+                      type="text"
+                      oninput="this.value = this.value.replace(/[0-9]/g, '')"
+                      matInput
+                      formControlName="town"
+                      placeholder="Town"
+                    />
+                    <mat-error
+                      *ngIf="addressDetails.get('town')?.hasError('required')"
+                    >
+                      Town is <b>required!</b>
+                    </mat-error>
+                    <!-- <mat-icon matPrefix>location_city</mat-icon> -->
+                  </mat-form-field>
+                </div>
 
-                                <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">Cell Number 2</label>
-                                    <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
-                                            matInput formControlName="cellTwo" placeholder="Cell Number 2">
-                                        <mat-icon matPrefix>phone</mat-icon>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </form>
+                <div
+                  class="vertical-start-stretch grey-input-container width-30"
+                >
+                  <label class="bold">City <span class="red-color">*</span> </label>
+                  <mat-form-field appearance="outline">
+                    <input
+                      type="text"
+                      oninput="this.value = this.value.replace(/[0-9]/g, '')"
+                      matInput
+                      formControlName="city"
+                      placeholder="City"
+                    />
+                    <mat-error
+                      *ngIf="addressDetails.get('city')?.hasError('required')"
+                    >
+                      City is <b>required!</b>
+                    </mat-error>
+                    <!-- <mat-icon matPrefix>apartment</mat-icon> -->
+                  </mat-form-field>
+                </div>
 
-                        <form [formGroup]="addressDetails">
+                <div
+                  class="vertical-start-stretch grey-input-container width-30"
+                >
+                  <label class="bold">Province <span class="red-color">*</span> </label>
+                  <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <mat-select
+                      formControlName="province"
+                      placeholder="Province"
+                    >
+                      <mat-option
+                        *ngFor="let province of provinces"
+                        [value]="province"
+                        >{{ province }}</mat-option
+                      >
+                    </mat-select>
+                    <mat-error
+                      *ngIf="
+                        addressDetails.get('province')?.hasError('required')
+                      "
+                    >
+                      Province is <b>required!</b>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+            <div
+              class="horizontal-space-between-stretch col-sm gap-sm full-width"
+            >
+              <div
+                class="vertical-start-stretch grey-input-container width-30"
+                style="display: none !important"
+              >
+                <label class="bold">Role <span class="red-color">*</span> </label>
+                <mat-form-field appearance="outline">
+                  <input
+                    [disabled]="true"
+                    matInput
+                    name="search"
+                    [value]="registerForm.value.role.description"
+                    placeholder="Role"
+                    type="text"
+                  />
+                  <!-- <mat-icon matPrefix>account_circle</mat-icon> -->
+                </mat-form-field>
+              </div>
 
-                            <div class="horizontal-space-between-stretch col-sm gap-sm full-width">
-                                <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">Town</label>
-                                    <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
-                                            matInput formControlName="town" placeholder="Town">
-                                        <mat-error *ngIf="addressDetails.get('town')?.hasError('required')">
-                                            Town is <b>required!</b>
-                                        </mat-error>
-                                        <mat-icon matPrefix>location_city</mat-icon>
-                                    </mat-form-field>
-                                </div>
+              <div class="vertical-start-stretch grey-input-container width-30">
+                <label class="bold">Password <span class="red-color">*</span> </label>
+                <mat-form-field appearance="outline">
+                  <input
+                    autocomplete="new-password"
+                    [disabled]="data"
+                    matInput
+                    name="search"
+                    formControlName="password"
+                    placeholder="Enter Password"
+                    [type]="showPass ? 'text' : 'password'"
+                  />
+                  <mat-error
+                    *ngIf="registerForm.get('password')?.hasError('required')"
+                  >
+                    Password is <b>required!</b>
+                  </mat-error>
+                  <!-- <mat-icon matPrefix>lock</mat-icon> -->
+                  <mat-icon matSuffix (click)="showPass = !showPass">{{
+                    showPass ? 'visibility' : 'visibility_off'
+                  }}</mat-icon>
+                </mat-form-field>
+              </div>
 
-                                <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">City</label>
-                                    <mat-form-field appearance="outline">
-                                        <input type="text" oninput="this.value = this.value.replace(/[0-9]/g, '')"
-                                            matInput formControlName="city" placeholder="City">
-                                        <mat-error *ngIf="addressDetails.get('city')?.hasError('required')">
-                                            City is <b>required!</b>
-                                        </mat-error>
-                                        <mat-icon matPrefix>apartment</mat-icon>
-                                    </mat-form-field>
-                                </div>
-
-                                <div class="vertical-start-stretch grey-input-container width-30">
-                                    <label class="bold">Province</label>
-                                    <mat-form-field appearance="outline" [floatLabel]="'never'">
-                                        <mat-select formControlName="province" placeholder="Province">
-                                            <mat-option *ngFor="let province of provinces" [value]="province">{{
-                                                province }}</mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="addressDetails.get('province')?.hasError('required')">
-                                            Province is <b>required!</b>
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="horizontal-space-between-stretch col-sm gap-sm full-width">
-                            <div class="vertical-start-stretch grey-input-container width-30">
-                                <label class="bold">Role</label>
-                                <mat-form-field appearance="outline">
-                                    <input [disabled]="true" matInput name="search"
-                                        [value]="registerForm.value.role.description" placeholder="Role" type="text">
-                                    <mat-icon matPrefix>account_circle</mat-icon>
-                                </mat-form-field>
-                            </div>
-
-                            <div class="vertical-start-stretch grey-input-container width-30">
-                                <label class="bold">Password</label>
-                                <mat-form-field appearance="outline">
-                                    <input autocomplete="new-password" [disabled]="data" matInput name="search"
-                                        formControlName="password" placeholder="Enter Password"
-                                        [type]="showPass ? 'text' : 'password'">
-                                    <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
-                                        Password is <b>required!</b>
-                                    </mat-error>
-                                    <mat-icon matPrefix>lock</mat-icon>
-                                    <mat-icon matSuffix (click)="showPass = !showPass">{{showPass ? 'visibility' : 'visibility_off'}}</mat-icon>
-                                </mat-form-field>
-                            </div>
-
-                            <div class="vertical-start-stretch grey-input-container width-30">
-                            </div>
-                        </div>
-
-                        <div *ngIf="!data" class="vertical-center-center">
-                            <button (click)="register(registerForm)"
-                                class="primary-bg white-color border-radius-2em btn-sm"
-                                mat-raised-button>Register</button>
-                        </div>
-
-                        <div *ngIf="data" class="vertical-center-center">
-                            <button [disabled]="registerForm.invalid" (click)="close(registerForm.value)"
-                                class="primary-bg white-color border-radius-2em btn-sm"
-                                mat-raised-button>Submit</button>
-                        </div>
-                        <div *ngIf="!data" class="horizontal-center-center">
-                            <p>Already a user? Login <span routerLink="../login"
-                                    class="bold primary-color pointer underline">here.</span></p>
-                        </div>
-                    </div>
-                </form>
-
+              <div
+                class="vertical-start-stretch grey-input-container width-30"
+              ></div>
             </div>
 
-        </mat-card>
-    </div>
+            <div *ngIf="!data" class="vertical-center-center">
+              <button
+                (click)="register(registerForm)"
+                class="primary-bg white-color border-radius-2em btn-sm"
+                mat-raised-button
+              >
+                Register
+              </button>
+            </div>
+
+            <div *ngIf="data" class="vertical-center-center">
+              <button
+                [disabled]="registerForm.invalid"
+                (click)="close(registerForm.value)"
+                class="primary-bg white-color border-radius-2em btn-sm"
+                mat-raised-button
+              >
+                Submit
+              </button>
+            </div>
+            <div *ngIf="!data" class="horizontal-center-center">
+              <p>
+                Already a user? Login
+                <span
+                  routerLink="../login"
+                  class="bold primary-color pointer underline"
+                  >here.</span
+                >
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </div>
 </div>
