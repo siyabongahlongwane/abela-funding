@@ -13,10 +13,6 @@ const Application = mongoose.model('application', {
         type: Array,
         required: true
     },
-    favouriteSubject: {
-        type: String,
-        required: false
-    },
     applicant: {
         type: String,
         required: false
@@ -48,6 +44,10 @@ const Application = mongoose.model('application', {
         required: true,
     },
     dateModified: {
+        type: String,
+        required: false
+    },
+    acceptedTerms: {
         type: String,
         required: false
     }
