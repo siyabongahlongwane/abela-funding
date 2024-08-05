@@ -28,7 +28,8 @@ export class NewApplicationComponent implements OnInit {
   width: number = 0;
   orientation: any = 'horizontal';
   loading$ = this.loader.loading$;
-
+  nextYear: number = new Date().getFullYear() + 1;
+  acceptedTerms: boolean = false;
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, public loader: LoadingService
   ) {
     this.personalDetails = this.personalDetailsForm();
@@ -37,7 +38,6 @@ export class NewApplicationComponent implements OnInit {
       personalDetails: this.personalDetails,
       addressDetails: this.addressDetails,
       subjects: this.fb.array([]),
-      favouriteSubject: [null, [Validators.required]]
     });
     this.width = this.sharedService.detectScreenSize();
     if (window.innerWidth <= 768) {
@@ -49,6 +49,8 @@ export class NewApplicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.prepopulateForm();
+    this.addSubject();
+
     this.applicationForm.patchValue({
       "personalDetails": {
         "name": "Siyabonga",
@@ -113,18 +115,19 @@ export class NewApplicationComponent implements OnInit {
       schoolWishToAttend: [null, [Validators.required]],
       gradeAndYearDoing: [null, [Validators.required]],
       hasGrant: [null, Validators.required],
-      grantDetails: [null, [Validators.required]],
+      grantDetails: [null],
       course: [null, Validators.required],
       motivation: [null, [Validators.required]],
       fetWishToAttend: [null, [Validators.required]],
       requestingFor: [null, [Validators.required]],
-      marksDoc: [this.isUpload ? this.document : null, this.isUpload ? Validators.required : []]
+      marksDoc: [this.isUpload ? this.document : null, this.isUpload ? Validators.required : []],
+      acceptedTerms: [null]
     })
   }
 
   addressDetailsForm(): FormGroup {
     return this.fb.group({
-      town: [null, [Validators.required]],
+      town: [null],
       city: [null, [Validators.required]],
       province: [null, [Validators.required]],
       cellOne: [null, [Validators.required, Validators.maxLength(13)]],
@@ -135,8 +138,7 @@ export class NewApplicationComponent implements OnInit {
 
   // Dynamically Add Subject
   addSubject() {
-    if (this.subjects.length === 9) this.snackbar.open('Max 9 subjects allowed!', 'OK');
-    else this.subjects.push(this.newSubject());
+    this.subjects.push(this.newSubject());
   }
 
   // Dynamically Remove Subject
@@ -145,6 +147,9 @@ export class NewApplicationComponent implements OnInit {
   }
 
   onSubmit() {
+    this.personalDetails.patchValue({ acceptedTerms: this.acceptedTerms })
+    if (!this.document?.base64) return this.sharedService.openSnackbar('Please upload your report.');
+    if (!this.acceptedTerms) return this.sharedService.openSnackbar('Please check the consent box');
     this.submitted = true;
     if (this.applicationForm.invalid) {
       this.sharedService.openSnackbar('Please enter all required details!');
@@ -212,7 +217,7 @@ export class NewApplicationComponent implements OnInit {
       }).catch((err) => {
         this.sharedService.openSnackbar('Something went wrong');
         console.log(err);
-      }).finally(() => this.loader.hideLoader());
+      })
     } else {
       this.startNewApplication(this.applicationForm.value);
     }
@@ -221,6 +226,7 @@ export class NewApplicationComponent implements OnInit {
   startNewApplication(body: any) {
     this.applicationService.apply(`applications/new`, body).subscribe(resp => {
       if (resp.msg) {
+        this.loader.hideLoader();
         this.sharedService.openSnackbar(resp.msg);
         this.router.navigate(['abela/beneficiary/applications/my-applications']);
       }

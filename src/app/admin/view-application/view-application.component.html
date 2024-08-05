@@ -25,13 +25,13 @@
                 </div>
             </div>
             <div class="vertical-start-stretch full-width gap-1em section-width">
-                <h3 class="secondary-color bold border-bottom-secondary">Subject Details</h3>
+                <h3 class="secondary-color bold border-bottom-secondary">Report Details</h3>
                 <div *ngIf="showDoc" class="vertical-start-stretch">
                         <app-document-viewer
                              [name]="marksDoc.name" [url]="marksDoc.file" [height]="'400px'"></app-document-viewer>
                 </div>
     
-                <div *ngIf="!showDoc" class="vertical-start-stretch max-width-930">
+                <div class="vertical-start-stretch max-width-930">
                     <div *ngFor="let subject of application?.subjects; let i = index;"
                         class="horizontal-space-between-stretch gap-1em">
                         <h4 class="bold width-24">Subject {{ i + 1 }}: <span class="fw-500">{{ subject?.subject}}</span>
