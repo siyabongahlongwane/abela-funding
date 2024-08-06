@@ -35,7 +35,7 @@ const User = mongoose.model('user', {
     },
     privileges: {
         type: Object,
-        required: true
+        required: false
     }
 });
 
