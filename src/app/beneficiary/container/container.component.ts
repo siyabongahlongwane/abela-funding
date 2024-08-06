@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -26,15 +28,16 @@ export class ContainerComponent implements OnInit {
   ];
 
   selectedItem: number = 0;
-  user: any = {};
+  user$!: Observable<any>;
   currentPage: string = '';
-  constructor(private router: Router, private sharedService: SharedService) {
+  constructor(private router: Router, private sharedService: SharedService, private auth: AuthService) {
     this.checkActiveRoute();
     this.width = this.sharedService.detectScreenSize();
   }
 
   ngOnInit(): void {
-    this.getUser();
+    this.auth.userSub.next(this.sharedService.get('user'));
+    this.user$ = this.auth.user$;
   }
 
   checkActiveRoute() {
@@ -55,10 +58,6 @@ export class ContainerComponent implements OnInit {
   goTo(url: string, i: number) {
     this.selectedItem = i;
     this.router.navigate([url])
-  }
-
-  getUser() {
-    this.user = this.sharedService.get('user');
   }
 
   setPageName(urlFragments: string[]) {

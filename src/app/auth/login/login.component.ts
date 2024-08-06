@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
         if (resp.user) {
           this.sharedService.set('user', resp.user);
           this.sharedService.openSnackbar(resp?.msg);
+          this.authService.userSub.next(resp.user);
           if (resp.user.role.description.includes('Admin')) this.router.navigate(['abela/admin/dashboard']);
           else this.router.navigate(['abela/beneficiary/applications/my-applications']);
         }

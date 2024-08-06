@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,6 +9,9 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
   backendUrl: string = environment.backendUrl;
+  userSub = new BehaviorSubject<any>(null);
+  user$ = this.userSub.asObservable();
+
   constructor(private http: HttpClient, public router: Router) { }
 
   register(endpoint: string, body: any): Observable<any> {
@@ -23,6 +26,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('user');
+    this.userSub.next(null);
     this.router.navigate(['/abela/auth/login']);
   }
 }

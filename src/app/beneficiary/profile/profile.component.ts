@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/auth/auth.service';
 import { RegisterComponent } from 'src/app/auth/register/register.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -17,7 +18,7 @@ export class ProfileComponent implements OnInit {
   loading$ = this.loader.loading$;
   url: string = 'https://abela-trust-funding.web.app/abela/auth/register';
   userDetailsList: any;
-  constructor(private sharedService: SharedService, private userService: UserService, private dialog: MatDialog, public loader: LoadingService) { }
+  constructor(private sharedService: SharedService, private userService: UserService, private dialog: MatDialog, public loader: LoadingService, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -25,6 +26,7 @@ export class ProfileComponent implements OnInit {
 
   getUser() {
     this.user = this.sharedService.get('user');
+    this.auth.userSub.next(this.user);
     const userDetailsKeyList = ['cellOne', 'cellTwo', 'email', 'town', 'city', 'province'];
     this.userDetailsList = setUpKeyValueList({...this.user.contactDetails, ...this.user.addressDetails}, userDetailsKeyList);
 
