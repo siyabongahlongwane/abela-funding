@@ -288,9 +288,9 @@
                                 </button>
                                 </div>
                                 <mat-error
-                                    *ngIf="submitted && !applicationForm.value?.personalDetails?.marksDoc">Please
+                                    *ngIf="submitted && !document?.base64">Please
                                     upload
-                                    your marks!</mat-error>
+                                    your report!</mat-error>
                             </div>
 
                             <div class="horizontal-start-stretch width-90"  [class.full-width]="width <= 768">
@@ -299,17 +299,36 @@
 
                             <div class="vertical-start-stretch width-90 gap-1em"   [class.full-width]="width <= 768">
                                 <div  [class.flex-wrap]="width <= 768" *ngFor="let subject of subjects.controls; let i = index" formArrayName="subjects"
-                                    class="horizontal-space-between-center col-sm">
-                                    <div class="vertical-start-stretch grey-input-container width-25" [class.full-width]="width <= 768"
+                                    class="horizontal-space-between-center gap-1em col-sm">
+                                    <div class="vertical-start-stretch grey-input-container width-48" [class.full-width]="width <= 768"
                                         [formGroupName]="i">
-                                        <label class="bold">Subject {{ i + 1}} <span class="red-color">*</span> </label>
-                                        <mat-form-field appearance="outline">
+                                      <label class="bold">Subject {{ i + 1}} <span class="red-color">*</span> </label>
+                                         <!--  <mat-form-field appearance="outline">
                                             <input type="text" matInput formControlName="subject"
                                                 placeholder="Subject {{ i + 1}}">
                                             <mat-error *ngIf="applicationForm.get('subject')?.hasError('required')">
                                                 Subject {{i}} is <b>required!</b>
                                             </mat-error>
-                                        </mat-form-field>
+                                        </mat-form-field> -->
+                                        <mat-form-field class="example-full-width" appearance="outline" [floatLabel]="'never'">
+                                            <input type="text"
+                                                   placeholder="Search subject"
+                                                   aria-label="Subject"
+                                                   matInput
+                                                   [formControl]="myControl"
+                                                   formControlName="subject"
+                                                   [matAutocomplete]="auto"
+                                                   >
+                                                   
+                                            <mat-autocomplete #auto="matAutocomplete">
+                                              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                                {{option}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                            <mat-error *ngIf="applicationForm.get('subject')?.hasError('required')">
+                                                Subject {{i}} is <b>required!</b>
+                                            </mat-error>
+                                          </mat-form-field>
                                     </div>
 
                                     <div class="vertical-start-stretch grey-input-container width-25" [class.full-width]="width <= 768"
@@ -340,6 +359,7 @@
                                                 Mark cannot be more than <b>100%</b>
                                             </mat-error>
                                         </mat-form-field>
+                                        
                                     </div>
                                     <div class="horizontal-start-stretch gap-1em margin-top-1-5em"  [class.width-48]="width <= 768">
                                         <button (click)="addSubject()" class="primary-bg white-color round height-3em full-width"
@@ -357,7 +377,7 @@
                             </div>
 
                             <div class="vertical-start-center">
-                                <button (click)="onSubmit()" class="primary-bg white-color round"
+                                <button (click)="onSubmit($event)" class="primary-bg white-color round"
                                     mat-raised-button>Submit</button>
                             </div>
                         </div>

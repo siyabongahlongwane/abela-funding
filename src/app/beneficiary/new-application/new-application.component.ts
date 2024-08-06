@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Observable, startWith, map } from 'rxjs';
 import { ApplicationsService } from 'src/app/services/applications.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { SUBJECTS } from 'src/app/utils/subjects';
 
 @Component({
   selector: 'app-new-application',
@@ -30,6 +32,10 @@ export class NewApplicationComponent implements OnInit {
   loading$ = this.loader.loading$;
   nextYear: number = new Date().getFullYear() + 1;
   acceptedTerms: boolean = false;
+  myControl = new FormControl();
+  SUBJECTS: Array<string> = [...SUBJECTS];
+  filteredOptions!: Observable<string[]>;
+
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, public loader: LoadingService
   ) {
     this.personalDetails = this.personalDetailsForm();
@@ -50,7 +56,10 @@ export class NewApplicationComponent implements OnInit {
   ngOnInit(): void {
     this.prepopulateForm();
     this.addSubject();
-
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    );
     this.applicationForm.patchValue({
       "personalDetails": {
         "name": "Siyabonga",
@@ -146,16 +155,17 @@ export class NewApplicationComponent implements OnInit {
     if (this.subjects.length != 1) this.subjects.removeAt(i);
   }
 
-  onSubmit() {
+  onSubmit(e: Event) {
+    e.preventDefault();
+    this.submitted = true;
     this.personalDetails.patchValue({ acceptedTerms: this.acceptedTerms })
     if (!this.document?.base64) return this.sharedService.openSnackbar('Please upload your report.');
     if (!this.acceptedTerms) return this.sharedService.openSnackbar('Please check the consent box');
-    this.submitted = true;
     if (this.applicationForm.invalid) {
       this.sharedService.openSnackbar('Please enter all required details!');
       return;
     } else {
-      this.saveApplication(this.applicationForm.value)
+      this.saveApplication(this.applicationForm.value);
     }
   }
 
@@ -234,5 +244,12 @@ export class NewApplicationComponent implements OnInit {
       console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
     })
+  }
+
+  private _filter(value: string): string[] {
+    console.log(value)
+    const filterValue = value.toLowerCase();
+
+    return this.SUBJECTS.filter(option => option.toLowerCase().includes(filterValue)).sort();
   }
 }
