@@ -68,7 +68,7 @@ const generateEmailLayout = (body) => {
         <p>${body.message}</a></p>
     <h3 style='margin: 0 !important; padding: 5px 0;'>Contact Details</h3>
     <ul>
-        <li style='list-style: none;'> <b>Requestor</b>: ${body.name}</li>
+        <li style='list-style: none;'> <b>Requestor</b>: ${body.name}  ${body?.surname}</li>
         <li style='list-style: none;'> <b>Email</b>:  ${body.email}</li>
         <li style='list-style: none;'> <b>Phone</b>:  ${body.cellOne}</li>
     </ul>
@@ -85,8 +85,13 @@ const generateStatusUpdateEmailLayout = (body) => {
     <h3 style='margin: 0 !important; padding: 5px 0;'>Message:</h3>
         <p>Hi, your application status has been updated to: <span style="font-weight: bold">${body?.status?.current}</span> </p>
         <p>Comments: <span style="font-weight: bold">${body?.status?.comment || "N/A"}</span> </p>
-        <p style='${body?.status?.current === "Approved" ? "display: blocked;" : "display: none;"}'>Please login, open your application and click on the "Upload Docs" button and upload the required documents. </p>
-        <h3 >Login and check the application on the Beneficiary Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://abela-trust-funding.web.app/abela/beneficiary/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
+        <p style='${body?.status?.current === "Approved" ? "display: blocked;" : "display: none;"}'>Please login, open your application and click on the "Upload Docs" button and upload the required documents:  </p>
+        <ul>
+            <li>Your ID / Birth Certificate Copy</li>
+            <li>Parent / Guardian ID Copy (For applicants under 18 years)</li>
+            <li>Statement of Fees / Invoice</li>
+        </ul>
+        <h3 >Login and check the application on the Beneficiary Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/abela/beneficiary/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
     </br>
     Warm Regards<br>
     This email was sent from the Abela Trust Website through WEBGOORU PTY LTD's Email Server
@@ -104,7 +109,7 @@ const generateApplicationLayout = (body) => {
         <li style='list-style: none;'> <b>Email</b>:  ${body.addressDetails.email}</li>
         <li style='list-style: none;'> <b>Phone</b>:  ${body.addressDetails.cellOne}</li>
     </ul>
-    <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://abela-trust-funding.web.app/abela/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
+    <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/abela/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
     </br>
     Warm Regards<br>
     This email was sent from the Abela Trust Website through WEBGOORU PTY LTD's Email Server
@@ -121,7 +126,7 @@ const adminDocsUploadedMail = (body) => {
         <li style='list-style: none;'> <b>Email</b>:  ${body.addressDetails.email}</li>
         <li style='list-style: none;'> <b>Phone</b>:  ${body.addressDetails.cellOne}</li>
     </ul>
-    <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://abela-trust-funding.web.app/abela/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
+    <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/abela/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
     </br>
     Warm Regards<br>
     This email was sent from the Abela Trust Website through WEBGOORU PTY LTD's Email Server

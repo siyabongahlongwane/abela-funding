@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   user: any = {};
   message: string = '';
   loading$ = this.loader.loading$;
-  url: string = 'https://abela-trust-funding.web.app/abela/auth/register';
+  url: string = 'https://apply.theabelatrust.co.za/abela/auth/register';
   userDetailsList: any;
   constructor(private sharedService: SharedService, private userService: UserService, private dialog: MatDialog, public loader: LoadingService, private auth: AuthService) { }
 

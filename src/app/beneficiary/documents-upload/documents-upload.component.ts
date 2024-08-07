@@ -32,12 +32,12 @@ export class DocumentsUploadComponent implements OnInit {
       base64: '',
       file: null
     },
-    {
-      label: 'Confirmation of Section 18A certificate from the school',
-      name: '',
-      base64: '',
-      file: null
-    },
+    // {
+    //   label: 'Confirmation of Section 18A certificate from the school',
+    //   name: '',
+    //   base64: '',
+    //   file: null
+    // },
   ]
 
   activatedRouteSub: Subscription = new Subscription();
