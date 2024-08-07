@@ -45,18 +45,51 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.registerForm.patchValue({
+      "personalDetails": {
+          "name": "Blessing",
+          "race": "Black",
+          "idNumber": "950209",
+          "surname": "Sangweni",
+          "gender": "Male"
+      },
+      "contactDetails": {
+          "cellOne": "0612905813",
+          "cellTwo": null,
+          "email": "siyabonga@webgooru.co.za"
+      },
+      "addressDetails": {
+          "town": null,
+          "city": "jhb",
+          "province": "Mpumalanga"
+      },
+      "role": {
+          "id": "ST",
+          "description": "Student"
+      },
+      "privileges": {},
+      "refId": null,
+      "password": "123456"
+  });
     if (this.data) {
       this.registerForm.patchValue(this.data);
     }
     this.setFormData();
     this.width = '';
+    this.personalDetails.get('idNumber')?.valueChanges.subscribe((value) => {
+      value.length >= 6 ? this.calculateDateOfBirth(value) : this.personalDetails.get('dateOfBirth')?.setValue(null);
+      value.length >= 7 && value.charAt(6) > 4 ? this.personalDetails.get('gender')?.setValue('Male') : this.personalDetails.get('gender')?.setValue('Female');
+    })
   }
 
   personalDetailsForm(): FormGroup {
     this.personalDetails = new FormGroup({
       name: new FormControl(null, Validators.required),
+      race: new FormControl(null, Validators.required),
+      idNumber: new FormControl(null, Validators.required),
       surname: new FormControl(null, Validators.required),
       dateOfBirth: new FormControl(null, Validators.required),
+      gender: new FormControl(null, Validators.required),
     });
     return this.personalDetails;
   }
@@ -124,5 +157,19 @@ export class RegisterComponent implements OnInit {
       console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Registration failed, Try Again Later.');
     })
+  }
+
+  calculateDateOfBirth(idNumber: string, cutoffYear = +new Date().getFullYear().toString().slice(1, 4)) {
+    // Extract the date of birth portion from the ID number
+    const dob = idNumber.slice(0, 6);
+
+    // Convert the date of birth into a date object
+    const year = parseInt(dob.slice(0, 2), 10) + (parseInt(dob.slice(0, 2), 10) < cutoffYear ? 2000 : 1900);
+    const month = parseInt(dob.slice(2, 4), 10) - 1;
+    const day = parseInt(dob.slice(4, 6), 10);
+    const dateOfBirth = new Date(year, month, day);
+
+    // Format the date object into the desired format
+    this.personalDetails.get('dateOfBirth')?.setValue(dateOfBirth);
   }
 }

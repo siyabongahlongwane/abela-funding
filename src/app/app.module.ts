@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, enableProdMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -49,4 +49,5 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   }],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
