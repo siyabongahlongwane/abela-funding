@@ -45,32 +45,32 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.registerForm.patchValue({
-      "personalDetails": {
-          "name": "Blessing",
-          "race": "Black",
-          "idNumber": "950209",
-          "surname": "Sangweni",
-          "gender": "Male"
-      },
-      "contactDetails": {
-          "cellOne": "0612905813",
-          "cellTwo": null,
-          "email": "siyabonga@webgooru.co.za"
-      },
-      "addressDetails": {
-          "town": null,
-          "city": "jhb",
-          "province": "Mpumalanga"
-      },
-      "role": {
-          "id": "ST",
-          "description": "Student"
-      },
-      "privileges": {},
-      "refId": null,
-      "password": "123456"
-  });
+  //   this.registerForm.patchValue({
+  //     "personalDetails": {
+  //         "name": "Blessing",
+  //         "race": "Black",
+  //         "idNumber": "950209",
+  //         "surname": "Sangweni",
+  //         "gender": "Male"
+  //     },
+  //     "contactDetails": {
+  //         "cellOne": "0612905813",
+  //         "cellTwo": null,
+  //         "email": "siyabonga@webgooru.co.za"
+  //     },
+  //     "addressDetails": {
+  //         "town": null,
+  //         "city": "jhb",
+  //         "province": "Mpumalanga"
+  //     },
+  //     "role": {
+  //         "id": "ST",
+  //         "description": "Student"
+  //     },
+  //     "privileges": {},
+  //     "refId": null,
+  //     "password": "123456"
+  // });
     if (this.data) {
       this.registerForm.patchValue(this.data);
     }

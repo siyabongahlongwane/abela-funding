@@ -294,7 +294,7 @@
                             </div>
 
                             <div class="horizontal-start-stretch width-90"  [class.full-width]="width <= 768">
-                                <h4 class="bold">Enter Subjects & Marks as per the report</h4>
+                                <h4 class="bold">Search / Enter Subjects & Marks as per the report</h4>
                             </div>
 
                             <div class="vertical-start-stretch width-90 gap-1em"   [class.full-width]="width <= 768">
@@ -315,7 +315,7 @@
                                                    placeholder="Search subject"
                                                    aria-label="Subject"
                                                    matInput
-                                                   [formControl]="myControl"
+                                                   [formControl]="controls[i]"
                                                    formControlName="subject"
                                                    [matAutocomplete]="auto"
                                                    >

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Observable, startWith, map } from 'rxjs';
+import { Observable, startWith, map, Subscription, of, take, takeWhile } from 'rxjs';
 import { ApplicationsService } from 'src/app/services/applications.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -33,9 +33,10 @@ export class NewApplicationComponent implements OnInit {
   nextYear: number = new Date().getFullYear() + 1;
   acceptedTerms: boolean = false;
   myControl = new FormControl();
+  controls: FormControl[] = [];
   SUBJECTS: Array<string> = [...SUBJECTS];
   filteredOptions!: Observable<string[]>;
-
+  subscriptions: Subscription[] = [];
   constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, public loader: LoadingService
   ) {
     this.personalDetails = this.personalDetailsForm();
@@ -56,37 +57,47 @@ export class NewApplicationComponent implements OnInit {
   ngOnInit(): void {
     this.prepopulateForm();
     this.addSubject();
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value)),
-    );
-    this.applicationForm.patchValue({
-      "personalDetails": {
-        "name": "Siyabonga",
-        "surname": "Hlongwane",
-        "dateOfBirth": "2000-02-22T22:00:00.000Z",
-        "schoolCurrentlyAttending": "Boksburg",
-        "schoolWishToAttend": "Voortrekker",
-        "gradeAndYearDoing": "9 in 2025",
-        "hasGrant": "No",
-        "grantDetails": "None",
-        "course": "Doctor",
-        "motivation": "I work hard bro.",
-        "fetWishToAttend": "DUT",
-        "requestingFor": "Bursary",
-        "marksDoc": ""
-      },
-      "addressDetails": {
-        "town": "Boksburg",
-        "city": "Johannesburg",
-        "province": "Gauteng",
-        "cellOne": "0846843654",
-        "cellTwo": "086054056",
-        "email": "siyabonga@webgooru.co.za"
-      },
-      "subjects": [],
-      "favouriteSubject": "Maths."
-    })
+
+    this.subjects.valueChanges.pipe(
+
+      map(value => {
+        this.controls.forEach((control, index) => {
+          control.setValue(value[index].subject)
+          const subscription = control.valueChanges.subscribe(change => {
+            this.filteredOptions = of(this._filter(change));
+          });
+          this.subscriptions.push(subscription);
+        });
+      }),
+    ).subscribe();
+    // });
+
+    // this.applicationForm.patchValue({
+    //   "personalDetails": {
+    //     "name": "Blessing",
+    //     "surname": "Sangweni",
+    //     "dateOfBirth": "1995-02-08T22:00:00.000Z",
+    //     "schoolCurrentlyAttending": "Boksburg",
+    //     "schoolWishToAttend": "Voortrekker",
+    //     "gradeAndYearDoing": "10 in 2025",
+    //     "hasGrant": "No",
+    //     "grantDetails": "None",
+    //     "course": "Engineer",
+    //     "motivation": "I aim to be the best Engineer ever!",
+    //     "fetWishToAttend": "DUT",
+    //     "requestingFor": "School Transfer",
+    //     "marksDoc": ""
+    //   },
+    //   "addressDetails": {
+    //     "town": "Boksburg",
+    //     "city": "Johannesburg",
+    //     "province": "Gauteng",
+    //     "cellOne": "0846843654",
+    //     "cellTwo": "086054056",
+    //     "email": "siyabongcodes@gmail.com"
+    //   },
+    //   "subjects": []
+    // })
   }
 
   toggleState(state: boolean) {
@@ -109,9 +120,9 @@ export class NewApplicationComponent implements OnInit {
 
   newSubject(): FormGroup {
     return this.fb.group({
-      subject: [null, !this.isUpload ? [Validators.required] : []],
-      standard: [null, !this.isUpload ? [Validators.required] : []],
-      mark: [null, !this.isUpload ? [Validators.required, Validators.max(100)] : []],
+      subject: [null, [Validators.required]],
+      standard: [null, [Validators.required]],
+      mark: [null, [Validators.required, Validators.max(100)]],
     })
   }
 
@@ -148,6 +159,7 @@ export class NewApplicationComponent implements OnInit {
   // Dynamically Add Subject
   addSubject() {
     this.subjects.push(this.newSubject());
+    this.controls.push(new FormControl());
   }
 
   // Dynamically Remove Subject
@@ -247,9 +259,8 @@ export class NewApplicationComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
-    console.log(value)
+    if (!value) return this.SUBJECTS;
     const filterValue = value.toLowerCase();
-
-    return this.SUBJECTS.filter(option => option.toLowerCase().includes(filterValue)).sort();
+    return this.SUBJECTS.filter(option => option.toLowerCase().includes(filterValue));
   }
 }
