@@ -2,7 +2,7 @@
 <div class="vertical-start-stretch full-width full-height docs-upload" [ngClass]="{'disable-all': loading$ | async}">
     <mat-card class="full-width gap-2em vertical-start-stretch">
         <h1>Upload Documents</h1>
-        <form [formGroup]="personalDetails">
+        <!-- <form [formGroup]="personalDetails">
             <div class="vertical-center-center gap-2em  full-width">
                 <div class="horizontal-space-between-stretch col-sm full-width input-container"
                     [class.full-width]="width <= 768">
@@ -101,7 +101,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </form> -->
         <div class="horizontal-space-between wrap">
             <div *ngFor="let doc of docs; let i = index;" class="vertical-start-stretch gap-1em width-48">
                 <div class="vertical-start-stretch gap-1em  ">
@@ -125,7 +125,7 @@
         </div>
 
         <div class="center-text">
-            <button (click)="uploadDocs(personalDetails)" class="primary-bg white-color round mt-2" mat-raised-button>
+            <button (click)="uploadDocs()" class="primary-bg white-color round mt-2" mat-raised-button>
                 Submit
             </button>
         </div>

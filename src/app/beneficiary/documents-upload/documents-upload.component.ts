@@ -45,17 +45,15 @@ export class DocumentsUploadComponent implements OnInit {
   loading$ = this.loaderService.loading$;
   personalDetails!: FormGroup;
   width: number = 0;
-
+  showParentDoc: boolean = false
   constructor(public sanitizer: DomSanitizer, private sharedService: SharedService, private applicationService: ApplicationsService, private activatedRouite: ActivatedRoute, private loaderService: LoadingService, private fb: FormBuilder, private router: Router) {
-    this.personalDetails = this.personalDetailsForm();
     this.activatedRouteSub = this.activatedRouite.params.subscribe(params => {
       if (params['applicationId']) {
         this.applicationService.genericFetchApplications(`applications/fetchApplications?_id=${params?.['applicationId']}`).subscribe((data: any) => {
           if (data[0]) {
             this.application = data[0];
-            this.application.personalDetails.dateOfBirth = new Date(this.application?.personalDetails?.dateOfBirth);
-            const { name, surname } = this.application.personalDetails;
-            this.personalDetails.patchValue({ name, surname });
+            this.showParentDoc = new Date().getFullYear() - +this.application?.personalDetails?.dateOfBirth?.slice(0, 4)  < 18 ? true : false;
+            !this.showParentDoc && this.docs.splice(2, 1);
           }
           else throw new Error('Error Fetching Application, Try Again Later.');
         }, err => {
@@ -105,8 +103,8 @@ export class DocumentsUploadComponent implements OnInit {
     }
   }
 
-  uploadDocs(form: FormGroup) {
-    const allDocsValid = this.docs.every(doc => doc.base64) && form.valid;
+  uploadDocs() {
+    const allDocsValid = this.docs.every(doc => doc.base64);
     if (allDocsValid) {
       this.loaderService.showLoader();
 
@@ -125,8 +123,7 @@ export class DocumentsUploadComponent implements OnInit {
           },
           submittedDocs: true,
           checkIfUploaded: true,
-          documents: this.docs,
-          documentExtraData: form.value
+          documents: this.docs
         }
 
         this.updateApplication(body)
@@ -136,7 +133,7 @@ export class DocumentsUploadComponent implements OnInit {
       }).finally(() => this.loaderService.hideLoader());
     }
     else {
-      this.sharedService.openSnackbar('Please add all required info');
+      this.sharedService.openSnackbar('Please upload all the files and try again');
     }
   }
 
@@ -150,18 +147,6 @@ export class DocumentsUploadComponent implements OnInit {
       console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Updating Application, Try Again Later.');
     }, () => this.loaderService.hideLoader())
-  }
-
-  personalDetailsForm(): FormGroup {
-    return this.fb.group({
-      name: [null, [Validators.required]],
-      surname: [null, [Validators.required]],
-      race: [null, [Validators.required]],
-      gender: [null, [Validators.required]],
-      schoolName: [null, [Validators.required]],
-      principalContactDetails: [null, [Validators.required]],
-      accountsContactDetails: [null, [Validators.required]],
-    })
   }
 
 }

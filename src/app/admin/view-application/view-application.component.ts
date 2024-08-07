@@ -82,7 +82,7 @@ export class ViewApplicationComponent implements OnInit {
 
 
   makeListData({ personalDetails, addressDetails, documentExtraData }: any) {
-    const personalDetailsKeyList = ['dateOfBirth', 'schoolCurrentlyAttending', 'schoolWishToAttend', 'gradeAndYearDoing', 'hasGrant', 'grantDetails', 'course', 'fetWishToAttend', 'requestingFor', 'motivation'];
+    const personalDetailsKeyList = ['dateOfBirth', 'race', 'gender', 'schoolCurrentlyAttending', 'schoolWishToAttend', 'gradeAndYearDoing', 'hasGrant', 'grantDetails', 'course', 'fetWishToAttend', 'requestingFor', 'motivation'];
     this.personalDetailsList = setUpKeyValueList(personalDetails, personalDetailsKeyList);
 
     const addressDetailsKeyList = ['cellOne', 'cellTwo', 'email', 'town', 'city', 'province'];

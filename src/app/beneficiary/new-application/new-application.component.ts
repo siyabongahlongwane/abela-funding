@@ -232,7 +232,7 @@ export class NewApplicationComponent implements OnInit {
 
         const body = {
           ...this.applicationForm.value,
-          personalDetails: { ...this.personalDetails.value, marksDoc: { name: 'Term Results', file: URLs[0], type: this.document.type } }
+          personalDetails: { ...this.user?.personalDetails, ...this.personalDetails.value, marksDoc: { name: 'Term Results', file: URLs[0], type: this.document.type } }
         }
 
         this.startNewApplication(body)

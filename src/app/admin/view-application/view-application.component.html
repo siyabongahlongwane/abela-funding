@@ -53,7 +53,7 @@
                         [dataList]="documentExtraDataList"></app-key-value-list>
                     <div class="vertical-start-stretch max-width-930">
                         <app-document-viewer
-                            *ngFor="let item of application?.documents; let i = index;" [label]="item.label" [name]="item.name" [url]="item.file" [height]="'400px'"></app-document-viewer>
+                            *ngFor="let item of application?.documents; let i = index;" [label]="item.label.replace('Your', '')" [name]="item.name" [url]="item.file" [height]="'400px'"></app-document-viewer>
                     </div>
     
                 </div>
