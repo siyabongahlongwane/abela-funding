@@ -103,11 +103,11 @@
             </div>
         </form> -->
         <div class="horizontal-space-between wrap">
-            <div *ngFor="let doc of docs; let i = index;" class="vertical-start-stretch gap-1em width-48">
-                <div class="vertical-start-stretch gap-1em  ">
+            <div *ngFor="let doc of docs; let i = index;" class="vertical-start-stretch gap-1em" [class.width]="width <= 600 ? '100%' : '48%'">
+                <div class="vertical-start gap-1em  ">
                     <input type="file" #upload [required]="true" (change)="uploadDoc($event, i)" hidden />
                     <span>{{ doc.label }}<br> <span class="bold">{{ doc.name || 'N/A' }}</span></span>
-                    <button (click)="upload.click()" class="secondary-bg white-color roundt" mat-raised-button>
+                    <button (click)="upload.click()" class="secondary-bg white-color round" mat-raised-button>
                         <div class="horizontal-center-center gap-1em">
                             Choose File<mat-icon>cloud</mat-icon>
                         </div>
