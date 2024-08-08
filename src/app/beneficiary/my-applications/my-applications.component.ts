@@ -20,7 +20,7 @@ export class MyApplicationsComponent implements OnInit {
   counts: number[] = [0, 0, 0, 0, 0];
   filter: string = '';
   user: any = {};
-  applicationsCount: number = 0;
+  applicationsCount: number = 0; 
   tableData: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,7 +32,7 @@ export class MyApplicationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.sharedService.get('user');
-    this.fetchApplicationsData(`?addressDetails.email=${this.user?.contactDetails?.email}`);
+    this.fetchApplicationsData(`?owner=${this.user?._id}`);
   }
 
   openConfirmDialog(applicationId: string) {

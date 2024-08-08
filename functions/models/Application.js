@@ -50,6 +50,10 @@ const Application = mongoose.model('application', {
     acceptedTerms: {
         type: String,
         required: false
+    },
+    owner: {
+        type: String,
+        required: true
     }
 });
 
