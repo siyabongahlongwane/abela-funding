@@ -4,6 +4,7 @@ import { KeyValueListComponent } from '../admin/key-value-list/key-value-list.co
 import { DocumentViewerComponent } from './components/document-viewer/document-viewer.component';
 import { ApplicantAndStatusViewerComponent } from './components/applicant-and-status-viewer/applicant-and-status-viewer.component';
 import { MaterialModule } from '../modules/material/material.module';
+import { LandingComponent } from './landing/landing.component';
 
 const SHARED_COMPONENTS = [
   KeyValueListComponent,
@@ -13,7 +14,8 @@ const SHARED_COMPONENTS = [
 
 @NgModule({
   declarations: [
-    ...SHARED_COMPONENTS
+    ...SHARED_COMPONENTS,
+    LandingComponent
   ],
   imports: [
     CommonModule,
