@@ -33,7 +33,7 @@
     
                 <div class="vertical-start-stretch max-width-930">
                     <div *ngFor="let subject of application?.subjects; let i = index;"
-                        class="horizontal-space-between-stretch gap-1em">
+                        class="horizontal-space-between-stretch gap-1em subject">
                         <h4 class="bold width-24">Subject {{ i + 1 }}: <span class="fw-500">{{ subject?.subject}}</span>
                         </h4>
                         <h4 class="bold width-24">Standard {{ i + 1 }}: <span class="fw-500">{{ subject?.standard}}</span>

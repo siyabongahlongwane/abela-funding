@@ -1,3 +1,17 @@
 :host {
     width: 100%;
 }
+
+@media (max-width:600px){
+    .subject {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        margin-bottom: 1em;
+        h4 {
+            width: 100%;
+        }
+    }
+}
