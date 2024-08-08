@@ -11,7 +11,7 @@
     "logs": "firebase functions:log",
     "lint-fix": "eslint src/**/*.js --fix",
     "functions": "firebase emulators:start --only functions",
-    "login": "firebase logout && firebase login -y"
+    "login": "firebase logout && firebase login"
   },
   "keywords": [],
   "author": "Siyabonga Hlongwane",
