@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ConfirmPopupComponent } from 'src/app/components/confirm-popup/confirm-popup.component';
 import { ApplicationsService } from 'src/app/services/applications.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -25,7 +25,10 @@ export class MyApplicationsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   loading$ = this.loader.loading$;
-  constructor(private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, public loader: LoadingService) { }
+  width: number = 0;
+  constructor(private dialog: MatDialog, private sharedService: SharedService, private applicationService: ApplicationsService, private router: Router, public loader: LoadingService) {
+    this.width = this.sharedService.detectScreenSize();
+  }
 
   ngOnInit(): void {
     this.user = this.sharedService.get('user');
@@ -57,31 +60,38 @@ export class MyApplicationsComponent implements OnInit {
   };
 
   fetchApplicationsData(filter: any) {
-    this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`).subscribe((data: any) => {
-      data.forEach((application: any) => {
-        let temp = {}
-        temp = Object.assign(temp, {
-          _id: application._id,
-          date: application.dateCreated,
-          name: application.personalDetails.name,
-          surname: application.personalDetails.surname,
-          email: application.addressDetails.email,
-          status: application.status.current,
-          requestingFor: application.personalDetails.requestingFor,
-          submittedDocs: application.submittedDocs,
-        });
-
-        this.tableData.push(temp);
+    this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`)
+      .subscribe((data: any) => {
+        data = data.map((application: any) => {
+          if ((this.user?.contactDetails?.email === application?.addressDetails?.email) && this.width <= 600) {
+            this.displayedColumns = ['dateCreated', 'requestingFor', 'status', 'action'];
+            return {
+              _id: application?._id,
+              date: application?.dateCreated,
+              status: application?.status?.current,
+              requestingFor: application?.personalDetails?.requestingFor,
+              submittedDocs: application?.submittedDocs,
+            }
+          }
+          return {
+            _id: application?._id,
+            date: application?.dateCreated,
+            name: application?.personalDetails?.name,
+            surname: application?.personalDetails?.surname,
+            email: application?.addressDetails?.email,
+            status: application?.status?.current,
+            requestingFor: application?.personalDetails?.requestingFor,
+            submittedDocs: application?.submittedDocs,
+          }
+        })
+        this.dataSource = new MatTableDataSource(data);
+        this.applicationsCount = data.length;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }, err => {
+        console.log(err);
+        this.sharedService.openSnackbar(err?.error?.msg || 'Error Fetching Application, Try Again Later.');
       });
-
-      this.dataSource = new MatTableDataSource(this.tableData);
-      this.applicationsCount = data.length;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }, err => {
-      console.log(err);
-      this.sharedService.openSnackbar(err.error.msg || 'Error Fetching Application, Try Again Later.');
-    });
   }
 
   goTo(applicationId: string, route: string) {

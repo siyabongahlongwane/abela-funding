@@ -1,92 +1,177 @@
 <div class="vertical-start-stretch full-width full-height gap-1em relative">
-    <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
-    <div class="horizontal-space-between-center full-width height-40px">
-        <div class="vertical-start-stretch full-width">
-            <div class="horizontal-space-between-center full-width">
-                <div class="vertical-start-stretch hidden">
-                    <span class="bold">Showing {{ applicationsCount }} Application(s)</span>
-                </div>
-                <div class="vertical-start-stretch grey-input-container half-width">
-                    <mat-form-field appearance="outline">
-                        <input (keyup)="applyFilter($event)" #input matInput type="text"
-                            placeholder="Filter My Applications">
-                        <mat-icon matSuffix>filter_alt</mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="vertical-start-stretch" routerLink="../apply">
-                    <button class="primary-bg white-color" mat-raised-button>New Application</button>
-                </div>
-            </div>
+  <mat-progress-spinner
+    [mode]="'indeterminate'"
+    *ngIf="loading$ | async"
+  ></mat-progress-spinner>
+  <div class="horizontal-space-between-center full-width height-40px">
+    <div class="vertical-start-stretch full-width">
+      <div class="horizontal-space-between-center full-width">
+        <div class="vertical-start-stretch hidden">
+          <span class="bold"
+            >Showing {{ applicationsCount }} Application(s)</span
+          >
         </div>
+        <div class="vertical-start-stretch grey-input-container half-width">
+          <mat-form-field appearance="outline">
+            <input
+              (keyup)="applyFilter($event)"
+              #input
+              matInput
+              type="text"
+              placeholder="Filter My Applications"
+            />
+            <mat-icon matSuffix>filter_alt</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="vertical-start-stretch" routerLink="../apply">
+          <button class="primary-bg white-color" mat-raised-button>
+            New Application
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="vertical-start-stretch full-width white-bg table-container full-width full-height">
-        <div *ngIf="(applicationsCount == 0) && !(loading$ | async)"
-            class="horizontal-center-center full-width full-height">
-            <h1 class="bold">No applications found</h1>
-        </div>
-        <div class="vertical-start full-width">
-            <table [hidden]="applicationsCount === 0" mat-table [dataSource]="dataSource" matSort
-                class="mat-elevation-z8 full-width">
-
-                <ng-container matColumnDef="dateCreated">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Date </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application.date | date: 'mediumDate'}}">
-                        {{application.date | date: 'mediumDate'}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="requestingFor">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Requesting For </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application?.requestingFor}}">
-                        {{application?.requestingFor}} </td>
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application?.name}}">
-                        {{application?.name}} {{application?.surname}}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="email">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Email </th>
-                    <td mat-cell *matCellDef="let application" matTooltip="{{application?.email}}">
-                        {{application?.email}}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let application">
-                        <div class="horizontal-start-center gap-5px">
-                            <mat-icon (click)="goTo(application['_id'], 'view')" class="light-blue-color pointer"
-                                matTooltip="View">visibility_on</mat-icon>
-                            <div class="secondary-bg white-color upload-button" (click)="goTo(application['_id'], 'upload-documents')"
-                                *ngIf="application.status === 'Approved' && !application?.submittedDocs">Upload Docs
-                            </div>
-                        </div>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Status </th>
-                    <td mat-cell *matCellDef="let application">
-                        <div [ngClass]="(['Approved', 'Documents Uploaded']).includes(application?.status) ? 'green-color' : application?.status ==  'Rejected' ? 'red-color' : application?.status == 'In Review' ? 'dark-grey-color' : 'orange-color'"
-                            class="status-btn">
-                            {{application?.status}}
-                        </div>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true;"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                </tr>
-            </table>
-        </div>
-        <mat-paginator [class.display-none]="applicationsCount == 0" #paginator showFirstLastButtons [pageSize]="6"
-            [pageSizeOptions]="[6, 12, 18]"></mat-paginator>
+  <div
+    class="vertical-start-stretch full-width white-bg table-container full-width full-height"
+  >
+    <div
+      *ngIf="applicationsCount == 0 && !(loading$ | async)"
+      class="horizontal-center-center full-width full-height"
+    >
+      <h1 class="bold">No applications found</h1>
     </div>
+    <div class="vertical-start full-width">
+      <table
+        [hidden]="applicationsCount === 0"
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8 full-width"
+      >
+        <div>
+          <ng-container matColumnDef="dateCreated">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Date</th>
+            <td
+              mat-cell
+              *matCellDef="let application"
+              matTooltip="{{ application.date | date: 'mediumDate' }}"
+            >
+              {{ application.date | date: 'mediumDate' }}
+            </td>
+          </ng-container>
+        </div>
+
+        <div>
+          <ng-container matColumnDef="requestingFor">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>
+              Request
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let application"
+              matTooltip="{{ application?.requestingFor }}"
+            >
+              {{ application?.requestingFor }}
+            </td>
+          </ng-container>
+        </div>
+
+        <!-- Name Column -->
+        <div [style.display]="width < 600 ? 'none' : 'block'">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+            <td
+              mat-cell
+              *matCellDef="let application"
+              matTooltip="{{ application?.name }}"
+            >
+              {{ application?.name }} {{ application?.surname }}
+            </td>
+          </ng-container>
+        </div>
+
+        <div [style.display]="width < 600 ? 'none' : 'block'">
+          <ng-container matColumnDef="email">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Email</th>
+            <td
+              mat-cell
+              *matCellDef="let application"
+              matTooltip="{{ application?.email }}"
+            >
+              {{ application?.email }}
+            </td>
+          </ng-container>
+        </div>
+
+        <div style="display: none;">
+          <ng-container matColumnDef="action">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let application">
+              <div class="horizontal-start-center gap-5px">
+                <mat-icon
+                  (click)="goTo(application['_id'], 'view')"
+                  class="light-blue-color pointer"
+                  matTooltip="View"
+                  >visibility_on</mat-icon
+                >
+                <div
+                  class="secondary-bg white-color upload-button"
+                  (click)="goTo(application['_id'], 'upload-documents')"
+                  *ngIf="
+                    application.status === 'Approved' &&
+                    !application?.submittedDocs
+                  "
+                >
+                  Upload Docs
+                </div>
+              </div>
+            </td>
+          </ng-container>
+        </div>
+
+        <div>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let application">
+              <div
+                [ngClass]="
+                  ['Approved', 'Documents Uploaded'].includes(
+                    application?.status
+                  )
+                    ? 'green-color'
+                    : application?.status == 'Rejected'
+                    ? 'red-color'
+                    : application?.status == 'In Review'
+                    ? 'dark-grey-color'
+                    : 'orange-color'
+                "
+                class="status-btn"
+              >
+                {{ application?.status }}
+              </div>
+            </td>
+          </ng-container>
+        </div>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No data matching the filter "{{ input.value }}"
+          </td>
+        </tr>
+      </table>
+    </div>
+    <mat-paginator
+      [class.display-none]="applicationsCount == 0"
+      #paginator
+      showFirstLastButtons
+      [pageSize]="6"
+      [pageSizeOptions]="[6, 12, 18]"
+    ></mat-paginator>
+  </div>
 </div>

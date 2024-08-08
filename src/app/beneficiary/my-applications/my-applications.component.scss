@@ -12,4 +12,9 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: .8rem;
+    min-width: max-content;
+}
+
+table td {
+    min-width: 80px;
 }

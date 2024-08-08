@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-applicant-and-status-viewer',
@@ -7,7 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ApplicantAndStatusViewerComponent implements OnInit {
   @Input() application: any;
-  constructor() { }
+  width: number = this.shared.detectScreenSize();
+  constructor(private shared: SharedService) { }
 
   ngOnInit(): void {
   }
