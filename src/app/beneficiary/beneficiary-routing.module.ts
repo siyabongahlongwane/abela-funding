@@ -10,7 +10,7 @@ import { DocumentsUploadComponent } from './documents-upload/documents-upload.co
 
 const routes: Routes = [
   {
-    path: 'abela/beneficiary', component: ContainerComponent, canActivate: [BeneficiaryGuard], children: [
+    path: 'beneficiary', component: ContainerComponent, canActivate: [BeneficiaryGuard], children: [
       {
         path: '', redirectTo: 'applications/my-applications', pathMatch: 'full'
       },

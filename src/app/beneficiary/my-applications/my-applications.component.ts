@@ -95,7 +95,7 @@ export class MyApplicationsComponent implements OnInit {
   }
 
   goTo(applicationId: string, route: string) {
-    this.router.navigate([`abela/beneficiary/applications/${route}/${applicationId}`]);
+    this.router.navigate([`beneficiary/applications/${route}/${applicationId}`]);
   }
 
   applyFilter(event: Event) {

@@ -91,7 +91,7 @@ const generateStatusUpdateEmailLayout = (body) => {
             <li>Parent / Guardian ID Copy (For applicants under 18 years)</li>
             <li>Statement of Fees / Invoice</li>
         </ul>
-        <h3 >Login and check the application on the Beneficiary Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/abela/beneficiary/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
+        <h3 >Login and check the application on the Beneficiary Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/beneficiary/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
     </br>
     Warm Regards<br>
     This email was sent from the Abela Trust Website through WEBGOORU PTY LTD's Email Server
@@ -109,7 +109,7 @@ const generateApplicationLayout = (body) => {
         <li style='list-style: none;'> <b>Email</b>:  ${body.addressDetails.email}</li>
         <li style='list-style: none;'> <b>Phone</b>:  ${body.addressDetails.cellOne}</li>
     </ul>
-    <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/abela/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
+    <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
     </br>
     Warm Regards<br>
     This email was sent from the Abela Trust Website through WEBGOORU PTY LTD's Email Server
@@ -126,7 +126,7 @@ const adminDocsUploadedMail = (body) => {
         <li style='list-style: none;'> <b>Email</b>:  ${body.addressDetails.email}</li>
         <li style='list-style: none;'> <b>Phone</b>:  ${body.addressDetails.cellOne}</li>
     </ul>
-    <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/abela/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
+    <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
     </br>
     Warm Regards<br>
     This email was sent from the Abela Trust Website through WEBGOORU PTY LTD's Email Server

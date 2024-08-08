@@ -27,6 +27,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem('user');
     this.userSub.next(null);
-    this.router.navigate(['/abela/auth/login']);
+    this.router.navigate(['/auth/login']);
   }
 }

@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   user: any = {};
   message: string = '';
   loading$ = this.loader.loading$;
-  url: string = 'https://apply.theabelatrust.co.za/abela/auth/register';
+  url: string = 'https://apply.theabelatrust.co.za/auth/register';
   userDetailsList: any;
   constructor(private sharedService: SharedService, private userService: UserService, private dialog: MatDialog, public loader: LoadingService, private auth: AuthService) { }
 
@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
 
   copyRefId() {
     // Copy text to clipboard
-    navigator.clipboard.writeText(`Click on this link to join: http://localhost:4000/abela/auth/register?refId=${this.user.refId}`);
+    navigator.clipboard.writeText(`Click on this link to join: http://localhost:4000/auth/register?refId=${this.user.refId}`);
     this.sharedService.openSnackbar('Text Copied');
   }
 

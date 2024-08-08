@@ -14,13 +14,13 @@ export class ContainerComponent implements OnInit {
   width: number = 0;
   sideNavItems: any[] = [
     {
-      url: 'abela/beneficiary/applications/my-applications',
+      url: 'beneficiary/applications/my-applications',
       title: 'Applications',
       icon: 'assignment_add',
       isActive: false
     },
     {
-      url: 'abela/beneficiary/profile',
+      url: 'beneficiary/profile',
       title: 'My Profile',
       icon: 'account_circle',
       isActive: false
@@ -61,7 +61,7 @@ export class ContainerComponent implements OnInit {
   }
 
   setPageName(urlFragments: string[]) {
-    this.currentPage = urlFragments[3][0].toUpperCase() + urlFragments[3].slice(1);
+    this.currentPage = urlFragments[2][0].toUpperCase() + urlFragments[2].slice(1);
     // if (urlFragments[4]) this.currentPage += ` - ${urlFragments[4]}`
   }
 }

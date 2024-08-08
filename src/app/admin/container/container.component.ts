@@ -11,19 +11,19 @@ export class ContainerComponent implements OnInit {
   active: boolean = false;
   sideNavItems: any[] = [
     {
-      url: 'abela/admin/dashboard',
+      url: 'admin/dashboard',
       title: 'Dashboard',
       icon: 'dashboard',
       isActive: false
     },
     {
-      url: 'abela/admin/applications/All',
+      url: 'admin/applications/All',
       title: 'Applications',
       icon: 'assignment_add',
       isActive: false
     },
     {
-      url: 'abela/admin/referrals',
+      url: 'admin/referrals',
       title: 'Referrals',
       icon: 'groups',
       isActive: false
@@ -78,7 +78,7 @@ export class ContainerComponent implements OnInit {
   }
 
   setPageName(urlFragments: string[]) {
-    this.currentPage = urlFragments[3][0].toUpperCase() + urlFragments[3].slice(1);
-    if (urlFragments[4]) this.currentPage;
+    this.currentPage = urlFragments[2][0].toUpperCase() + urlFragments[2].slice(1);
+    if (urlFragments[3]) this.currentPage;
   }
 }

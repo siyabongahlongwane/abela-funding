@@ -32,7 +32,7 @@ export class ViewApplicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.sharedService.get('user');
-    if (!this.user) this.router.navigate(['abela/auth/login']);
+    if (!this.user) this.router.navigate(['auth/login']);
     this.activeRoute.params.subscribe(params => {
       if (params['applicationId']) {
         this.fetchApplication(`?_id=${params['applicationId']}`);

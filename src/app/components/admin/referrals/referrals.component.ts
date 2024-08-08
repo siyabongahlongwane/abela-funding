@@ -54,7 +54,7 @@ export class ReferralsComponent implements OnInit {
   }
 
   viewApplication(applicationId: string) {
-    this.router.navigate([`abela/admin/applications/view/${applicationId}`]);
+    this.router.navigate([`admin/applications/view/${applicationId}`]);
   }
 
   applyFilter(event: Event) {

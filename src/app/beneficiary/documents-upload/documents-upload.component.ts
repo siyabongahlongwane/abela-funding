@@ -142,7 +142,7 @@ export class DocumentsUploadComponent implements OnInit {
     this.applicationService.updateApplication(`applications/update/${this.application['_id']}`, data).subscribe((data: any) => {
       this.sharedService.openSnackbar(data?.msg);
       this.loaderService.hideLoader();
-      this.router.navigate(['/abela/beneficiary/applications'])
+      this.router.navigate(['/beneficiary/applications'])
     }, err => {
       console.log(err)
       this.sharedService.openSnackbar(err.error.msg || 'Error Updating Application, Try Again Later.');

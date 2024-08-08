@@ -151,7 +151,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(`auth/register`, this.registerForm.value).subscribe(resp => {
       if (resp.msg) {
         this.sharedService.openSnackbar(resp.msg);
-        this.router.navigate(['abela/auth/login']);
+        this.router.navigate(['auth/login']);
       }
     }, err => {
       console.log(err)

@@ -9,11 +9,11 @@ import { ViewApplicationComponent } from './view-application/view-application.co
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'abela/admin/dashboard', pathMatch: 'full'
+    path: '', redirectTo: 'admin/dashboard', pathMatch: 'full'
   }
   ,
   {
-    path: 'abela/admin', component: ContainerComponent, canActivate: [AdminGuard], children: [
+    path: 'admin', component: ContainerComponent, canActivate: [AdminGuard], children: [
       {
         path: '', redirectTo: 'dashboard', pathMatch: 'full'
       },

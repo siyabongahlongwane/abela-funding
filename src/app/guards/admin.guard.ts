@@ -18,7 +18,7 @@ export class AdminGuard implements CanActivate {
 
     if (!isLoggedIn) {
       this.shared.openSnackbar('Only Admins can access this page!');
-      this.router.navigate(['/abela/auth/login']);
+      this.router.navigate(['/auth/login']);
       return isLoggedIn;
     } else {
       return true;

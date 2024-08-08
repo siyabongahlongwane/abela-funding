@@ -13,13 +13,13 @@ export class NavbarComponent implements OnInit {
   @Input() currentPage: any;
   sideNavItems: any[] = [
     {
-      url: '/abela/beneficiary/applications/my-applications',
+      url: '/beneficiary/applications/my-applications',
       title: 'Applications',
       icon: 'assignment_add',
       isActive: false
     },
     {
-      url: '/abela/beneficiary/profile',
+      url: '/beneficiary/profile',
       title: 'My Profile',
       icon: 'account_circle',
       isActive: false

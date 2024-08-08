@@ -134,6 +134,6 @@ export class ApplicationsComponent implements OnInit {
   }
 
   viewApplication(applicationId: string) {
-    this.router.navigate([`abela/admin/applications/view/${applicationId}`]);
+    this.router.navigate([`admin/applications/view/${applicationId}`]);
   }
 }

@@ -251,7 +251,7 @@ export class NewApplicationComponent implements OnInit {
       if (resp.msg) {
         this.loader.hideLoader();
         this.sharedService.openSnackbar(resp.msg);
-        this.router.navigate(['abela/beneficiary/applications/my-applications']);
+        this.router.navigate(['beneficiary/applications/my-applications']);
       }
     }, err => {
       console.log(err)

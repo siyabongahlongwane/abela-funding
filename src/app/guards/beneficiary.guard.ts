@@ -18,7 +18,7 @@ export class BeneficiaryGuard implements CanActivate {
     let isLoggedIn = keys.length > 0 && this.user['role']['description'] == 'Student' ? true : false;
     if (!isLoggedIn) {
       this.shared.openSnackbar('Only registered students can access this page!');
-      this.router.navigate(['/abela/auth/login']);
+      this.router.navigate(['/auth/login']);
       return isLoggedIn;
     } else {
       return true;
