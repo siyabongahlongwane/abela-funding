@@ -5,6 +5,7 @@ import { DocumentViewerComponent } from './components/document-viewer/document-v
 import { ApplicantAndStatusViewerComponent } from './components/applicant-and-status-viewer/applicant-and-status-viewer.component';
 import { MaterialModule } from '../modules/material/material.module';
 import { LandingComponent } from './landing/landing.component';
+import { ReferralDialogComponent } from './referral-dialog/referral-dialog.component';
 
 const SHARED_COMPONENTS = [
   KeyValueListComponent,
@@ -15,7 +16,8 @@ const SHARED_COMPONENTS = [
 @NgModule({
   declarations: [
     ...SHARED_COMPONENTS,
-    LandingComponent
+    LandingComponent,
+    ReferralDialogComponent
   ],
   imports: [
     CommonModule,
