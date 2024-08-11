@@ -1,5 +1,7 @@
-<div class="vertical-start-stretch white-bg full-height padding-6em gap-4em">
-  <div class="horizontal-space-between-center">
+<div
+  class="vertical-start-stretch white-bg padding-6em gap-2em wrapper"
+>
+  <div class="horizontal-space-between-center image-row">
     <div class="vertical-start-stretch txt-container gap-1em">
       <h1 class="big-text">
         Welcome To <br />
@@ -14,20 +16,41 @@
       <img class="glow-image" src="../../../assets/school-kids.jpg" alt="" />
     </div>
   </div>
-  <div class="horizontal-space-between-center">
-    <mat-card *ngFor="let card of cards" class="padding-2em width-32 card">
-      <div class="horizontal-start-stretch">
-        <div class="vertical-start-stretch gap-1em">
-          <div class="horizontal-center-center gap-1em">
-            <mat-icon>{{ card.icon }}</mat-icon>
-            <h2 class="bold">{{ card.label }}</h2>
+  <div class="home-banner">
+    <div class="vertical-start-stretch txt-container gap-1em">
+      <h1 class="big-text white-color">
+        Welcome To <br />
+        <span class="primary-color">Abela Trust</span>
+      </h1>
+      <h3 class="para white-color">
+        Providing funding opportunities for education and poverty relief
+        programs.
+      </h3>
+    </div>
+  </div>
+  <div class="vertical-start-stretch content gap-2em">
+    <div class="vertical-start-center">
+      <h1 class="query">What would you like to do?</h1>
+    </div>
+    <div class="horizontal-space-between-center cards">
+      <mat-card *ngFor="let card of cards" class="padding-2em width-32 card">
+        <div class="horizontal-start-stretch">
+          <div class="vertical-start-stretch gap-1em">
+            <div class="horizontal-center-center gap-1em">
+              <mat-icon>{{ card.icon }}</mat-icon>
+              <h2 class="bold">{{ card.label }}</h2>
+            </div>
+            <p>{{ card.txt }}</p>
+            <button
+              (click)="goTo(card.route)"
+              mat-raised-button
+              class="secondary-bg white-color round"
+            >
+              Get Started
+            </button>
           </div>
-          <p>{{ card.txt }}</p>
-          <button (click)="goTo(card.route)" mat-raised-button class="secondary-bg white-color round">
-            Get Started
-          </button>
         </div>
-      </div>
-    </mat-card>
+      </mat-card>
+    </div>
   </div>
 </div>

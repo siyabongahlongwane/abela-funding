@@ -1,39 +1,123 @@
+body {
+    background: #fff;
+}
 .padding-2em {
     padding: 2em;
 }
 
 .padding-6em {
-    padding: 6em;
+    padding: 4em;
 }
 
 .big-text {
     font-size: 60px;
-    font-weight: 900;
-    line-height: normal;
 }
 
 .para {
     font-size: 25px;
 }
 
-.glow-image, .card {
+.glow-image,
+.card {
     height: auto;
     /* Maintain the aspect ratio */
     border-radius: 10px;
     /* Optional: Adds rounded corners to the image */
-    box-shadow: 0 0 20px 10px rgba(255, 20, 147, 0.8);
+    box-shadow: 0 0 10px 5px rgba(255, 20, 147, 0.8);
     transition: box-shadow 0.3s ease-in-out;
 }
 
 .glow-image:hover {
-    box-shadow: 0 0 30px 20px rgba(255, 20, 147, 1);
+    box-shadow: 0 0 15px 10px rgba(255, 20, 147, 1);
 }
 
-.txt-container,.image-container {
+.txt-container,
+.image-container {
     width: 45%;
 }
 
 
 .card {
     box-sizing: border-box;
+}
+
+.big-text,
+.query {
+    font-weight: 900;
+    line-height: normal;
+}
+
+.query {
+    font-size: 30px;
+}
+
+.home-banner {
+    display: none;
+}
+
+.cards {
+    margin-bottom: 2em;
+}
+@media (min-width: 600px) and (max-width: 900px) {
+    .wrapper {
+        padding: 1em;
+    }
+
+
+    .image-row {
+        display: flex;
+    }
+}
+
+@media (max-width: 600px) {
+    .wrapper {
+        padding: 0em;
+        gap: 1em;
+    }
+
+    .home-banner {
+        .txt-container {
+            width: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        display: block;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('../../../assets/school-kids.jpg');
+        background-size: cover;
+        background-position: center center;
+        width: 100%;
+        padding: 3em 0;
+    }
+
+    .image-row {
+        display: none;
+    }
+
+    .content {
+        padding: 1em;
+    }
+
+    .big-text {
+        font-size: 30px;
+    }
+
+    .query {
+        font-size: 1.6em;
+    }
+
+    .para {
+        font-size: 1.2em;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .cards {
+        flex-direction: column;
+        gap: 2em;
+    }
+
 }
