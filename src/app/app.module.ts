@@ -19,6 +19,7 @@ import { NetworkInterceptor } from './interceptors/network.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    SharedModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

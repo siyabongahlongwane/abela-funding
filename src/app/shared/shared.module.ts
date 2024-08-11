@@ -9,6 +9,7 @@ import { ReferralDialogComponent } from './referral-dialog/referral-dialog.compo
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShareIconsComponent } from './share-icons/share-icons.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 
 const SHARED_COMPONENTS = [
   KeyValueListComponent,
@@ -16,13 +17,14 @@ const SHARED_COMPONENTS = [
   ApplicantAndStatusViewerComponent,
   LandingComponent,
   ReferralDialogComponent,
-  ShareIconsComponent
+  ShareIconsComponent,
+  ForgotPasswordComponent,
+  ScrollToTopComponent
 ]
 
 @NgModule({
   declarations: [
     ...SHARED_COMPONENTS,
-    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,
