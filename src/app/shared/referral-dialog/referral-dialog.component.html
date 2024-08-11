@@ -1,0 +1,122 @@
+<div class="vertical-start-stretch">
+  <div class="horizontal-space-between-stretch">
+    <div></div>
+    <mat-icon class="pointer" (click)="close()">close</mat-icon>
+  </div>
+  <div *ngIf="!tempUser" class="vertical-start-stretch gap-1em">
+    <h3>Enter your details below to get a referral code.</h3>
+    <form [formGroup]="referralForm">
+      <div class="vertical-start-stretch gap-1em gap-sm">
+        <form [formGroup]="personalDetails">
+          <div class="horizontal-space-between-stretch col-sm gap-sm flex-wrap">
+            <div class="vertical-start-stretch grey-input-container width-30">
+              <label class="bold">Name <span class="red-color">*</span> </label>
+              <mat-form-field appearance="outline">
+                <input
+                  type="text"
+                  oninput="this.value = this.value.replace(/[0-9]/g, '')"
+                  matInput
+                  formControlName="name"
+                  placeholder="Name"
+                />
+                <mat-error
+                  *ngIf="personalDetails.get('name')?.hasError('required')"
+                >
+                  Name is <b>required!</b>
+                </mat-error>
+                <!-- <mat-icon matPrefix>person</mat-icon> -->
+              </mat-form-field>
+            </div>
+
+            <div class="vertical-start-stretch grey-input-container width-30">
+              <label class="bold"
+                >Surname <span class="red-color">*</span>
+              </label>
+              <mat-form-field appearance="outline">
+                <input
+                  type="text"
+                  oninput="this.value = this.value.replace(/[0-9]/g, '')"
+                  matInput
+                  formControlName="surname"
+                  placeholder="Surname"
+                />
+                <mat-error
+                  *ngIf="personalDetails.get('surname')?.hasError('required')"
+                >
+                  Surname is <b>required!</b>
+                </mat-error>
+                <!-- <mat-icon matPrefix>person</mat-icon> -->
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+
+        <form [formGroup]="contactDetails">
+          <div class="horizontal-space-between-stretch col-sm gap-sm">
+            <div class="vertical-start-stretch grey-input-container width-30">
+              <label class="bold"
+                >Email <span class="red-color">*</span>
+              </label>
+              <mat-form-field appearance="outline">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="email"
+                  placeholder="Email"
+                />
+                <mat-error
+                  *ngIf="
+                    contactDetails.get('email')?.hasError('required') &&
+                    !contactDetails.get('email')?.hasError('pattern')
+                  "
+                >
+                  Email is <b>required!</b>
+                </mat-error>
+                <mat-error
+                  *ngIf="contactDetails.get('email')?.hasError('pattern')"
+                >
+                  Email is <b>invalid!</b>
+                </mat-error>
+                <!-- <mat-icon matPrefix>mail</mat-icon> -->
+              </mat-form-field>
+            </div>
+
+            <div class="vertical-start-stretch grey-input-container width-30">
+              <label class="bold"
+                >Cell Number <span class="red-color">*</span>
+              </label>
+              <mat-form-field appearance="outline">
+                <input
+                  type="text"
+                  oninput="this.value = this.value.replace(/[A-Z a-z]/g, '')"
+                  matInput
+                  formControlName="cellOne"
+                  placeholder="Cell Number 1"
+                />
+                <mat-error
+                  *ngIf="contactDetails.get('cellOne')?.hasError('required')"
+                >
+                  Cell Number 1 is <b>required!</b>
+                </mat-error>
+                <!-- <mat-icon matPrefix>phone</mat-icon> -->
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+
+        <div class="vertical-center-center">
+          <button
+            (click)="register(referralForm)"
+            class="primary-bg white-color border-radius-2em btn-sm"
+            mat-raised-button
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+<div *ngIf="tempUser" class="vertical-start-stretch">
+    <app-share-icons [user]="tempUser" ></app-share-icons>
+</div>
+</div>
