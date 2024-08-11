@@ -29,12 +29,6 @@ export class ProfileComponent implements OnInit {
     this.auth.userSub.next(this.user);
     const userDetailsKeyList = ['cellOne', 'cellTwo', 'email', 'town', 'city', 'province'];
     this.userDetailsList = setUpKeyValueList({...this.user.contactDetails, ...this.user.addressDetails}, userDetailsKeyList);
-
-    this.message = `Looking for educational Support? Need a Bursary? Need Books?
-    Is Registration fee a problem....?
-    Abela Trust is a registered entity focusing on the upliftment of education in South Africa and aiming to assist as many learners as possible to reach their educational goals.
-    To Apply, click on the link: ${this.url}?refId=${this.user.refId}
-    Please share this opportunity with someone you know who might need it and you could win yourself a mini tablet or smartphone!`;
   }
 
   openRegisterDialog() {
@@ -73,19 +67,5 @@ export class ProfileComponent implements OnInit {
 
   shareLink() {
     const message = `Click on this link to join: ${this.url}?refId=${this.user.refId}`
-
-  }
-
-  facebook() {
-    const facebookApi = `https://www.facebook.com/sharer/sharer.php?u=${this.url}?refId=${this.user.refId}`;
-    window.open(facebookApi, '_blank')
-  }
-  tiktok() {
-    const twitterApi = `https://twitter.com/intent/tweet?text=${this.message}`;
-    window.open(twitterApi, '_blank')
-  }
-  whatsapp() {
-    window.open(`https://wa.me/?text=${this.message}`, '_blank')
-
   }
 }
