@@ -46,32 +46,32 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  //   this.registerForm.patchValue({
-  //     "personalDetails": {
-  //         "name": "Blessing",
-  //         "race": "Black",
-  //         "idNumber": "950209",
-  //         "surname": "Sangweni",
-  //         "gender": "Male"
-  //     },
-  //     "contactDetails": {
-  //         "cellOne": "0612905813",
-  //         "cellTwo": null,
-  //         "email": "siyabonga@webgooru.co.za"
-  //     },
-  //     "addressDetails": {
-  //         "town": null,
-  //         "city": "jhb",
-  //         "province": "Mpumalanga"
-  //     },
-  //     "role": {
-  //         "id": "ST",
-  //         "description": "Student"
-  //     },
-  //     "privileges": {},
-  //     "refId": null,
-  //     "password": "123456"
-  // });
+    this.registerForm.patchValue({
+      "personalDetails": {
+          "name": "Blessing",
+          "race": "Black",
+          "idNumber": "9508016864081",
+          "surname": "Sangweni",
+          "gender": "Male"
+      },
+      "contactDetails": {
+          "cellOne": "0612905813",
+          "cellTwo": null,
+          "email": "siyabonga@webgooru.co.za"
+      },
+      "addressDetails": {
+          "town": null,
+          "city": "jhb",
+          "province": "Mpumalanga"
+      },
+      "role": {
+          "id": "ST",
+          "description": "Student"
+      },
+      "privileges": {},
+      "refId": null,
+      "password": "123456"
+  });
     if (this.data) {
       this.hidePassword = true;
       this.registerForm.patchValue(this.data);
@@ -121,7 +121,7 @@ export class RegisterComponent implements OnInit {
       this.createRefId();
       this.activatedRoute.queryParams.subscribe(queryParams => {
         if (Object.keys(queryParams).includes('refId')) {
-          this.userService.fetchReferrer(`auth/fetchReferrer?refId=${queryParams['refId']}`).subscribe(referrer => {
+          this.userService.fetchReferrer(`referrer/fetchReferrer?refId=${queryParams['refId']}`).subscribe(referrer => {
             if (referrer.length > 0) {
               this.registerForm.value.referrer = referrer[0];
               this.registerForm.value.referralDate = new Date();
