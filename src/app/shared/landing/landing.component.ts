@@ -14,13 +14,13 @@ export class LandingComponent implements OnInit {
     {
       label: 'Refer someone',
       txt: 'Share this opportunity with someone you know who might need it and you could win yourself a mini tablet or smartphone!',
-      icon: 'account_circle',
+      icon: 'groups',
       route: ''
     },
     {
       label: 'Register',
       txt: 'Create an account and apply for funding by following the steps provided in the process and uploading the required documents.',
-      icon: 'account_circle',
+      icon: 'edit_square',
       route: 'auth/register'
     },
     {
@@ -32,16 +32,12 @@ export class LandingComponent implements OnInit {
   ];
   constructor(private router: Router, private dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    this.goTo('');
-  }
+  ngOnInit(): void {}
 
   goTo(route: string) {
     if(!route) this.dialog.open(ReferralDialogComponent, {
       disableClose: true,
-
-    }).afterClosed().subscribe((x) => {
-      console.log(x);
+      maxWidth: 350
     })
     else this.router.navigate([route]);
   }

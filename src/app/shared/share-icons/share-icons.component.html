@@ -1,0 +1,28 @@
+<div class="vertical-start-stretch">
+    <div class="horizontal-center-stretch white-bg padding-2em-zero full-height">
+        <div class="vertical-start-center width-90 gap-1em">
+            <div class="vertical-start-center  gap-5px">
+                <div class="vertical-start-center gap-5px">
+                    <h2 class="bold secondary-color">Hi, {{ user?.personalDetails?.name }} {{ user?.personalDetails?.surname }}
+                    </h2>
+                    <div class=" share-text">
+                        <!-- <small>Click <span (click)="copyRefId()" class="primary-color bold pointer">here</span> to copy your
+                code and share with others to stand a chance to win data.</small> -->
+                        <span>Please share this opportunity with someone you know who might need it and you could win yourself a mini tablet or smartphone!</span>
+                    </div>
+                </div>
+                <div class="horizontal-center-stretch icon-wrapper gap-5px">
+                    <div title="whatsapp" class="icon pointer white-bg vertical-start-stretch" (click)="whatsapp()">
+                        <img src="../../../assets/whatsapp.png" alt="whatsapp">
+                    </div>
+                    <div title="facebook" class="icon pointer white-bg vertical-start-stretch" (click)="facebook()">
+                        <img src="../../../assets/facebook.png" alt="facebook">
+                    </div>
+                    <div title="twitter" class="icon pointer white-bg vertical-start-stretch" (click)="tiktok()">
+                        <img src="../../../assets/twitter.svg" alt="twitter">
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>

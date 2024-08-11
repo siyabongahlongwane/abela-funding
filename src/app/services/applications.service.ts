@@ -71,4 +71,9 @@ export class ApplicationsService {
       }
     });
   }
+
+  addReferrer(body: any): Observable<any> {
+    const url = `${this.backendUrl}/referrer/addReferrer`;
+    return this.http.post(url, body);
+  }  
 }

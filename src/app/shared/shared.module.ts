@@ -6,22 +6,26 @@ import { ApplicantAndStatusViewerComponent } from './components/applicant-and-st
 import { MaterialModule } from '../modules/material/material.module';
 import { LandingComponent } from './landing/landing.component';
 import { ReferralDialogComponent } from './referral-dialog/referral-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ShareIconsComponent } from './share-icons/share-icons.component';
 
 const SHARED_COMPONENTS = [
   KeyValueListComponent,
   DocumentViewerComponent,
   ApplicantAndStatusViewerComponent,
+  LandingComponent,
+  ReferralDialogComponent,
+  ShareIconsComponent
 ]
 
 @NgModule({
   declarations: [
-    ...SHARED_COMPONENTS,
-    LandingComponent,
-    ReferralDialogComponent
+    ...SHARED_COMPONENTS
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ],
   exports: [
     ...SHARED_COMPONENTS
