@@ -23,7 +23,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="vertical-start-stretch grey-input-container gap-1em">
+                        <div class="vertical-start-stretch grey-input-container gap-5px">
                             <mat-form-field appearance="outline">
                                 <input matInput name="search" formControlName="password" placeholder="Enter Password"
                                     [type]="showPass ? 'text' : 'password'">
@@ -34,9 +34,9 @@
                                 <mat-icon (click)="showPass = !showPass" matSuffix>{{ showPass ? 'visibility_off' :
                                     'visibility_on' }}</mat-icon>
                             </mat-form-field>
-                            <!-- <div class="horizontal-end-stretch">
-                                <span class="secondary-color pointer bold underline">Forgot password?</span>
-                            </div> -->
+                            <div class="horizontal-end-stretch">
+                                <small (click)="openEmailDialog('forgot')" class="red-color pointer bold underline">Forgot password?</small>
+                            </div>
                         </div>
                         <div class="vertical-center-center">
                             <button (click)="login(loginForm)" class="primary-bg white-color border-radius-2em width-30"

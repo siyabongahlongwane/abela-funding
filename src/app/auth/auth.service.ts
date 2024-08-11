@@ -24,6 +24,16 @@ export class AuthService {
     return this.http.get(url);
   }
 
+  forgotPassword(endpoint: string, body: any): Observable<any> {
+    const url = `${this.backendUrl}/${endpoint}`;
+    return this.http.post(url, body);
+  }
+
+  resetPassword(endpoint: string, body: any): Observable<any> {
+    const url = `${this.backendUrl}/${endpoint}`;
+    return this.http.post(url, body);
+  }
+
   logout() {
     localStorage.removeItem('user');
     this.userSub.next(null);

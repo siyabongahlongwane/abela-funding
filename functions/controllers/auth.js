@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+let mailFunctions = require('./mail');
 
 const login = async (req, res) => {
   let { email, password } = req.query;
@@ -60,6 +61,27 @@ const signUp = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  req.body.email = req.body?.email.toLowerCase();
+  const query = { "contactDetails.email": req.body?.email };
+
+  try {
+    const user = await User.findOne(query);
+    if (!user) throw new Error('User not found');
+    req.body._password = generatePassword();
+    req.body.password = await bcrypt.hash(req.body._password, 10);
+    console.log(req.body);
+    const updatedUser = await User.findOneAndUpdate(query, { $set: { password:  req.body.password} }, { new: true, returnOriginal: false });
+    if (updatedUser) {
+      console.log(updatedUser);
+      mailFunctions.sendMail(req, res);
+      res.status(200).send({ msg: 'Request successful, please check your emails' });
+    }
+  } catch (error) {
+    res.status(404).send({ msg: error.message })
+  }
+};
+
 const hashPassword = async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
@@ -70,25 +92,18 @@ const hashPassword = async (req, res) => {
   }
 };
 
-const fetchReferrer = async (req, res) => {
-  await User.find(req.query, {
-    "personalDetails.name": 1,
-    "personalDetails.surname": 1,
-    contactDetails: 1,
-  }).then((user) => {
-    try {
-      if (user.length > 0) {
-        res.send(user);
-      } else {
-        res.send({ err: "Referrer does not exist" });
-      }
-    } catch (error) {
-      res.send({ err: "Error fetching referrer details" });
-    }
-  });
-};
+const crypto = require('crypto');
+
+const generatePassword = (length = 8) => {
+  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*()_+.-=';
+  let password = '';
+  for (let i = 0; i < length; ++i) {
+    password += characters[crypto.randomInt(0, characters.length)];
+  }
+  return password;
+}
 
 router.post("/register", signUp);
 router.get("/login", login);
-router.get("/fetchReferrer", fetchReferrer);
+router.post("/forgotPassword", forgotPassword);
 module.exports = router;

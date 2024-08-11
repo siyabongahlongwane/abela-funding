@@ -8,6 +8,7 @@ import { LandingComponent } from './landing/landing.component';
 import { ReferralDialogComponent } from './referral-dialog/referral-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShareIconsComponent } from './share-icons/share-icons.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const SHARED_COMPONENTS = [
   KeyValueListComponent,
@@ -20,7 +21,8 @@ const SHARED_COMPONENTS = [
 
 @NgModule({
   declarations: [
-    ...SHARED_COMPONENTS
+    ...SHARED_COMPONENTS,
+    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,

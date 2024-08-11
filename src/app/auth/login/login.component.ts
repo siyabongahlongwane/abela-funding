@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { AuthService } from '../auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ForgotPasswordComponent } from 'src/app/shared/forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
   width: any = 0;
   loading$ = this.loader.loading$;
 
-  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private router: Router, private authService: AuthService, public loader: LoadingService) {
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private sharedService: SharedService, private router: Router, private authService: AuthService, public loader: LoadingService, private dialog: MatDialog) {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)]],
       password: [null, [Validators.required]],
@@ -50,4 +52,17 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  openEmailDialog(action: string) {
+    if (action === 'forgot') {
+      this.dialog.open(ForgotPasswordComponent, { disableClose: true, width: '320px', data: {action, header: 'Forgot Password'}}).afterClosed().subscribe(res => {
+        if(res){
+          // Call API
+        }
+      })
+    }
+  }
+
+  triggerForgotPassword(email: string){
+
+  }
 }

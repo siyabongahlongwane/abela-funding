@@ -7,6 +7,8 @@ async function sendMail(req, res) {
     let body = req.body;
     let output = '';
     let subject = '';
+    let to = 'applications@theabelatrust.co.za';
+    console.log(body)
     switch (type) {
         case 'email':
             subject = "Contact Form From Website";
@@ -17,12 +19,18 @@ async function sendMail(req, res) {
             output = generateApplicationLayout(body);
             break;
         case 'statusUpdate':
-            subject = `Abela Trust Application Status`;
+            subject = `Abela Trust - Application Status`;
             output = generateStatusUpdateEmailLayout(body);
+            to = body?.addressDetails?.email;
             break;
         case 'adminDocsUploaded':
-            subject = `Abela Trust Application Documents`;
+            subject = `Abela Trust - Application Documents`;
             output = adminDocsUploadedMail(body);
+            break;
+        case 'forgotPassword':
+            subject = `Abela Trust - Forgot Password`;
+            output = forgotPassword(body);
+            to = body?.email
             break;
         default:
             break;
@@ -42,13 +50,12 @@ async function sendMail(req, res) {
             rejectUnauthorized: false,
         },
     });
-    console.log(type);
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: `applications@theabelatrust.co.za`, // sender address
-        to: (type === 'application' || type === 'adminDocsUploaded') ? "applications@theabelatrust.co.za" : body?.addressDetails?.email, // list of receivers
-        subject: subject, // Subject line
-        html: output // html body
+        to, // list of receivers
+        subject, // Subject line
+        html: `<div style="padding: 1em">${output}</div>` // html body
     });
 
     if (info.messageId) {
@@ -127,6 +134,17 @@ const adminDocsUploadedMail = (body) => {
         <li style='list-style: none;'> <b>Phone</b>:  ${body.addressDetails.cellOne}</li>
     </ul>
     <h3 >Login and check the request on the Admin Panel. Link: <a style='color: #e01a72; font-weight: bold;' href="https://apply.theabelatrust.co.za/admin/applications/view/${reqId}"><span style='color: #e01a72'>here</span></a></h3>
+    </br>
+    Warm Regards<br>
+    This email was sent from the Abela Trust Website through WEBGOORU PTY LTD's Email Server
+    `;
+}
+
+const forgotPassword = (body) => {
+    return `
+    <h3 style='margin: 0 !important; padding: 5px 0;'>Request for forgotten password</h3>
+    <h5 style='margin: 0 !important; padding: 5px 0;'>Use your registered email and password: <b>${body._password}</b> to login</h5>
+    <h5 >Next step: Navigate to the "Profile" page to update your password. </h5>
     </br>
     Warm Regards<br>
     This email was sent from the Abela Trust Website through WEBGOORU PTY LTD's Email Server

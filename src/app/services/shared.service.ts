@@ -35,7 +35,7 @@ export class SharedService {
     localStorage.setItem(key, JSON.stringify(body));
   }
 
-  openSnackbar(message: string, theme?: string) {
-    this.snackbar.open(message, 'OK', { duration: 3000 });
+  openSnackbar(message: string, duration: number = 5000, theme?: string) {
+    this.snackbar.open(message, 'OK', { duration });
   }
 }
