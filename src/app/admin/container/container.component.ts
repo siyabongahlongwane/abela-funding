@@ -64,7 +64,8 @@ export class ContainerComponent implements OnInit {
         }
       }
       let urlFragments = this.router.url.split('/');
-      this.setPageName(urlFragments);
+      if(urlFragments.some(str => str)) this.setPageName(urlFragments);
+      
     })
   }
 

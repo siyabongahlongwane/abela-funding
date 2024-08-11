@@ -51,7 +51,7 @@ export class ContainerComponent implements OnInit {
         }
       }
       let urlFragments = this.router.url.split('/');
-      this.setPageName(urlFragments);
+      if(urlFragments.some(str => str)) this.setPageName(urlFragments);
     })
   }
 
@@ -61,6 +61,7 @@ export class ContainerComponent implements OnInit {
   }
 
   setPageName(urlFragments: string[]) {
+    console.log(urlFragments);
     this.currentPage = urlFragments[2][0].toUpperCase() + urlFragments[2].slice(1);
     // if (urlFragments[4]) this.currentPage += ` - ${urlFragments[4]}`
   }
