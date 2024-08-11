@@ -2,6 +2,12 @@
 <div class="horizontal-center-stretch white-bg padding-2em-zero full-height">
     <div class="vertical-start-center width-90 gap-1em">
             <app-share-icons [user]="user"></app-share-icons>
+            <div class="vertical-start-stretch gap-1em">
+                <h3 class="secondary-color bold border-bottom-secondary">Contact & Address Details</h3>
+                <div class="vertical-start-stretch">
+                    <app-key-value-list *ngIf="user?.contactDetails" [dataList]="userDetailsList"></app-key-value-list>
+                </div>
+            </div>
             <div class="vertical-center-center">
                 <button (click)="openRegisterDialog()" class="primary-bg white-color border-radius-2em" mat-raised-button>Edit Details</button>
             </div>
