@@ -6,6 +6,7 @@ import { ApplicationsComponent } from './applications/applications.component';
 import { ContainerComponent } from './container/container.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewApplicationComponent } from './view-application/view-application.component';
+import { NotFoundComponent } from '../shared/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -28,9 +29,12 @@ const routes: Routes = [
       },
       {
         path: 'referrals', component: ReferralsComponent
-      }
+      },
+      // { path: '**', component: NotFoundComponent } // Wildcard route
     ]
   },
+  // { path: '**', component: NotFoundComponent } // Wildcard route
+
 ];
 
 @NgModule({

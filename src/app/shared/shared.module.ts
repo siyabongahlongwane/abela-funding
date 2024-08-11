@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ShareIconsComponent } from './share-icons/share-icons.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { RouterModule } from '@angular/router';
 
 const SHARED_COMPONENTS = [
   KeyValueListComponent,
@@ -25,11 +27,13 @@ const SHARED_COMPONENTS = [
 @NgModule({
   declarations: [
     ...SHARED_COMPONENTS,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     ...SHARED_COMPONENTS

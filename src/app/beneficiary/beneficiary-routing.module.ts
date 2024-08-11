@@ -7,6 +7,7 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
 import { NewApplicationComponent } from './new-application/new-application.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DocumentsUploadComponent } from './documents-upload/documents-upload.component';
+import { NotFoundComponent } from '../shared/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -36,11 +37,14 @@ const routes: Routes = [
           },
           {
             path: 'upload-documents/:applicationId', component: DocumentsUploadComponent
-          }
+          },
+          
         ]
       },
-    ]
-  }
+      // { path: '**', component: NotFoundComponent } // Wildcard route
+    ],
+  },
+
 
 ];
 

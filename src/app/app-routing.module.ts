@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingComponent } from './shared/landing/landing.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
   {
     path: 'admin', // path to the feature module
     loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule)
-  }
+  },
 ];
 
 @NgModule({

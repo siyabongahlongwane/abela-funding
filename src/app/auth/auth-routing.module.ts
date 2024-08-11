@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'reset-password', component: RegisterComponent
-  }
+  },
 ];
 
 @NgModule({
