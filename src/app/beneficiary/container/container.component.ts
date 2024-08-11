@@ -61,7 +61,6 @@ export class ContainerComponent implements OnInit {
   }
 
   setPageName(urlFragments: string[]) {
-    console.log(urlFragments);
     this.currentPage = urlFragments[2][0].toUpperCase() + urlFragments[2].slice(1);
     // if (urlFragments[4]) this.currentPage += ` - ${urlFragments[4]}`
   }

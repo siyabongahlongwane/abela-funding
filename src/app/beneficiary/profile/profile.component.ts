@@ -5,6 +5,7 @@ import { RegisterComponent } from 'src/app/auth/register/register.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
+import { ForgotPasswordComponent } from 'src/app/shared/forgot-password/forgot-password.component';
 import { setUpKeyValueList } from 'src/app/utils/KeyToHumanValue';
 
 @Component({
@@ -28,7 +29,7 @@ export class ProfileComponent implements OnInit {
     this.user = this.sharedService.get('user');
     this.auth.userSub.next(this.user);
     const userDetailsKeyList = ['cellOne', 'cellTwo', 'email', 'town', 'city', 'province'];
-    this.userDetailsList = setUpKeyValueList({...this.user.contactDetails, ...this.user.addressDetails}, userDetailsKeyList);
+    this.userDetailsList = setUpKeyValueList({ ...this.user.contactDetails, ...this.user.addressDetails }, userDetailsKeyList);
   }
 
   openRegisterDialog() {
@@ -36,6 +37,7 @@ export class ProfileComponent implements OnInit {
       data: this.user,
       disableClose: true,
       hasBackdrop: true,
+      maxWidth: 320,
       maxHeight: '80vh'
     });
 
@@ -43,6 +45,13 @@ export class ProfileComponent implements OnInit {
       if (data) {
         this.updateDetails(data);
       }
+    });
+  }
+
+  openPasswordDialog() {
+    this.dialog.open(ForgotPasswordComponent, {
+      data: { email: this.user?.contactDetails?.email, header: 'Reset Password', action: 'reset' },
+      disableClose: true,
     });
   }
 

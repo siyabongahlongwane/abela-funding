@@ -81,6 +81,27 @@ const forgotPassword = async (req, res) => {
     res.status(404).send({ msg: error.message })
   }
 };
+const resetPassword = async (req, res) => {
+  console.log(req.body);
+  let { password, currentPassword, email } = req.body;
+  email = req.body?.email.toLowerCase();
+  const query = { "contactDetails.email": email };
+  try {
+    const user = await User.findOne(query);
+    if (!await bcrypt.compare(currentPassword, user.password)) {
+      throw new Error('Current Password does not match the password for this account');
+    }
+    if (!user) throw new Error('User not found');
+
+    const updatedPassword = await User.findOneAndUpdate(query, { $set: { password: await bcrypt.hash(password, 10)} }, { new: true, returnOriginal: false });
+    if (updatedPassword) {
+      res.status(200).send({ msg: 'Password reset successful' });
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(404).send({ msg: error.message })
+  }
+};
 
 const hashPassword = async (req, res) => {
   try {
@@ -95,7 +116,7 @@ const hashPassword = async (req, res) => {
 const crypto = require('crypto');
 
 const generatePassword = (length = 8) => {
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*()_+.-=';
+  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let password = '';
   for (let i = 0; i < length; ++i) {
     password += characters[crypto.randomInt(0, characters.length)];
@@ -106,4 +127,5 @@ const generatePassword = (length = 8) => {
 router.post("/register", signUp);
 router.get("/login", login);
 router.post("/forgotPassword", forgotPassword);
+router.post("/resetPassword", resetPassword);
 module.exports = router;

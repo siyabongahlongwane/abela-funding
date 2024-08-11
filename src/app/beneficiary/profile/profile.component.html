@@ -8,8 +8,9 @@
                     <app-key-value-list *ngIf="user?.contactDetails" [dataList]="userDetailsList"></app-key-value-list>
                 </div>
             </div>
-            <div class="vertical-center-center">
+            <div class="horizontal-center-center gap-5px">
                 <button (click)="openRegisterDialog()" class="primary-bg white-color border-radius-2em" mat-raised-button>Edit Details</button>
+                <button (click)="openPasswordDialog()" class="secondary-bg white-color border-radius-2em" mat-raised-button>Reset Password</button>
             </div>
         </div>
     </div>

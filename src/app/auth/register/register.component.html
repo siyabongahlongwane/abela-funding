@@ -207,7 +207,7 @@
                 </mat-form-field>
               </div>
 
-              <div class="vertical-start-stretch grey-input-container width-30">
+              <div [style.display]="hidePassword ? 'none' : 'flex'" class="vertical-start-stretch grey-input-container width-30">
                 <label class="bold">Password <span class="red-color">*</span> </label>
                 <mat-form-field appearance="outline">
                   <input autocomplete="current-password" suggested="password" [disabled]="data" matInput name="search" formControlName="password"
