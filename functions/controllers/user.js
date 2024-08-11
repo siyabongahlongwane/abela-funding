@@ -26,12 +26,10 @@ const fetchReferrals = async (req, res) => {
         try {
             if (referrals) {
                 res.send(referrals);
-            } else {
-                res.send({ base64 });
-            }
+            } 
         } catch (error) {
             console.log(error);
-            res.status(500).send({ msg: "Error Fetching Document" })
+            res.status(500).send({ msg: "Error Fetching Referrals" })
         }
     }).catch(err => {
         console.log(err);
