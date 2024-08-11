@@ -63,7 +63,7 @@ export class MyApplicationsComponent implements OnInit {
     this.applicationService.genericFetchApplications(`applications/fetchApplications${filter}`)
       .subscribe((data: any) => {
         data = data.map((application: any) => {
-          if ((this.user?.contactDetails?.email === application?.addressDetails?.email) && this.width <= 600) {
+          if ((this.user?._id === application?.owner) && this.width <= 600) {
             this.displayedColumns = ['dateCreated', 'requestingFor', 'status', 'action'];
             return {
               _id: application?._id,
@@ -73,6 +73,7 @@ export class MyApplicationsComponent implements OnInit {
               submittedDocs: application?.submittedDocs,
             }
           }
+         else {
           return {
             _id: application?._id,
             date: application?.dateCreated,
@@ -83,6 +84,7 @@ export class MyApplicationsComponent implements OnInit {
             requestingFor: application?.personalDetails?.requestingFor,
             submittedDocs: application?.submittedDocs,
           }
+         }
         })
         this.dataSource = new MatTableDataSource(data);
         this.applicationsCount = data.length;
