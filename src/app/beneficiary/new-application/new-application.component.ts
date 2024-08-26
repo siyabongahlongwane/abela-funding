@@ -72,32 +72,32 @@ export class NewApplicationComponent implements OnInit {
     ).subscribe();
     // });
 
-    // this.applicationForm.patchValue({
-    //   "personalDetails": {
-    //     "name": "Blessing",
-    //     "surname": "Sangweni",
-    //     "dateOfBirth": "1995-02-08T22:00:00.000Z",
-    //     "schoolCurrentlyAttending": "Boksburg",
-    //     "schoolWishToAttend": "Voortrekker",
-    //     "gradeAndYearDoing": "10 in 2025",
-    //     "hasGrant": "No",
-    //     "grantDetails": "None",
-    //     "course": "Engineer",
-    //     "motivation": "I aim to be the best Engineer ever!",
-    //     "fetWishToAttend": "DUT",
-    //     "requestingFor": "School Transfer",
-    //     "marksDoc": ""
-    //   },
-    //   "addressDetails": {
-    //     "town": "Boksburg",
-    //     "city": "Johannesburg",
-    //     "province": "Gauteng",
-    //     "cellOne": "0846843654",
-    //     "cellTwo": "086054056",
-    //     "email": "siyabongcodes@gmail.com"
-    //   },
-    //   "subjects": []
-    // })
+    this.applicationForm.patchValue({
+      "personalDetails": {
+        "name": "Blessing",
+        "surname": "Sangweni",
+        "dateOfBirth": "1995-02-08T22:00:00.000Z",
+        "schoolCurrentlyAttending": "Boksburg",
+        "schoolWishToAttend": "Voortrekker",
+        "gradeAndYearDoing": "10 in 2025",
+        "hasGrant": "No",
+        "grantDetails": "None",
+        "course": "Engineer",
+        "motivation": "I aim to be the best Engineer ever!",
+        "fetWishToAttend": "DUT",
+        "requestingFor": "School Transfer",
+        "marksDoc": ""
+      },
+      "addressDetails": {
+        "town": "Boksburg",
+        "city": "Johannesburg",
+        "province": "Gauteng",
+        "cellOne": "0846843654",
+        "cellTwo": "086054056",
+        "email": "siyabonga@webgooru.co.za"
+      },
+      "subjects": []
+    })
   }
 
   toggleState(state: boolean) {
@@ -171,6 +171,7 @@ export class NewApplicationComponent implements OnInit {
     e.preventDefault();
     this.submitted = true;
     this.personalDetails.patchValue({ acceptedTerms: this.acceptedTerms })
+    console.log(this.applicationForm);
     if (!this.document?.base64) return this.sharedService.openSnackbar('Please upload your report.');
     if (!this.acceptedTerms) return this.sharedService.openSnackbar('Please check the consent box');
     if (this.applicationForm.invalid) {

@@ -92,8 +92,8 @@ const generateStatusUpdateEmailLayout = (body) => {
     <h3 style='margin: 0 !important; padding: 5px 0;'>Message:</h3>
         <p>Hi, your application status has been updated to: <span style="font-weight: bold">${body?.status?.current}</span> </p>
         <p>Comments: <span style="font-weight: bold">${body?.status?.comment || "N/A"}</span> </p>
-        <p style='${body?.status?.current === "Approved" ? "display: blocked;" : "display: none;"}'>Please login, open your application and click on the "Upload Docs" button and upload the required documents:  </p>
-        <ul>
+        <p style='${body?.status?.current === "Approved" ? "display: block;" : "display: none;"}'>Please login, open your application and click on the "Upload Docs" button and upload the required documents:  </p>
+        <ul style='${body?.status?.current === "Approved" ? "display: block;" : "display: none;"}'>
             <li>Your ID / Birth Certificate Copy</li>
             <li>Parent / Guardian ID Copy (For applicants under 18 years)</li>
             <li>Statement of Fees / Invoice</li>
