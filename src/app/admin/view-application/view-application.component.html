@@ -36,7 +36,7 @@
                         class="horizontal-space-between-stretch gap-1em subject">
                         <h4 class="bold width-24">Subject {{ i + 1 }}: <span class="fw-500">{{ subject?.subject}}</span>
                         </h4>
-                        <h4 class="bold width-24">Standard {{ i + 1 }}: <span class="fw-500">{{ subject?.standard}}</span>
+                        <h4 class="bold width-24">Standard {{ i + 1 }}: <span class="fw-500">{{ subject?.standard  || 'N/A'}}</span>
                         </h4>
                         <h4 class="bold width-24">Percentage {{ i + 1 }}: <span class="fw-500">{{ subject?.mark}}</span>
                         </h4>

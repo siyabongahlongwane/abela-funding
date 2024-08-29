@@ -79,7 +79,7 @@ export class NewApplicationComponent implements OnInit {
         "dateOfBirth": "1995-02-08T22:00:00.000Z",
         "schoolCurrentlyAttending": "Boksburg",
         "schoolWishToAttend": "Voortrekker",
-        "gradeAndYearDoing": "10 in 2025",
+        "gradeOrYearOfStudy": "10 in 2025",
         "hasGrant": "No",
         "grantDetails": "None",
         "course": "Engineer",
@@ -121,7 +121,7 @@ export class NewApplicationComponent implements OnInit {
   newSubject(): FormGroup {
     return this.fb.group({
       subject: [null, [Validators.required]],
-      standard: [null, [Validators.required]],
+      standard: [null],
       mark: [null, [Validators.required, Validators.max(100)]],
     })
   }
@@ -133,12 +133,13 @@ export class NewApplicationComponent implements OnInit {
       dateOfBirth: [null, [Validators.required]],
       schoolCurrentlyAttending: [null, [Validators.required]],
       schoolWishToAttend: [null, [Validators.required]],
-      gradeAndYearDoing: [null, [Validators.required]],
+      gradeOrYearOfStudy: [null, [Validators.required]],
+      yearApplyingFor: [null, [Validators.required]],
       hasGrant: [null, Validators.required],
       grantDetails: [null],
       course: [null, Validators.required],
       motivation: [null, [Validators.required]],
-      fetWishToAttend: [null, [Validators.required]],
+      // fetWishToAttend: [null, [Validators.required]],
       requestingFor: [null, [Validators.required]],
       marksDoc: [this.isUpload ? this.document : null, this.isUpload ? Validators.required : []],
       acceptedTerms: [null]

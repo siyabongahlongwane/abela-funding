@@ -10,8 +10,8 @@ export const keyToHumanValue = (key: string) => {
         case 'schoolWishToAttend':
             transformedKey = 'School Wishing To Attend';
             break;
-        case 'gradeAndYearDoing':
-            transformedKey = 'Grade and Year';
+        case 'gradeOrYearOfStudy':
+            transformedKey = 'Grade or Year Of Study';
             break;
         case 'hasGrant':
             transformedKey = 'Has Study Grant';
@@ -63,6 +63,9 @@ export const keyToHumanValue = (key: string) => {
             break;
         case 'accountsContactDetails':
             transformedKey = 'Accounts Contact Details';
+            break;
+        case 'yearApplyingFor':
+            transformedKey = 'Year Applying For';
             break;
         default:
             return ''
