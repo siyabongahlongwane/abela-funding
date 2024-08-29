@@ -37,8 +37,9 @@ export class ProfileComponent implements OnInit {
       data: this.user,
       disableClose: true,
       hasBackdrop: true,
-      maxWidth: 320,
-      maxHeight: '80vh'
+      maxWidth: '90%',
+      maxHeight: '80vh',
+      panelClass: 'edit-details-dialog'
     });
 
     dialog.afterClosed().subscribe(data => {

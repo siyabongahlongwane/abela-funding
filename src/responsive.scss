@@ -69,6 +69,13 @@
     .gap-sm {
         gap: 1em !important;
     }
+
+    .edit-details-dialog {
+        width: 95vw;
+        mat-dialog-container {
+            padding: 0;
+        }
+    }
 }
 
 @media (min-width: 885px) {
